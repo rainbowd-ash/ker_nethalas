@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://c42eyxq2cofdb"]
+
+[ext_resource type="Script" path="res://character_creation/title.gd" id="1_11af2"]
+[ext_resource type="PackedScene" uid="uid://o3v2p0jwfs6f" path="res://character_creation/name.tscn" id="2_c444w"]
+
+[node name="Title" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+script = ExtResource("1_11af2")
+next_screen_scene = ExtResource("2_c444w")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.5
+offset_top = -52.0
+offset_right = 114.5
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Title1" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "KER NETHALIS"
+horizontal_alignment = 1
+
+[node name="Title2" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "INTO THE MIDNIGHT THRONE"
+horizontal_alignment = 1
+
+[node name="Title3" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = " "
+horizontal_alignment = 1
+
+[node name="Title4" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][color=#6a7066]RETURN[/color] TO START[/center]"
+fit_content = true

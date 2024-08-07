@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Masteries" load_steps=2 format=3 uid="uid://bkgesm5f3ljsy"]
+
+[ext_resource type="Script" path="res://character_creation/masteries.gd" id="1_eeko7"]
+
+[resource]
+script = ExtResource("1_eeko7")
+title = "abyssal reaver"

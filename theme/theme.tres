@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://csylo5c2lbme1"]
+
+[ext_resource type="StyleBox" uid="uid://dtyij8ifxmo0o" path="res://theme/button_style_box.tres" id="1_p23ha"]
+
+[resource]
+Button/colors/font_disabled_color = Color(0.200213, 0.21432, 0.190781, 1)
+Button/colors/font_focus_color = Color(0.415686, 0.439216, 0.4, 1)
+Button/styles/disabled = ExtResource("1_p23ha")
+Button/styles/focus = ExtResource("1_p23ha")
+Button/styles/hover = ExtResource("1_p23ha")
+Button/styles/normal = ExtResource("1_p23ha")
+Button/styles/pressed = ExtResource("1_p23ha")
+LineEdit/colors/caret_color = Color(0.94902, 0.94902, 0.94902, 0)
+LineEdit/colors/font_color = Color(0.415686, 0.439216, 0.4, 1)
+LineEdit/colors/font_outline_color = Color(1, 1, 1, 0)
+LineEdit/colors/font_selected_color = Color(1, 1, 1, 0)
+LineEdit/colors/selection_color = Color(0.247059, 0.247059, 0.247059, 0)

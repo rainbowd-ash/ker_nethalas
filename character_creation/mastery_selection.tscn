@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dhc1ii5jnt2j1"]
+
+[node name="MasterySelection" type="VBoxContainer"]
+visible = false
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "MASTERIES"
+
+[node name="ItemList" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="ItemList"]
+layout_mode = 2
+text = "ABYSSAL REAVER"
+
+[node name="Button2" type="Button" parent="ItemList"]
+layout_mode = 2
+text = "ARCANIST"
+
+[node name="Button3" type="Button" parent="ItemList"]
+layout_mode = 2
+text = "BRAWLER"
