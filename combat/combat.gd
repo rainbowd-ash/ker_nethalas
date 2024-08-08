@@ -16,7 +16,7 @@ func add_monster():
 
 func roll_initiative():
 	var roll_result : OpposedCheckResult = Dice.opposed_check(
-		CheckValue.new(Character.skills.get_skill_value("perception"), 0),
+		CheckValue.new(Character.skills.get_value("perception"), 0),
 		CheckValue.new(monster.get_stat_value("awareness"), 0),
 	)
 	if roll_result.winner == Enums.opposed_winner.attacker:

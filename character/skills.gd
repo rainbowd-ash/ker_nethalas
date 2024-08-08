@@ -1,3 +1,4 @@
+extends Node
 class_name Skills
 
 var skills = {
@@ -18,10 +19,10 @@ var skills = {
 	fist_weapons = Skill.new("fist_weapons", "fist weapons", 0, ["weapon"]),
 }
 
-func set_skill(skill_title, new_value):
+func set_value(skill_title : String, new_value : int):
 	skills[skill_title].value = new_value
 
-func get_skill_value(skill_title: String):
+func get_value(skill_title: String):
 	return skills[skill_title].get_value()
 
 func get_skills():
