@@ -1,4 +1,4 @@
-extends Resource
+extends Node
 class_name Attributes
 
 var health : int = 0 :

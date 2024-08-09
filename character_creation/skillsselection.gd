@@ -65,4 +65,4 @@ func focus_valid_button():
 func finalize_selection():
 	for button in %ButtonContainer.get_children():
 		if button.is_disabled():
-			Character.skills.set_skill(button.skill.title, button.new_value)
+			Character.skills.set_value(button.skill.title, button.new_value)

@@ -3,20 +3,20 @@ extends Node
 
 var char_name = "default name"
 var accused = ""
-var skills = Skills.new()
-var attributes = Attributes.new()
+@onready var skills = $Skills
+@onready var attributes = $Attributes
 
 func _ready():
 	skills_init()
 	attributes_init()
 
 func skills_init():
-	skills.set_skill("acrobatics",10)
-	skills.set_skill("athletics",10)
-	skills.set_skill("dodge",10)
-	skills.set_skill("perception",20)
-	skills.set_skill("resolve",10)
-	skills.set_skill("fist_weapons",10)
+	skills.set_value("acrobatics",10)
+	skills.set_value("athletics",10)
+	skills.set_value("dodge",10)
+	skills.set_value("perception",20)
+	skills.set_value("resolve",10)
+	skills.set_value("fist_weapons",10)
 
 func attributes_init():
 	attributes.health = Dice.roll(1, "d6", 8)
