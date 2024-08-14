@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cahehf8eg71en"]
+
+[ext_resource type="Texture2D" uid="uid://cu8krp5s341t5" path="res://art/pawn.png" id="1_51unu"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture = ExtResource("1_51unu")
+region_enabled = true
+region_rect = Rect2(23, 23, 45, 45)

@@ -1,40 +1,65 @@
-[gd_scene load_steps=3 format=3 uid="uid://dpwu21k1ya0ad"]
+[gd_scene load_steps=8 format=3 uid="uid://dpwu21k1ya0ad"]
 
 [ext_resource type="Script" path="res://dungeon/dungeon.gd" id="1_ec43u"]
-[ext_resource type="TileSet" uid="uid://dy6bwru7k8qu4" path="res://art/temp_tiles.tres" id="1_iynku"]
+[ext_resource type="Script" path="res://dungeon/DungeonCamera.gd" id="2_l2xxq"]
+[ext_resource type="PackedScene" uid="uid://cyiknnvjftrgq" path="res://dungeon/rooms/room1.tscn" id="2_uxbhp"]
+[ext_resource type="PackedScene" uid="uid://dl4askb15wpou" path="res://dungeon/rooms/room2.tscn" id="3_6eo3u"]
+[ext_resource type="PackedScene" uid="uid://cahehf8eg71en" path="res://dungeon/pawn.tscn" id="3_465da"]
+[ext_resource type="Script" path="res://dungeon/RoomSelection.gd" id="5_2xpbr"]
+[ext_resource type="PackedScene" uid="uid://c8ntfn6vafdpw" path="res://dungeon/room_button.tscn" id="7_ymtkp"]
 
-[node name="Dungeon" type="Node2D"]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("pawn")]
+position = Vector2(630, 360)
 script = ExtResource("1_ec43u")
+pawn = NodePath("Room1/Pawn")
 
-[node name="Room1" type="TileMap" parent="."]
-tile_set = ExtResource("1_iynku")
-format = 2
-layer_0/tile_data = PackedInt32Array(0, 0, 1, 1, 0, 1, 2, 0, 1, 65538, 0, 1, 131074, 0, 1, 196610, 0, 1, 196609, 0, 1, 196608, 0, 1, 131072, 0, 1, 65536, 0, 1, 65537, 0, 1, 131073, 0, 1)
+[node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("pawn")]
+script = ExtResource("2_l2xxq")
+pawn = NodePath("../Room1/Pawn")
 
-[node name="Pawn" type="Node2D" parent="Room1"]
+[node name="Room1" parent="." instance=ExtResource("2_uxbhp")]
+rotation = -1.57079
+
+[node name="Pawn" parent="Room1" instance=ExtResource("3_465da")]
+rotation = 1.57079
+
+[node name="Room2" parent="." instance=ExtResource("3_6eo3u")]
+position = Vector2(90, 0)
+rotation = 1.57079
+
+[node name="Room3" parent="." instance=ExtResource("2_uxbhp")]
+position = Vector2(90, 90)
+rotation = 3.14159
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RoomSelector" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = -270.0
+offset_right = -550.0
+offset_bottom = -270.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_2xpbr")
 
-[node name="Corridor1" type="TileMap" parent="."]
-tile_set = ExtResource("1_iynku")
-format = 2
-layer_0/tile_data = PackedInt32Array(196607, 0, 0)
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RoomSelector"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="Corridor2" type="TileMap" parent="."]
-tile_set = ExtResource("1_iynku")
-format = 2
-layer_0/tile_data = PackedInt32Array(262145, 0, 0, 327681, 0, 0, 327680, 0, 0, 393215, 0, 0, 393217, 0, 0, 458753, 0, 0, 458752, 0, 0)
+[node name="RoomButton" parent="CanvasLayer/RoomSelector/VBoxContainer" instance=ExtResource("7_ymtkp")]
+layout_mode = 2
 
-[node name="Room2" type="TileMap" parent="."]
-tile_set = ExtResource("1_iynku")
-format = 2
-layer_0/tile_data = PackedInt32Array(131070, 0, 1, 196606, 0, 1, 131069, 0, 1, 131068, 0, 1, 196604, 0, 1, 65532, 0, 1, -4, 0, 1, -3, 0, 1, -2, 0, 1, 65534, 0, 1, 65533, 0, 1)
+[node name="Timer" type="Timer" parent="CanvasLayer/RoomSelector"]
+wait_time = 0.05
 
-[node name="Room3" type="TileMap" parent="."]
-tile_set = ExtResource("1_iynku")
-format = 2
-layer_0/tile_data = PackedInt32Array(262142, 0, 1, 262141, 0, 1, 262140, 0, 1, 196605, 0, 1, 327676, 0, 1, 393212, 0, 1, 393213, 0, 1, 393214, 0, 1, 327678, 0, 1, 327677, 0, 1)
-
-[node name="Room4" type="TileMap" parent="."]
-tile_set = ExtResource("1_iynku")
-format = 2
-layer_0/tile_data = PackedInt32Array(458749, 0, 1, 458750, 0, 1, 458751, 0, 1, 524287, 0, 1, 589823, 0, 1, 589822, 0, 1, 524286, 0, 1, 524285, 0, 1, 589821, 0, 1)
+[connection signal="moved_through_door" from="." to="Camera" method="_on_dungeon_moved_through_door"]
+[connection signal="moved_through_door" from="." to="CanvasLayer/RoomSelector" method="_on_dungeon_moved_through_door"]
+[connection signal="timeout" from="CanvasLayer/RoomSelector/Timer" to="CanvasLayer/RoomSelector" method="_on_timer_timeout"]
