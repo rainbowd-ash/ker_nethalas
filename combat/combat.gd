@@ -19,7 +19,7 @@ func roll_initiative():
 		CheckValue.new(Character.skills.get_value("perception"), 0),
 		CheckValue.new(monster.get_stat_value("awareness"), 0),
 	)
-	if roll_result.winner == Enums.opposed_winner.attacker:
+	if roll_result.winner == Dice.opposed_winner.attacker:
 		print("Player gets initiative")
 	else: print("Monster gets initiative")
 	return roll_result
@@ -31,7 +31,7 @@ func _ready():
 	print("Combat Starting")
 	add_monster()
 	var initiative = roll_initiative()
-	if initiative.winner == Enums.opposed_winner.attacker:
+	if initiative.winner == Dice.opposed_winner.attacker:
 		player_action()
 	else:
 		monster_action()

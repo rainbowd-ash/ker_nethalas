@@ -1,6 +1,6 @@
 class_name OpposedCheckResult
 
-var winner = Enums.opposed_winner.attacker
+var winner = Dice.opposed_winner.attacker
 var attacker_success : bool = false
 var defender_success : bool = false
 var attacker_critical : bool = false

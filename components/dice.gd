@@ -1,6 +1,20 @@
 extends Node
 #class_name Dice
 
+# dice result of normal check
+enum check_results {
+	SUCCESS,
+	FUMBLE,
+	CRITICAL_SUCCESS,
+	CRITICAL_FUMBLE,
+}
+
+# result of opposed check
+enum opposed_winner {
+	attacker,
+	defender,
+}
+
 const sizes = {
 	"d4": 4,
 	"d6": 6,
@@ -57,7 +71,7 @@ func interprete_check(roll : Dictionary, values : CheckValue):
 
 # attacker and defender both roll 2d10 (d100)
 # highest roll without going over skill limit wins
-# on ties (two fumbles any value, two crit_fumbles any value, tied rolls with double success)
+# on ties (two fumbles any value, two crit_fumbles any value, two success and tied roll)
 	# highest skill point value wins
 # I'm interpreting the rules to include crit_success beating regular success any values
 # also giving attacker win on absolute ties
@@ -72,51 +86,48 @@ func opposed_check(atk_values : CheckValue, def_values : CheckValue):
 	if (result.attacker_success and result.defender_success) and (result.defender_critical == result.attacker_critical):
 		# higher die result wins
 		if attacker_roll.roll > defender_roll.roll:
-			result.winner = Enums.opposed_winner.attacker
+			result.winner = opposed_winner.attacker
 			return result
 		if attacker_roll.roll < defender_roll.roll:
-			result.winner = Enums.opposed_winner.defender
+			result.winner = opposed_winner.defender
 			return result
 		# skill value runoff with attacker win after die ties
 		if atk_values.attribute_value >= def_values.attribute_value:
-			result.winner = Enums.opposed_winner.attacker
+			result.winner = opposed_winner.attacker
 			return result
 		if atk_values.attribute_value < def_values.attribute_value:
-			result.winner = Enums.opposed_winner.defender
+			result.winner = opposed_winner.defender
 			return result
 	
 	# (B) both fumble
 	if not result.attacker_success and not result.defender_success:
 		# one crit fumble and one normal fumble
 		if result.attacker_critical and not result.defender_critical:
-			result.winner = Enums.opposed_winner.defender
+			result.winner = opposed_winner.defender
 			return result
 		if not result.attacker_critical and result.defender_critical:
-			result.winner = Enums.opposed_winner.attacker
+			result.winner = opposed_winner.attacker
 			return result
 		# stat value runoff of two fumbles or two crit fumbles
 		if atk_values.attribute_value == def_values.attribute_value: 
-			result.winner = Enums.opposed_winner.attacker 
+			result.winner = opposed_winner.attacker 
 			return result
 		if atk_values.attribute_value > def_values.attribute_value:
-			result.winner = Enums.opposed_winner.attacker
+			result.winner = opposed_winner.attacker
 			return result
 		if atk_values.attribute_value < def_values.attribute_value: 
-			result.winner = Enums.opposed_winner.defender
+			result.winner = opposed_winner.defender
 			return result
 	
 	# (C) one (crit or normal) success and one (crit or normal) fumble
 	if result.attacker_success and not result.defender_success:
-		result.winner = Enums.opposed_winner.attacker
+		result.winner = opposed_winner.attacker
 		return result
 	if not result.attacker_success and result.defender_success:
-		result.winner = Enums.opposed_winner.defender
+		result.winner = opposed_winner.defender
 		return result
 	
 	# fall-through attacker win
-	result.winner = Enums.opposed_winner.attacker
+	result.winner = opposed_winner.attacker
 	print("ERROR: opposed check result not handled correctly")
 	return result
-
-
-
