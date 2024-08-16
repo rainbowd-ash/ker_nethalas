@@ -3,9 +3,9 @@ class_name Torch
 
 var turns_remaining : int = 20
 
-func _ready():
+func _init():
 	title = "torch"
-	weight = weights.light
+	weight = Item.weights.light
 	cost = 10
 	update_description()
 
@@ -18,4 +18,4 @@ func burn_torch():
 		update_description()
 
 func update_description():
-	description = "Serves as a light source. %i rooms remaining." % turns_remaining
+	description = "Serves as a light source. %d rooms remaining." % turns_remaining

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://viqctjgf6pg2"]
+[gd_scene load_steps=5 format=3 uid="uid://viqctjgf6pg2"]
 
 [ext_resource type="Script" path="res://character/character.gd" id="1_i8eqm"]
 [ext_resource type="Script" path="res://character/attributes.gd" id="3_ug4ts"]
+[ext_resource type="Script" path="res://character/inventory.gd" id="4_hmyaj"]
 [ext_resource type="Script" path="res://character/skills.gd" id="4_ra211"]
 
 [node name="Character" type="Node"]
@@ -12,3 +13,6 @@ script = ExtResource("3_ug4ts")
 
 [node name="Skills" type="Node" parent="."]
 script = ExtResource("4_ra211")
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("4_hmyaj")

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ker_nethalas"
-run/main_scene="res://dungeon/dungeon.tscn"
+run/main_scene="res://inventory/inventory_ui.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.png"
 
@@ -20,7 +20,6 @@ config/icon="res://icon.png"
 Dice="*res://components/dice.gd"
 Character="*res://character/character.tscn"
 AccusedTable="*res://tables/accused_table.gd"
-Enums="*res://components/misc_enums.gd"
 
 [display]
 
