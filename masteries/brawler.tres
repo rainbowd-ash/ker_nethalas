@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="Masteries" load_steps=2 format=3 uid="uid://em7e64cfwpaj"]
-
-[ext_resource type="Script" path="res://character_creation/masteries.gd" id="1_i0gyf"]
-
-[resource]
-script = ExtResource("1_i0gyf")
-title = "brawler"

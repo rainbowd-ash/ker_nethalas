@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8ntfn6vafdpw"]
-
-[ext_resource type="Script" path="res://dungeon/RoomButton.gd" id="1_fifk8"]
-
-[node name="RoomButton" type="Button"]
-text = "button"
-script = ExtResource("1_fifk8")
-
-[connection signal="pressed" from="." to="." method="_on_pressed"]
