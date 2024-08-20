@@ -16,6 +16,10 @@ var description : String = "default_description"
 var quantity : int = 0
 var stack_size : int = 10
 
+var item_actions = [
+	"drop"
+]
+
 func consume_item():
 	queue_free()
 
@@ -28,11 +32,8 @@ func get_printable_properties():
 	}
 
 func get_actions():
-	return [
-		"drop",
-	]
+	return item_actions
 
-func actions(action : String):
+func do_action(action : String):
 	if action == "drop":
 		$Character/Inventory.remove_item(self)
-		# emit signal

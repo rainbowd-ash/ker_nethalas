@@ -13,7 +13,6 @@ func _unhandled_input(event):
 		if not current_room().get_items().is_empty():
 			pick_up_item(current_room().get_items()[0])
 
-
 func pick_up_item(item : Item):
 	var room = current_room()
 	if room.get_items().has(item):
@@ -41,14 +40,3 @@ func door_labels(clear : bool = false):
 		return
 	for i in range(0,len(doors)):
 		doors[i].set_label(str(i))
-
-func roll_tension():
-	pass
-
-func roll_combat():
-	pass
-
-func roll_event():
-	pass
-
-

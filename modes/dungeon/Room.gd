@@ -1,7 +1,7 @@
 extends Sprite2D
 class_name Room
 
-var items = [Torch.new()]
+var items = [Torch.new(), Backpack.new()]
 
 func get_doors():
 	var return_array = []

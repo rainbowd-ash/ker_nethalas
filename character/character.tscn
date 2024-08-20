@@ -1,18 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://viqctjgf6pg2"]
+[gd_scene load_steps=6 format=3 uid="uid://viqctjgf6pg2"]
 
 [ext_resource type="Script" path="res://character/character.gd" id="1_i8eqm"]
 [ext_resource type="Script" path="res://character/attributes.gd" id="3_ug4ts"]
 [ext_resource type="Script" path="res://character/inventory.gd" id="4_hmyaj"]
 [ext_resource type="Script" path="res://character/skills.gd" id="4_ra211"]
+[ext_resource type="Script" path="res://character/gear.gd" id="5_jk57i"]
 
 [node name="Character" type="Node"]
 script = ExtResource("1_i8eqm")
 
 [node name="Attributes" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_ug4ts")
 
 [node name="Skills" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("4_ra211")
 
 [node name="Inventory" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("4_hmyaj")
+
+[node name="Gear" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_jk57i")

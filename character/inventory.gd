@@ -1,7 +1,7 @@
 extends Node
 class_name Inventory
 
-var max_size = 10
+var base_capacity = 10
 
 func _ready():
 	add_item(Torch.new())
