@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cld1c4x65h2t7"]
+
+[ext_resource type="PackedScene" uid="uid://codjfwxwjfo8g" path="res://modes/modemachine/ModeMachine.tscn" id="1_lcfvi"]
+[ext_resource type="PackedScene" uid="uid://k4nigwxll27" path="res://modes/modemachine/DungeonMode.tscn" id="2_q553v"]
+
+[node name="Game" type="Node"]
+
+[node name="ModeMachine" parent="." instance=ExtResource("1_lcfvi")]
+
+[node name="DungeonMode" parent="ModeMachine" instance=ExtResource("2_q553v")]
