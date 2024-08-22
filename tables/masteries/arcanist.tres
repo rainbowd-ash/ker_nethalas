@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Masteries" load_steps=2 format=3 uid="uid://c61rhe4c0217w"]
 
-[ext_resource type="Script" path="res://modes/character_creation/masteries.gd" id="1_m0kqv"]
+[ext_resource type="Script" path="res://types/masteries.gd" id="1_m0kqv"]
 
 [resource]
 script = ExtResource("1_m0kqv")
