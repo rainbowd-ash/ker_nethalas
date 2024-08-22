@@ -1,6 +1,24 @@
 extends Node
 class_name Skills
 
+enum all_skills {
+	acrobatics,
+	athletics,
+	bladed_weapons,
+	bludgeoning_weapons,
+	dodge,
+	endurance,
+	medicine,
+	perception,
+	resolve,
+	reason,
+	scavenge,
+	shafted_weapons,
+	stealth,
+	thievery,
+	fist_weapons,
+}
+# TODO: is there a better way to do this? having an enum and then the skills initializer below seems wrong
 var skills = {
 	acrobatics = Skill.new("acrobatics", "acrobatics", 0),
 	athletics = Skill.new("athletics", "athletics", 0),

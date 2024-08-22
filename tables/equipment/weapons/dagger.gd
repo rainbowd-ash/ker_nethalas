@@ -1,0 +1,9 @@
+extends Weapon
+class_name Dagger
+
+func _init():
+	cost = 5
+	damage_type = Attack.damage_types.piercing
+	skill = Skills.all_skills.bladed_weapons
+	speed = 10
+	qualities = [Weapon.all_qualities.quick]
