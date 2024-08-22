@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bxcxx1ioxwp48"]
 
-[ext_resource type="Script" path="res://combat/combat.gd" id="1_s0ov4"]
+[ext_resource type="Script" path="res://modes/combat/combat.gd" id="1_s0ov4"]
 
 [node name="Combat" type="Node"]
 script = ExtResource("1_s0ov4")
