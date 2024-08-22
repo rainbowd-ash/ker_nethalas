@@ -17,9 +17,8 @@ enum equipment_types {
 	backpack,
 	pouches,
 }
-
-var equipped: bool = false
-
+var equipment_type : int = -1
+var equipped : bool = false
 var equipment_actions = [
 	"equip",
 	"unequip"
