@@ -2,14 +2,14 @@ extends Monster
 class_name BlightfangRats
 
 func _init():
-	stat_block.title = "blightfang rats"
-	stat_block.number = 3
-	stat_block.awareness = 60
-	stat_block.endurance = 30
-	stat_block.athletics = 5
-	stat_block.health = 3
-	stat_block.combat_skill = 30
-	stat_block.magic_resistance = 20
+	title = "blightfang rats"
+	number = 3
+	awareness = 60
+	endurance = 30
+	athletics = 5
+	health = 3
+	combat_skill = 30
+	magic_resistance = 20
 
 func actions():
 	var action_roll = Dice.roll(1,"d6")
