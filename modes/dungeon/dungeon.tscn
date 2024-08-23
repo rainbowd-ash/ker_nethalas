@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://modes/dungeon/DungeonCamera.gd" id="2_l2xxq"]
 [ext_resource type="PackedScene" uid="uid://cyiknnvjftrgq" path="res://modes/dungeon/rooms/room1.tscn" id="2_uxbhp"]
 [ext_resource type="PackedScene" uid="uid://dl4askb15wpou" path="res://modes/dungeon/rooms/room2.tscn" id="3_6eo3u"]
-[ext_resource type="PackedScene" uid="uid://cahehf8eg71en" path="res://modes/dungeon/pawn.tscn" id="3_465da"]
+[ext_resource type="Texture2D" uid="uid://cu8krp5s341t5" path="res://art/tiles/pawn.png" id="4_c6pn4"]
 [ext_resource type="Script" path="res://modes/dungeon/RoomSelection.gd" id="5_2xpbr"]
 [ext_resource type="PackedScene" uid="uid://c8ntfn6vafdpw" path="res://modes/dungeon/room_button.tscn" id="7_ymtkp"]
 [ext_resource type="PackedScene" uid="uid://cujtfjsy5gju1" path="res://modes/inventory/inventory_ui.tscn" id="8_rtk67"]
@@ -26,13 +26,13 @@ color = Color(0, 0, 0, 1)
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("pawn")]
 script = ExtResource("2_l2xxq")
-pawn = NodePath("../Room1/Pawn")
+pawn = NodePath("")
 
 [node name="Room1" parent="." instance=ExtResource("2_uxbhp")]
 rotation = -1.57079
 
-[node name="Pawn" parent="Room1" instance=ExtResource("3_465da")]
-rotation = 1.57079
+[node name="Pawn" type="Sprite2D" parent="Room1"]
+texture = ExtResource("4_c6pn4")
 
 [node name="Room2" parent="." instance=ExtResource("3_6eo3u")]
 position = Vector2(90, 0)

@@ -1,10 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cld1c4x65h2t7"]
+[gd_scene load_steps=5 format=3 uid="uid://cld1c4x65h2t7"]
 
 [ext_resource type="PackedScene" uid="uid://codjfwxwjfo8g" path="res://modes/modemachine/ModeMachine.tscn" id="1_lcfvi"]
+[ext_resource type="Script" path="res://modes/game.gd" id="1_ow7ic"]
 [ext_resource type="PackedScene" uid="uid://k4nigwxll27" path="res://modes/modemachine/DungeonMode.tscn" id="2_q553v"]
+[ext_resource type="PackedScene" uid="uid://y8f7iqc6u1vp" path="res://modes/action_selection/action_selection.tscn" id="3_2och2"]
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" node_paths=PackedStringArray("initial_mode")]
+script = ExtResource("1_ow7ic")
+initial_mode = NodePath("ModeMachine/DungeonMode")
 
 [node name="ModeMachine" parent="." instance=ExtResource("1_lcfvi")]
 
 [node name="DungeonMode" parent="ModeMachine" instance=ExtResource("2_q553v")]
+
+[node name="ActionSelection" parent="." instance=ExtResource("3_2och2")]

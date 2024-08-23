@@ -13,6 +13,13 @@ func _unhandled_input(event):
 		if not current_room().get_items().is_empty():
 			pick_up_item(current_room().get_items()[0])
 
+func _ready() -> void:
+	list_actions()
+
+func list_actions():
+	var actions = current_room().get_actions()
+	get_node("/root/Game/ActionSelection").list_actions(actions)
+
 func pick_up_item(item : Item):
 	var room = current_room()
 	if room.get_items().has(item):
@@ -20,7 +27,7 @@ func pick_up_item(item : Item):
 		room.remove_item(item)
 		print("Picked up " + item.title)
 
-func current_room():
+func current_room() -> Room:
 	return pawn.get_parent()
 
 func move_through_door(door : Door):

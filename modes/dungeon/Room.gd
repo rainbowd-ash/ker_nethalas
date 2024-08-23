@@ -2,6 +2,7 @@ extends Sprite2D
 class_name Room
 
 var items = [Torch.new(), Backpack.new()]
+var scavenged = false
 
 func get_doors():
 	var return_array = []
@@ -18,3 +19,11 @@ func get_items():
 func remove_item(item : Item):
 	if items.has(item):
 		items.erase(item)
+
+func get_actions() -> Array:
+	var actions = []
+	if not scavenged:
+		actions.push_back("scavenge")
+	if items:
+		actions.push_back("pick up")
+	return actions

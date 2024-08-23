@@ -3,3 +3,5 @@ extends Node
 
 # emitted when item picked up off floor
 signal item_picked_up(item : Item)
+
+signal mode_transition(new_mode_name : String)

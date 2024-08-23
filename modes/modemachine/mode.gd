@@ -7,9 +7,10 @@ signal transitioned(new_mode_name : String) # O_O
 var scene : String
 var instantiated_scene : Node
 
-func Enter() -> void:
+func enter() -> void:
 	instantiated_scene = load(scene).instantiate()
 	get_node("/root/Game").add_child.call_deferred(instantiated_scene)
+	transitioned.emit(name)
 
-func Exit() -> void:
+func exit() -> void:
 	instantiated_scene.queue_free()
