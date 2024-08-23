@@ -5,8 +5,6 @@ class_name Dungeon
 signal moved_through_door
 
 func _unhandled_input(event):
-	if event.is_action_pressed("ui_up"):
-		print(get_doors())
 	if event.is_action_pressed("ui_accept"):
 		%RoomSelector.update_selector()
 	if event.is_action_pressed("pickup"):
@@ -36,6 +34,7 @@ func move_through_door(door : Door):
 	SignalBus.moved_through_door.emit()
 	list_actions()
 	door_labels()
+	roll_combat_encounter()
 
 func get_doors():
 	return current_room().get_doors()
@@ -50,3 +49,8 @@ func door_labels(clear : bool = false):
 	for door in doors:
 		door.set_label(str(counter))
 		counter += 1
+
+func roll_combat_encounter():
+	# roll to see if combat happens
+	# if so, roll a monster
+	get_node("/root/Game").start_combat(CombatValues.new(BlightfangRats.new()))

@@ -6,3 +6,7 @@ class_name Game
 
 func _ready():
 	$ModeMachine.initialize(initial_mode)
+
+func start_combat(values : CombatValues):
+	$ModeMachine.mode_swap("CombatMode")
+	$Combat.initialize(values)

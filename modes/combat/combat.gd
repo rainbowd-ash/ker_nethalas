@@ -1,45 +1,76 @@
 extends Node
+class_name Combat
 
 var combat_actions = [
-	"standard_attack",
-	"flee",
+	Action.new(self, "standard attack", "standard attack"),
+	Action.new(self, "flee", "flee"),
+	Action.new(self, "pass", "pass"),
 ]
 
-var combatants = []
-var monster
+var stealth_actions = [
+	Action.new(self, "attempt stealth", "attempt"),
+	Action.new(self, "attack", "attack"),
+]
 
-func add_monster():
-	monster = load("res://monsters/monsters/blightfang_rats.tscn").instantiate()
-	monster.add_to_group("monsters")
-	add_child(monster)
-	# check number stat to add copies of monster
+var monsters = []
+var player_initiative : bool = true
+enum stealth_outcomes {
+	none,
+	success,
+	failure
+}
+var stealth_result : stealth_outcomes = stealth_outcomes.none
+
+func do_action(action_key : String):
+	if action_key == "attempt":
+		attempt_stealth()
+		roll_initiative()
+	elif action_key == "attack":
+		roll_initiative()
+
+func initialize(values : CombatValues):
+	print("-combat starting-")
+	add_monster(values.monster)
+	if not values.player_surprised:
+		stealth_check()
+
+func add_monster(monster : Monster):
+	for i in range(1, monster.number):
+		monsters.push_back(monster)
+
+func stealth_check():
+	ActionSelection.list_actions(stealth_actions)
+
+func attempt_stealth():
+	var highest_awareness = 0
+	for monster in monsters:
+		if monster.awareness > highest_awareness:
+			highest_awareness = monster.awareness
+	var stealth_check_result = Dice.opposed_check(
+		CheckValue.new(Character.skills.get_value("stealth")),
+		CheckValue.new(highest_awareness)
+	)
+	if stealth_check_result.winner == Dice.opposed_winner.attacker:
+		stealth_result = stealth_outcomes.success
+	else:
+		stealth_result = stealth_outcomes.failure
 
 func roll_initiative():
+	var character_perception = Character.skills.get_value("perception")
+	var highest_awareness = 0
+	for monster in monsters:
+		if monster.awareness > highest_awareness:
+			highest_awareness = monster.awareness
+	if stealth_result == stealth_outcomes.failure:
+		character_perception =- 10
 	var roll_result : OpposedCheckResult = Dice.opposed_check(
-		CheckValue.new(Character.skills.get_value("perception"), 0),
-		CheckValue.new(monster.get_stat_value("awareness"), 0),
+		CheckValue.new(character_perception),
+		CheckValue.new(highest_awareness),
 	)
 	if roll_result.winner == Dice.opposed_winner.attacker:
-		print("Player gets initiative")
-	else: print("Monster gets initiative")
+		print("player gets initiative")
+		player_initiative = true
+	else: 
+		print("monster gets initiative")
+		player_initiative = false
 	return roll_result
-
-func set_initiative_order(check_result : OpposedCheckResult):
-	pass
-
-func _ready():
-	print("Combat Starting")
-	add_monster()
-	var initiative = roll_initiative()
-	if initiative.winner == Dice.opposed_winner.attacker:
-		player_action()
-	else:
-		monster_action()
-	# handle crit fails on initiave roll
-	pass
-
-func player_action():
-	print("player action")
-
-func monster_action():
-	print("monster action")

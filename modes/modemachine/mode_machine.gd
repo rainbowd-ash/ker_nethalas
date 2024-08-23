@@ -18,6 +18,12 @@ func initialize(starting_mode):
 	current_mode.enter()
 	SignalBus.mode_transition.emit(current_mode.name)
 
+func mode_swap(new_mode_name : String):
+	current_mode.exit()
+	current_mode = modes[new_mode_name]
+	current_mode.enter()
+	SignalBus.mode_transition.emit(current_mode.name)
+
 func _on_child_transitioned(new_mode_name : StringName) -> void:
 	var new_mode = modes.get(new_mode_name)
 	if new_mode != null:

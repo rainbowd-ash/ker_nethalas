@@ -129,6 +129,15 @@ func opposed_check(atk_values : CheckValue, def_values : CheckValue):
 		result.winner = opposed_winner.defender
 		return result
 	
+	# (D) double success single critical OVERRIDE!!!!
+	if result.attacker_success and result.defender_success:
+		if result.attacker_critical:
+			result.winner = opposed_winner.attacker
+			return result
+		else:
+			result.winner = opposed_winner.defender
+			return result
+	
 	# fall-through attacker win
 	result.winner = opposed_winner.attacker
 	print("ERROR: opposed check result not handled correctly")
