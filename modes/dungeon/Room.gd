@@ -54,33 +54,36 @@ func scavenge():
 	var scavenge_check = Dice.check(CheckValue.new(Character.skills.get_value("scavenge")))
 	if scavenge_check.success:
 		var scavenge_roll = Dice.roll(1, "d20")
+		print("\tscavenge table roll: %d" % scavenge_roll)
 		if scavenge_check.critical:
 			scavenge_roll += 5
 			if scavenge_roll > 20:
 				scavenge_roll = 20
+				print("\ttable roll + 5: %d" % scavenge_roll)
 		if scavenge_roll == 1:
 			# You uncover some grisly remains. Make a successful Resolve check or lose 1 Sanity
 			Dice.check(CheckValue.new(Character.get_value("resolve")))
-		if scavenge_roll == 2:
+		elif scavenge_roll == 2:
 			# you find nothing of interest
 			pass
-		if scavenge_roll == 3:
-			# you discover 20c
-			pass
-		if scavenge_roll >= 4 and scavenge_roll <= 11:
+		elif scavenge_roll == 3:
+			# you discover d20c
+			Character.inventory.adjust_currency(Dice.roll(1, "d20"))
+		elif scavenge_roll >= 4 and scavenge_roll <= 11:
 			# you find d4 crafting supplies
-			pass
-		if scavenge_roll == 12:
+			Character.inventory.add_item(CraftingSupplies.new(Dice.roll(1, "d4")))
+		elif scavenge_roll == 12:
 			# you discover 2d20c
-			pass
-		if scavenge_roll >= 13 and scavenge_roll <= 18:
+			Character.inventory.adjust_currency(Dice.roll(2, "d20"))
+		elif scavenge_roll >= 13 and scavenge_roll <= 18:
 			# you find d4 cooking supplies
-			pass
-		if scavenge_roll == 19:
+			Character.inventory.add_item(CookingSupplies.new(Dice.roll(1, "d4")))
+		elif scavenge_roll == 19:
 			# you discover d100c
-			pass
-		if scavenge_roll == 20:
+			Character.inventory.adjust_currency(Dice.roll_100(0).roll)
+		elif scavenge_roll == 20:
 			# roll on the spoils table
+			# TODO add the spoils table
 			pass
 	find_parent("Dungeon").list_actions()
 	if not scavenge_check.success:

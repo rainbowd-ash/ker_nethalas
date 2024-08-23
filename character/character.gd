@@ -5,6 +5,7 @@ var char_name = "default name"
 var accused = ""
 @onready var skills = $Skills
 @onready var attributes = $Attributes
+@onready var inventory = $Inventory
 
 func _ready():
 	skills_init()
@@ -17,6 +18,8 @@ func skills_init():
 	skills.set_value("perception",20)
 	skills.set_value("resolve",10)
 	skills.set_value("fist_weapons",10)
+	# non-canon test values
+	skills.set_value("scavenge",50)
 
 func attributes_init():
 	attributes.health = Dice.roll(1, "d6", 8)

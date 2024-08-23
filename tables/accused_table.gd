@@ -24,5 +24,5 @@ const accused_table = [
 	"trespassing",
 	"clandestine marriage",
 	"child theft",
-	"sodomy"
+	"sodomy" # O.O
 ]
