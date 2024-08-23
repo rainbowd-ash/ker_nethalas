@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func list_actions():
 	var actions = current_room().get_actions()
-	get_node("/root/Game/ActionSelection").list_actions(actions)
+	ActionSelection.list_actions(actions)
 
 func pick_up_item(item : Item):
 	var room = current_room()
@@ -33,7 +33,8 @@ func current_room() -> Room:
 func move_through_door(door : Door):
 	door_labels(true)
 	pawn.reparent(door.get_parent(), false)
-	moved_through_door.emit()
+	SignalBus.moved_through_door.emit()
+	list_actions()
 	door_labels()
 
 func get_doors():
@@ -41,9 +42,11 @@ func get_doors():
 
 func door_labels(clear : bool = false):
 	var doors = get_doors()
+	var counter = 1
 	if clear:
-		for i in range(0,len(doors)):
-			doors[i].set_label("")
+		for door in doors:
+			door.set_label("")
 		return
-	for i in range(0,len(doors)):
-		doors[i].set_label(str(i))
+	for door in doors:
+		door.set_label(str(counter))
+		counter += 1

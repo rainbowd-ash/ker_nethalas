@@ -53,12 +53,14 @@ func roll_100(advantage : int):
 		"critical" = critical,
 	}
 
-func check(values : CheckValue):
+func check(values : CheckValue) -> CheckResult:
 	var r = roll_100(values.advantage)
-	return interprete_check(r, values)
+	var result = interprete_check(r, values)
+	print("\tsuccess: %s\n\tcritical: %s" % [str(result.success), str(result.critical)])
+	return result
 
-func interprete_check(roll : Dictionary, values : CheckValue):
-	var result : InterpreteCheckResult = InterpreteCheckResult.new()
+func interprete_check(roll : Dictionary, values : CheckValue) -> CheckResult:
+	var result : CheckResult = CheckResult.new()
 	if roll.critical:
 		result.critical = true
 	else:

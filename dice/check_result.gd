@@ -1,5 +1,4 @@
-class_name InterpreteCheckResult
-extends Node
+class_name CheckResult
 
 var success = false
 var critical = false

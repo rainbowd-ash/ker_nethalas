@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bhnd0gvsy6ig1"]
 
-[ext_resource type="Script" path="res://modes/dungeon/Door.gd" id="1_nydye"]
+[ext_resource type="Script" path="res://modes/dungeon/door.gd" id="1_nydye"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dor5m"]
 

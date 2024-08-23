@@ -19,6 +19,7 @@ enum all_skills {
 	fist_weapons,
 }
 # TODO: is there a better way to do this? having an enum and then the skills initializer below seems wrong
+# set_value("title"), get_value("title")
 var skills = {
 	acrobatics = Skill.new("acrobatics", "acrobatics", 0),
 	athletics = Skill.new("athletics", "athletics", 0),

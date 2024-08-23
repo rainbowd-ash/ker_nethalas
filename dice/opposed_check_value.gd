@@ -6,7 +6,7 @@ var defender_success : bool = false
 var attacker_critical : bool = false
 var defender_critical : bool = false
 
-func _init(attacker_checkvalue : InterpreteCheckResult = null, defender_checkvalue : InterpreteCheckResult = null):
+func _init(attacker_checkvalue : CheckResult = null, defender_checkvalue : CheckResult = null):
 	if attacker_checkvalue:
 		attacker_success = attacker_checkvalue.success
 		attacker_critical = attacker_checkvalue.critical

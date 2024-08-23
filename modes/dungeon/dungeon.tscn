@@ -1,13 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpwu21k1ya0ad"]
+[gd_scene load_steps=6 format=3 uid="uid://dpwu21k1ya0ad"]
 
 [ext_resource type="Script" path="res://modes/dungeon/dungeon.gd" id="1_ec43u"]
-[ext_resource type="Script" path="res://modes/dungeon/DungeonCamera.gd" id="2_l2xxq"]
+[ext_resource type="Script" path="res://modes/dungeon/dungeon_camera.gd" id="2_l2xxq"]
 [ext_resource type="PackedScene" uid="uid://cyiknnvjftrgq" path="res://modes/dungeon/rooms/room1.tscn" id="2_uxbhp"]
 [ext_resource type="PackedScene" uid="uid://dl4askb15wpou" path="res://modes/dungeon/rooms/room2.tscn" id="3_6eo3u"]
 [ext_resource type="Texture2D" uid="uid://cu8krp5s341t5" path="res://art/tiles/pawn.png" id="4_c6pn4"]
-[ext_resource type="Script" path="res://modes/dungeon/RoomSelection.gd" id="5_2xpbr"]
-[ext_resource type="PackedScene" uid="uid://c8ntfn6vafdpw" path="res://modes/dungeon/room_button.tscn" id="7_ymtkp"]
-[ext_resource type="PackedScene" uid="uid://cujtfjsy5gju1" path="res://modes/inventory/inventory_ui.tscn" id="8_rtk67"]
 
 [node name="Dungeon" type="Node2D" node_paths=PackedStringArray("pawn")]
 position = Vector2(630, 360)
@@ -26,13 +23,15 @@ color = Color(0, 0, 0, 1)
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("pawn")]
 script = ExtResource("2_l2xxq")
-pawn = NodePath("")
+pawn = NodePath("../Room1/Pawn")
 
 [node name="Room1" parent="." instance=ExtResource("2_uxbhp")]
 rotation = -1.57079
 
 [node name="Pawn" type="Sprite2D" parent="Room1"]
 texture = ExtResource("4_c6pn4")
+region_enabled = true
+region_rect = Rect2(37, 36, 16, 17)
 
 [node name="Room2" parent="." instance=ExtResource("3_6eo3u")]
 position = Vector2(90, 0)
@@ -41,49 +40,3 @@ rotation = 1.57079
 [node name="Room3" parent="." instance=ExtResource("2_uxbhp")]
 position = Vector2(90, 90)
 rotation = 3.14159
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="RoomSelector" type="Control" parent="CanvasLayer"]
-unique_name_in_owner = true
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -550.0
-offset_top = -270.0
-offset_right = -550.0
-offset_bottom = -270.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("5_2xpbr")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RoomSelector"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="RoomButton" parent="CanvasLayer/RoomSelector/VBoxContainer" instance=ExtResource("7_ymtkp")]
-layout_mode = 2
-
-[node name="Timer" type="Timer" parent="CanvasLayer/RoomSelector"]
-wait_time = 0.05
-
-[node name="InventoryUI" parent="CanvasLayer" instance=ExtResource("8_rtk67")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 431.0
-offset_top = -290.0
-offset_right = 431.0
-offset_bottom = -290.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[connection signal="moved_through_door" from="." to="Camera" method="_on_dungeon_moved_through_door"]
-[connection signal="moved_through_door" from="." to="CanvasLayer/RoomSelector" method="_on_dungeon_moved_through_door"]
-[connection signal="timeout" from="CanvasLayer/RoomSelector/Timer" to="CanvasLayer/RoomSelector" method="_on_timer_timeout"]

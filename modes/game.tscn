@@ -5,12 +5,15 @@
 [ext_resource type="PackedScene" uid="uid://k4nigwxll27" path="res://modes/modemachine/DungeonMode.tscn" id="2_q553v"]
 [ext_resource type="PackedScene" uid="uid://y8f7iqc6u1vp" path="res://modes/action_selection/action_selection.tscn" id="3_2och2"]
 
-[node name="Game" type="Node" node_paths=PackedStringArray("initial_mode")]
+[node name="Game" type="Node" node_paths=PackedStringArray("initial_mode", "action_selection_ui")]
 script = ExtResource("1_ow7ic")
 initial_mode = NodePath("ModeMachine/DungeonMode")
+action_selection_ui = NodePath("UI/ActionSelectionUI")
 
 [node name="ModeMachine" parent="." instance=ExtResource("1_lcfvi")]
 
 [node name="DungeonMode" parent="ModeMachine" instance=ExtResource("2_q553v")]
 
-[node name="ActionSelection" parent="." instance=ExtResource("3_2och2")]
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ActionSelectionUI" parent="UI" instance=ExtResource("3_2och2")]
