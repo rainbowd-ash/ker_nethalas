@@ -2,7 +2,7 @@ extends Mode
 class_name DungeonMode
 
 func enter() -> void:
-	pass
+	attached_node.list_actions()
 
 func exit() -> void:
 	pass

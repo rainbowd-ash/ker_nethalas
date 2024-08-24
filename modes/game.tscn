@@ -15,17 +15,14 @@ action_selection_ui = NodePath("UI/ActionSelectionUI")
 
 [node name="ModeMachine" parent="." instance=ExtResource("1_lcfvi")]
 
-[node name="DungeonMode" parent="ModeMachine" node_paths=PackedStringArray("attached_scene") instance=ExtResource("2_q553v")]
-attached_scene = NodePath("../../Dungeon")
+[node name="DungeonMode" parent="ModeMachine" node_paths=PackedStringArray("attached_node") instance=ExtResource("2_q553v")]
+attached_node = NodePath("../../Dungeon")
 
-[node name="CombatMode" parent="ModeMachine" node_paths=PackedStringArray("attached_scene") instance=ExtResource("4_hrula")]
-attached_scene = NodePath("../../Combat")
+[node name="CombatMode" parent="ModeMachine" instance=ExtResource("4_hrula")]
+attached_scene = ExtResource("6_mptfh")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="ActionSelectionUI" parent="UI" instance=ExtResource("3_2och2")]
 
 [node name="Dungeon" parent="." instance=ExtResource("5_xv7t0")]
-
-[node name="Combat" parent="." instance=ExtResource("6_mptfh")]
-visible = false

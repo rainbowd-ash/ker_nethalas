@@ -18,6 +18,7 @@ func get_items():
 func add_item(item : Item):
 	# TODO attempt to stack light items first
 	items.push_back(item)
+	print("picked up %s" % item.title)
 	# emit signal?
 
 func remove_item(r_item : Item):
@@ -29,6 +30,7 @@ func remove_item(r_item : Item):
 
 func adjust_currency(amount : int):
 	currency += amount
+	print("picked up %d coins" % amount)
 
 func _on_item_picked_up(item : Item):
 	add_item(item)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c2vcui05i3wim"]
 
-[ext_resource type="Script" path="res://modes/modemachine/modes/dungeon_mode.gd" id="1_wdm5x"]
+[ext_resource type="Script" path="res://modes/modemachine/modes/combat_mode.gd" id="1_diq01"]
 
 [node name="CombatMode" type="Node"]
-script = ExtResource("1_wdm5x")
+script = ExtResource("1_diq01")

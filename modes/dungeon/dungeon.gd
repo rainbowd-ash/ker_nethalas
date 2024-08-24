@@ -53,4 +53,4 @@ func door_labels(clear : bool = false):
 func roll_combat_encounter():
 	# roll to see if combat happens
 	# if so, roll a monster
-	get_node("/root/Game").start_combat(CombatValues.new(BlightfangRats.new()))
+	get_node("/root/Game").start_combat(CombatSetupValues.new(BlightfangRats.new()))

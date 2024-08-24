@@ -23,11 +23,11 @@ func remove_item(item : Item):
 func get_actions() -> Array:
 	var actions = []
 	if not scavenged:
-		actions.push_back(Action.new(self, "scavenge", "scavenge"))
+		actions.push_back(Action.new(self, "scavenge"))
 	if items:
-		actions.push_back(Action.new(self, "pick up", "pick up"))
+		actions.push_back(Action.new(self, "pick up"))
 	if not get_doors().is_empty():
-		actions.push_back(Action.new(self, "doors", "doors"))
+		actions.push_back(Action.new(self, "doors"))
 	return actions
 
 func do_action(action_key : String):
@@ -38,7 +38,7 @@ func do_action(action_key : String):
 		var door_actions = []
 		var counter : int = 1
 		for door in get_doors():
-			door_actions.push_back(Action.new(door, "move through door %d" % counter, "move"))
+			door_actions.push_back(Action.new(door, "move", "move through door %d" % counter))
 			counter += 1
 		ActionSelection.list_actions(door_actions)
 		return

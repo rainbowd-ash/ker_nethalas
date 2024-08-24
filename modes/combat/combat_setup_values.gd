@@ -1,4 +1,4 @@
-class_name CombatValues
+class_name CombatSetupValues
 
 var monster : Monster = null
 var player_surprised : bool = false
