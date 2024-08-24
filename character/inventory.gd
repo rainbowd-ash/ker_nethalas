@@ -7,6 +7,7 @@ var currency = 0
 
 func _ready():
 	add_item(Torch.new())
+	add_item(LightHelmet.new())
 	SignalBus.item_picked_up.connect(_on_item_picked_up)
 
 # list of item objects

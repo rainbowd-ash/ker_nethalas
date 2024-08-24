@@ -4,8 +4,8 @@ class_name Mode
 
 signal transitioned(new_mode_name : String) # O_O
 
-@export var attached_node : Node
 @export var attached_scene : PackedScene
+@export var attached_node : Node
 
 func enter() -> void:
 	attached_node.show()

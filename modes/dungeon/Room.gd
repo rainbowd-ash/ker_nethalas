@@ -42,6 +42,9 @@ func do_action(action_key : String):
 			counter += 1
 		ActionSelection.list_actions(door_actions)
 		return
+	if action_key == "pick up":
+		Character.inventory.add_item(items[0])
+		remove_item(items[0])
 
 # can scavenge once per room
 # make a scavenge check

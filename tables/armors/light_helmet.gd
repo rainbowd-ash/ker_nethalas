@@ -5,7 +5,9 @@ var perception_modifier : int = -5
 
 func _init():
 	title = "light helmet"
+	cost = 20
 	integrity = Dice.sizes.d6
+	protection = 1
 	equipment_type = equipment_types.head
 
 func modify_perception_skill():

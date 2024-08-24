@@ -8,6 +8,7 @@ func _init():
 	weight = weights.normal
 	cost = 500
 	description = "Increases carrying capacity by %d item slots." % capacity_increase
+	equipment_type = equipment_types.backpack
 
 func modify_max_inventory_size():
 	return capacity_increase

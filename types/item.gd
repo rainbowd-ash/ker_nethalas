@@ -23,10 +23,10 @@ var item_actions = [
 func consume_item():
 	queue_free()
 
-func get_printable_properties():
+func get_item_details():
 	return {
 		"title": title,
-		"weight": weight,
+		"weight": weights.keys()[weight],
 		"cost": cost,
 		"description": description,
 	}

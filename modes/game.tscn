@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cld1c4x65h2t7"]
+[gd_scene load_steps=9 format=3 uid="uid://cld1c4x65h2t7"]
 
 [ext_resource type="PackedScene" uid="uid://codjfwxwjfo8g" path="res://modes/modemachine/mode_machine.tscn" id="1_lcfvi"]
 [ext_resource type="Script" path="res://modes/game.gd" id="1_ow7ic"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c2vcui05i3wim" path="res://modes/modemachine/modes/combat_mode.tscn" id="4_hrula"]
 [ext_resource type="PackedScene" uid="uid://dpwu21k1ya0ad" path="res://modes/dungeon/dungeon.tscn" id="5_xv7t0"]
 [ext_resource type="PackedScene" uid="uid://bxcxx1ioxwp48" path="res://modes/combat/combat.tscn" id="6_mptfh"]
+[ext_resource type="PackedScene" uid="uid://cujtfjsy5gju1" path="res://modes/inventory/inventory_ui.tscn" id="9_oexrn"]
 
 [node name="Game" type="Node" node_paths=PackedStringArray("initial_mode", "action_selection_ui")]
 script = ExtResource("1_ow7ic")
@@ -16,8 +17,8 @@ action_selection_ui = NodePath("UI/ActionSelectionUI")
 [node name="ModeMachine" parent="." instance=ExtResource("1_lcfvi")]
 
 [node name="DungeonMode" parent="ModeMachine" node_paths=PackedStringArray("attached_node") instance=ExtResource("2_q553v")]
-attached_node = NodePath("")
 attached_scene = ExtResource("5_xv7t0")
+attached_node = NodePath("../../Dungeon")
 
 [node name="CombatMode" parent="ModeMachine" instance=ExtResource("4_hrula")]
 attached_scene = ExtResource("6_mptfh")
@@ -25,5 +26,8 @@ attached_scene = ExtResource("6_mptfh")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="ActionSelectionUI" parent="UI" instance=ExtResource("3_2och2")]
+
+[node name="InventoryUI" parent="UI" instance=ExtResource("9_oexrn")]
+visible = false
 
 [node name="Dungeon" parent="." instance=ExtResource("5_xv7t0")]

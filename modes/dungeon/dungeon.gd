@@ -2,7 +2,6 @@ extends Node2D
 class_name Dungeon
 
 @export var pawn : Node
-signal moved_through_door
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept"):
