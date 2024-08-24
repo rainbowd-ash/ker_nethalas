@@ -83,62 +83,52 @@ func opposed_check(atk_values : CheckValue, def_values : CheckValue):
 	var result : OpposedCheckResult = OpposedCheckResult.new(
 		interprete_check(attacker_roll, atk_values),
 		interprete_check(defender_roll, def_values),)
-		
 	# (A) both crit succeed or both normal succeed
 	if (result.attacker_success and result.defender_success) and (result.defender_critical == result.attacker_critical):
 		# higher die result wins
 		if attacker_roll.roll > defender_roll.roll:
 			result.winner = opposed_winner.attacker
-			return result
-		if attacker_roll.roll < defender_roll.roll:
+		elif attacker_roll.roll < defender_roll.roll:
 			result.winner = opposed_winner.defender
-			return result
 		# skill value runoff with attacker win after die ties
-		if atk_values.attribute_value >= def_values.attribute_value:
+		elif atk_values.attribute_value >= def_values.attribute_value:
 			result.winner = opposed_winner.attacker
-			return result
-		if atk_values.attribute_value < def_values.attribute_value:
+		elif atk_values.attribute_value < def_values.attribute_value:
 			result.winner = opposed_winner.defender
-			return result
 	
 	# (B) both fumble
-	if not result.attacker_success and not result.defender_success:
+	elif not result.attacker_success and not result.defender_success:
 		# one crit fumble and one normal fumble
 		if result.attacker_critical and not result.defender_critical:
 			result.winner = opposed_winner.defender
-			return result
-		if not result.attacker_critical and result.defender_critical:
+		elif not result.attacker_critical and result.defender_critical:
 			result.winner = opposed_winner.attacker
-			return result
 		# stat value runoff of two fumbles or two crit fumbles
-		if atk_values.attribute_value == def_values.attribute_value: 
+		elif atk_values.attribute_value == def_values.attribute_value: 
 			result.winner = opposed_winner.attacker 
-			return result
-		if atk_values.attribute_value > def_values.attribute_value:
+		elif atk_values.attribute_value > def_values.attribute_value:
 			result.winner = opposed_winner.attacker
-			return result
-		if atk_values.attribute_value < def_values.attribute_value: 
+		elif atk_values.attribute_value < def_values.attribute_value: 
 			result.winner = opposed_winner.defender
-			return result
 	
 	# (C) one (crit or normal) success and one (crit or normal) fumble
-	if result.attacker_success and not result.defender_success:
+	elif result.attacker_success and not result.defender_success:
 		result.winner = opposed_winner.attacker
-		return result
-	if not result.attacker_success and result.defender_success:
+	elif not result.attacker_success and result.defender_success:
 		result.winner = opposed_winner.defender
-		return result
 	
 	# (D) double success single critical OVERRIDE!!!!
-	if result.attacker_success and result.defender_success:
+	elif (result.attacker_success and result.defender_success) and (result.attacker_critical != result.defender_critical) :
 		if result.attacker_critical:
 			result.winner = opposed_winner.attacker
-			return result
 		else:
 			result.winner = opposed_winner.defender
-			return result
 	
 	# fall-through attacker win
-	result.winner = opposed_winner.attacker
-	print("ERROR: opposed check result not handled correctly")
+	else: 
+		result.winner = opposed_winner.attacker
+		push_warning("ERROR: opposed check result not handled correctly")
+	print("\tattacker roll: %d stat: %d success: %s critical: %s" % [attacker_roll.roll, atk_values.attribute_value, str(result.attacker_success), str(result.attacker_critical)])
+	print("\tdefender roll: %d stat: %d success: %s critical: %s" % [defender_roll.roll, def_values.attribute_value, str(result.defender_success), str(result.defender_critical)])
+	print("\twinner: %s" % ("attacker" if  result.winner == 0 else "defender")) 
 	return result
