@@ -16,7 +16,8 @@ action_selection_ui = NodePath("UI/ActionSelectionUI")
 [node name="ModeMachine" parent="." instance=ExtResource("1_lcfvi")]
 
 [node name="DungeonMode" parent="ModeMachine" node_paths=PackedStringArray("attached_node") instance=ExtResource("2_q553v")]
-attached_node = NodePath("../../Dungeon")
+attached_node = NodePath("")
+attached_scene = ExtResource("5_xv7t0")
 
 [node name="CombatMode" parent="ModeMachine" instance=ExtResource("4_hrula")]
 attached_scene = ExtResource("6_mptfh")
