@@ -3,11 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://codjfwxwjfo8g" path="res://modes/modemachine/mode_machine.tscn" id="1_lcfvi"]
 [ext_resource type="Script" path="res://modes/game.gd" id="1_ow7ic"]
 [ext_resource type="PackedScene" uid="uid://k4nigwxll27" path="res://modes/modemachine/modes/dungeon_mode.tscn" id="2_q553v"]
-[ext_resource type="PackedScene" uid="uid://y8f7iqc6u1vp" path="res://modes/action_selection/action_selection.tscn" id="3_2och2"]
+[ext_resource type="PackedScene" uid="uid://y8f7iqc6u1vp" path="res://action_selection/action_selection.tscn" id="3_2och2"]
 [ext_resource type="PackedScene" uid="uid://c2vcui05i3wim" path="res://modes/modemachine/modes/combat_mode.tscn" id="4_hrula"]
-[ext_resource type="PackedScene" uid="uid://dpwu21k1ya0ad" path="res://modes/dungeon/dungeon.tscn" id="5_xv7t0"]
-[ext_resource type="PackedScene" uid="uid://bxcxx1ioxwp48" path="res://modes/combat/combat.tscn" id="6_mptfh"]
-[ext_resource type="PackedScene" uid="uid://cujtfjsy5gju1" path="res://modes/inventory/inventory_ui.tscn" id="9_oexrn"]
+[ext_resource type="PackedScene" uid="uid://dpwu21k1ya0ad" path="res://dungeon/dungeon.tscn" id="5_xv7t0"]
+[ext_resource type="PackedScene" uid="uid://bxcxx1ioxwp48" path="res://combat/combat.tscn" id="6_mptfh"]
+[ext_resource type="PackedScene" uid="uid://cujtfjsy5gju1" path="res://inventory/inventory_ui.tscn" id="9_oexrn"]
 
 [node name="Game" type="Node" node_paths=PackedStringArray("initial_mode", "action_selection_ui")]
 script = ExtResource("1_ow7ic")

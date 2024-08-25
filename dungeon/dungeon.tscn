@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dpwu21k1ya0ad"]
 
-[ext_resource type="Script" path="res://modes/dungeon/dungeon.gd" id="1_ec43u"]
-[ext_resource type="Script" path="res://modes/dungeon/dungeon_camera.gd" id="2_l2xxq"]
-[ext_resource type="PackedScene" uid="uid://cyiknnvjftrgq" path="res://modes/dungeon/rooms/room1.tscn" id="2_uxbhp"]
-[ext_resource type="PackedScene" uid="uid://dl4askb15wpou" path="res://modes/dungeon/rooms/room2.tscn" id="3_6eo3u"]
+[ext_resource type="Script" path="res://dungeon/dungeon.gd" id="1_ec43u"]
+[ext_resource type="Script" path="res://dungeon/dungeon_camera.gd" id="2_l2xxq"]
+[ext_resource type="PackedScene" uid="uid://cyiknnvjftrgq" path="res://dungeon/rooms/room1.tscn" id="2_uxbhp"]
+[ext_resource type="PackedScene" uid="uid://dl4askb15wpou" path="res://dungeon/rooms/room2.tscn" id="3_6eo3u"]
 [ext_resource type="Texture2D" uid="uid://cu8krp5s341t5" path="res://art/tiles/pawn.png" id="4_c6pn4"]
 
 [node name="Dungeon" type="Node2D" node_paths=PackedStringArray("pawn")]
