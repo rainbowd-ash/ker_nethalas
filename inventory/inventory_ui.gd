@@ -37,5 +37,5 @@ func refresh_details():
 		label.set_text("%s: %s" % [property, properties[property]])
 		%ItemDetails.add_child(label)
 
-func _on_item_picked_up(item : Item):
+func _on_item_picked_up():
 	refresh_items()

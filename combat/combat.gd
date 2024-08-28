@@ -146,4 +146,4 @@ func _on_character_performed_free_action():
 func end_combat():
 	print("-end combat-")
 	initiative_mod = {}
-	get_node("/root/Game/ModeMachine").mode_swap("DungeonMode")
+	get_node("/root/Game/GameModes").mode_swap("DungeonMode")

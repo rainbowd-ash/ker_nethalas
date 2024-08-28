@@ -6,11 +6,11 @@ class_name Game
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory_toggle"):
-		$UI/InventoryUI.toggle()
+		$Ui/InventoryUi.toggle()
 
 func _ready():
-	$ModeMachine.initialize(initial_mode)
+	$GameModes.initialize(initial_mode)
 
 func start_combat(values : CombatSetupValues):
-	$ModeMachine.mode_swap("CombatMode")
+	$GameModes.mode_swap("CombatMode")
 	$Combat.initialize(values)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bubyhh1gcr2cr"]
 
-[ext_resource type="Script" path="res://modes/character_creation/accused.gd" id="1_jhosg"]
+[ext_resource type="Script" path="res://character_creation/accused.gd" id="1_jhosg"]
 
 [node name="Accused" type="Control"]
 layout_mode = 3

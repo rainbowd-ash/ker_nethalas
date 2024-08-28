@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://datsly007mcrb"]
 
 [ext_resource type="Theme" uid="uid://csylo5c2lbme1" path="res://art/theme/theme.tres" id="1_5xbgs"]
-[ext_resource type="Script" path="res://modes/character_creation/CharacterCreation.gd" id="2_nlpm6"]
+[ext_resource type="Script" path="res://character_creation/CharacterCreation.gd" id="2_nlpm6"]
 
 [node name="CharacterCreation" type="ColorRect"]
 anchors_preset = 15
