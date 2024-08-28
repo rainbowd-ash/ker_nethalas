@@ -21,7 +21,7 @@ Dice="*res://dice/dice.gd"
 Character="*res://character/character.tscn"
 AccusedTable="*res://tables/accused_table.gd"
 SignalBus="*res://signal_bus.gd"
-ActionSelection="*res://action_selection/action_selection.gd"
+ActionSelection="*res://ui/action_selection/action_selection.gd"
 
 [display]
 

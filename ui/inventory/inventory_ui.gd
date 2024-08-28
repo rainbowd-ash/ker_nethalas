@@ -6,6 +6,7 @@ class_name InventoryUI
 func _ready():
 	hide()
 	SignalBus.item_picked_up.connect(_on_item_picked_up)
+	SignalBus.mode_transition.connect(_on_mode_transition)
 
 func toggle():
 	if not is_visible():
@@ -37,5 +38,8 @@ func refresh_details():
 		label.set_text("%s: %s" % [property, properties[property]])
 		%ItemDetails.add_child(label)
 
-func _on_item_picked_up():
+func _on_item_picked_up(item_name):
+	refresh_items()
+
+func _on_mode_transition(new_mode_name):
 	refresh_items()
