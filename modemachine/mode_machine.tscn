@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://codjfwxwjfo8g"]
 
-[ext_resource type="Script" path="res://modes/modemachine/mode_machine.gd" id="1_o6jq0"]
+[ext_resource type="Script" path="res://modemachine/mode_machine.gd" id="1_o6jq0"]
 
 [node name="ModeMachine" type="Node"]
 script = ExtResource("1_o6jq0")

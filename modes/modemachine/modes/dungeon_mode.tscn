@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://k4nigwxll27"]
-
-[ext_resource type="Script" path="res://modes/modemachine/modes/dungeon_mode.gd" id="1_3ings"]
-
-[node name="DungeonMode" type="Node"]
-script = ExtResource("1_3ings")

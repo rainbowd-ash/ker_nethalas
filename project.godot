@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ker_nethalas"
-run/main_scene="res://modes/game.tscn"
+run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.png"
 
@@ -21,7 +21,7 @@ Dice="*res://dice/dice.gd"
 Character="*res://character/character.tscn"
 AccusedTable="*res://tables/accused_table.gd"
 SignalBus="*res://signal_bus.gd"
-ActionSelection="*res://action_selection/action_selection.gd"
+ActionSelection="*res://ui/action_selection/action_selection.gd"
 
 [display]
 

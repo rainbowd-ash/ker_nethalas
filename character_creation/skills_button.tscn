@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b6gtlda6jkqh4"]
 
-[ext_resource type="Script" path="res://modes/character_creation/skills_button.gd" id="1_3c8sq"]
+[ext_resource type="Script" path="res://character_creation/skills_button.gd" id="1_3c8sq"]
 
 [node name="Button" type="Button"]
 anchors_preset = 15

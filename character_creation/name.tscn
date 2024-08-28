@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://o3v2p0jwfs6f"]
 
-[ext_resource type="Script" path="res://modes/character_creation/name.gd" id="1_ff56w"]
+[ext_resource type="Script" path="res://character_creation/name.gd" id="1_ff56w"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q0f0r"]
 
