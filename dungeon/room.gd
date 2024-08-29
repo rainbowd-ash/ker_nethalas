@@ -40,7 +40,7 @@ func do_action(action_key : String):
 		for door in get_doors():
 			door_actions.push_back(Action.new(door, "move", "move through door %d" % counter))
 			counter += 1
-		ActionSelection.list_actions(door_actions)
+		Router.actions_ui.list_actions(door_actions)
 		return
 	if action_key == "pick up":
 		if items:

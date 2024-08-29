@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://game.gd" id="1_ow7ic"]
 [ext_resource type="Script" path="res://modemachine/mode_machine.gd" id="2_jdppo"]
-[ext_resource type="PackedScene" uid="uid://y8f7iqc6u1vp" path="res://ui/action_selection/action_selection.tscn" id="3_2och2"]
 [ext_resource type="Script" path="res://modemachine/game_modes/dungeon_mode.gd" id="3_phqrw"]
 [ext_resource type="Script" path="res://modemachine/game_modes/combat_mode.gd" id="5_hwbk0"]
 [ext_resource type="PackedScene" uid="uid://dpwu21k1ya0ad" path="res://dungeon/dungeon.tscn" id="5_xv7t0"]
 [ext_resource type="PackedScene" uid="uid://bxcxx1ioxwp48" path="res://combat/combat.tscn" id="6_mptfh"]
 [ext_resource type="Script" path="res://modemachine/mode.gd" id="7_bjpqt"]
+[ext_resource type="Script" path="res://ui/actions/actions_ui.gd" id="9_2n6vd"]
 [ext_resource type="PackedScene" uid="uid://cujtfjsy5gju1" path="res://ui/inventory/inventory_ui.tscn" id="9_oexrn"]
 
 [node name="Game" type="Node" node_paths=PackedStringArray("action_selection_ui")]
@@ -29,7 +29,7 @@ attached_node = NodePath("../../Dungeon")
 
 [node name="UiModes" type="Node" parent="." node_paths=PackedStringArray("initial_mode")]
 script = ExtResource("2_jdppo")
-initial_mode = NodePath("ActionSelectionMode")
+initial_mode = NodePath("ActionsMode")
 
 [node name="ActionSelectionMode" type="Node" parent="UiModes" node_paths=PackedStringArray("attached_node")]
 script = ExtResource("7_bjpqt")
@@ -39,10 +39,39 @@ attached_node = NodePath("../../Ui/ActionSelectionUi")
 script = ExtResource("7_bjpqt")
 attached_node = NodePath("../../Ui/InventoryUi")
 
+[node name="ActionsMode" type="Node" parent="UiModes" node_paths=PackedStringArray("attached_node")]
+script = ExtResource("7_bjpqt")
+attached_node = NodePath("../../Ui/ActionsUi")
+
 [node name="Ui" type="CanvasLayer" parent="."]
 
-[node name="ActionSelectionUi" parent="Ui" instance=ExtResource("3_2och2")]
+[node name="ActionSelectionUi" type="Control" parent="Ui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ActionList" type="RichTextLabel" parent="Ui/ActionSelectionUi"]
+layout_mode = 0
+offset_right = 376.0
+offset_bottom = 437.0
 
 [node name="InventoryUi" parent="Ui" instance=ExtResource("9_oexrn")]
+
+[node name="ActionsUi" type="Control" parent="Ui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_2n6vd")
+
+[node name="Buttons" type="VBoxContainer" parent="Ui/ActionsUi"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Dungeon" parent="." instance=ExtResource("5_xv7t0")]

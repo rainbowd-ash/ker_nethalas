@@ -11,8 +11,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			$UiModes.mode_swap("ActionSelectionMode")
 
 func _ready():
+	call_deferred("setup") # called on the first frame of the game running (after all _ready()s)
+
+func setup() -> void:
 	$UiModes.initialize()
 	$GameModes.initialize()
+	
 
 func start_combat(values : CombatSetupValues):
 	$GameModes.mode_swap("CombatMode")
