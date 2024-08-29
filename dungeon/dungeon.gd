@@ -3,12 +3,10 @@ class_name Dungeon
 
 @export var pawn : Node
 
-func _unhandled_input(event):
-	if event.is_action_pressed("ui_accept"):
-		%RoomSelector.update_selector()
-	if event.is_action_pressed("pickup"):
-		if not current_room().get_items().is_empty():
-			pick_up_item(current_room().get_items()[0])
+func _ready() -> void:
+	current_room().visited = true
+	update_map()
+	door_labels()
 
 func list_actions():
 	var actions = current_room().get_actions()
@@ -27,16 +25,15 @@ func current_room() -> Room:
 func move_through_door(door : Door):
 	door_labels(true)
 	pawn.reparent(door.get_parent(), false)
+	current_room().visited = true
+	update_map()
 	SignalBus.moved_through_door.emit()
 	list_actions()
 	door_labels()
-	roll_combat_encounter()
-
-func get_doors():
-	return current_room().get_doors()
+	#roll_combat_encounter()
 
 func door_labels(clear : bool = false):
-	var doors = get_doors()
+	var doors = current_room().get_doors()
 	var counter = 1
 	if clear:
 		for door in doors:
@@ -45,6 +42,14 @@ func door_labels(clear : bool = false):
 	for door in doors:
 		door.set_label(str(counter))
 		counter += 1
+
+func update_map() -> void:
+	for child in get_children():
+		if child is Room:
+			if child.visited:
+				child.show()
+			else:
+				child.hide()
 
 func roll_combat_encounter():
 	# roll to see if combat happens

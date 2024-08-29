@@ -3,8 +3,16 @@ class_name Room
 
 var items = [Torch.new(), Backpack.new()]
 var scavenged = false
+var visited = false
 
 func get_doors() -> Array:
+	var return_array = []
+	for child in get_children():
+		if child is Door:
+			return_array.push_back(child)
+	return return_array
+
+func get_attached_doors() -> Array:
 	var return_array = []
 	for child in get_children():
 		if child is Door:
@@ -26,7 +34,7 @@ func get_actions() -> Array:
 		actions.push_back(Action.new(self, "scavenge"))
 	if items:
 		actions.push_back(Action.new(self, "pick up"))
-	if not get_doors().is_empty():
+	if not get_attached_doors().is_empty():
 		actions.push_back(Action.new(self, "doors"))
 	return actions
 
@@ -37,7 +45,7 @@ func do_action(action_key : String):
 	if action_key == "doors":
 		var door_actions = []
 		var counter : int = 1
-		for door in get_doors():
+		for door in get_attached_doors():
 			door_actions.push_back(Action.new(door, "move", "move through door %d" % counter))
 			counter += 1
 		Router.actions_ui.list_actions(door_actions)

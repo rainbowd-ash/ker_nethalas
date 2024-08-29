@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwnvcu14pupoo"]
+
+[ext_resource type="Texture2D" uid="uid://dpxvm22nwjtbb" path="res://art/tiles/corridor4.png" id="1_188qf"]
+[ext_resource type="Script" path="res://dungeon/room.gd" id="2_ynr61"]
+[ext_resource type="PackedScene" uid="uid://bhnd0gvsy6ig1" path="res://dungeon/door.tscn" id="3_0w4vs"]
+
+[node name="Corridor" type="Sprite2D"]
+texture = ExtResource("1_188qf")
+region_rect = Rect2(20, 20, 1060, 1060)
+script = ExtResource("2_ynr61")
+
+[node name="Door" parent="." instance=ExtResource("3_0w4vs")]
+position = Vector2(0, 45)
+
+[node name="Door2" parent="." instance=ExtResource("3_0w4vs")]
+position = Vector2(0, -46)
+
+[node name="Door3" parent="." instance=ExtResource("3_0w4vs")]
+position = Vector2(45, 0)
+
+[node name="Door4" parent="." instance=ExtResource("3_0w4vs")]
+position = Vector2(-45, 0)

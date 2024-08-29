@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://deni0ssu48flu"]
+
+[ext_resource type="Texture2D" uid="uid://ueht7nefbwf1" path="res://art/tiles/room4.png" id="1_l8r1c"]
+[ext_resource type="Script" path="res://dungeon/room.gd" id="2_vedhh"]
+[ext_resource type="PackedScene" uid="uid://bhnd0gvsy6ig1" path="res://dungeon/door.tscn" id="3_uqt8c"]
+
+[node name="Room" type="Sprite2D"]
+texture = ExtResource("1_l8r1c")
+region_rect = Rect2(20, 20, 1060, 1060)
+script = ExtResource("2_vedhh")
+
+[node name="Door" parent="." instance=ExtResource("3_uqt8c")]
+position = Vector2(0, 45)
+
+[node name="Door2" parent="." instance=ExtResource("3_uqt8c")]
+position = Vector2(0, -45)
+
+[node name="Door3" parent="." instance=ExtResource("3_uqt8c")]
+position = Vector2(45, 0)
