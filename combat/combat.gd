@@ -110,7 +110,7 @@ func player_action():
 	print("player action!")
 
 func list_stealth_actions():
-	ActionSelection.list_actions([
+	Router.actions_ui.list_actions([
 		Action.new(self, "attempt stealth", "go for a sneak attack"),
 		Action.new(self, "no stealth", "run in and attack"),
 		])
@@ -123,18 +123,18 @@ func list_combat_actions():
 		combat_actions.push_front(Action.new(self, "free action"))
 	if bool(player_standard_actions):
 		combat_actions.push_front(Action.new(self, "standard action"))
-	ActionSelection.list_actions(combat_actions)
+	Router.actions_ui.list_actions(combat_actions)
 
 func list_free_actions():
 	var result = Character.get_free_actions()
 	result.push_back(Action.new(self,"actions_back", "back"))
-	ActionSelection.list_actions(result)
+	Router.actions_ui.list_actions(result)
 
 func list_standard_actions():
 	var result = Character.get_standard_actions()
 	result.push_back(Action.new(self, "flee"))
 	result.push_back(Action.new(self,"actions_back", "back"))
-	ActionSelection.list_actions(result)
+	Router.actions_ui.list_actions(result)
 
 func _on_character_performed_standard_action():
 	player_standard_actions -= 1
@@ -142,6 +142,7 @@ func _on_character_performed_standard_action():
 
 func _on_character_performed_free_action():
 	player_free_actions -= 1
+	list_combat_actions()
 
 func end_combat():
 	print("-end combat-")

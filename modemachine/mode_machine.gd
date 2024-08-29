@@ -9,6 +9,8 @@ func _ready():
 	for child in get_children():
 		if child is Mode:
 			modes[child.name] = child
+			if child.attached_node == null and child.attached_scene == null:
+				push_error("%s is missing both a node and a scene" % child.name)
 
 func initialize(starting_mode : Mode = initial_mode):
 	current_mode = starting_mode

@@ -40,7 +40,7 @@ func do_action(action_key : String):
 		for door in get_doors():
 			door_actions.push_back(Action.new(door, "move", "move through door %d" % counter))
 			counter += 1
-		ActionSelection.list_actions(door_actions)
+		Router.actions_ui.list_actions(door_actions)
 		return
 	if action_key == "pick up":
 		if items:
@@ -68,7 +68,7 @@ func scavenge():
 				print("\ttable roll + 5: %d" % scavenge_roll)
 		if scavenge_roll == 1:
 			# You uncover some grisly remains. Make a successful Resolve check or lose 1 Sanity
-			Dice.check(CheckValue.new(Character.get_value("resolve")))
+			Dice.check(CheckValue.new(Character.skills.get_value("resolve")))
 		elif scavenge_roll == 2:
 			# you find nothing of interest
 			pass
