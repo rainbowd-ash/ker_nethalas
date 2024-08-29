@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://cld1c4x65h2t7"]
+
+[ext_resource type="Script" path="res://globals/game.gd" id="1_mhmjv"]
+[ext_resource type="Script" path="res://modemachine/mode_machine.gd" id="2_x38xm"]
+[ext_resource type="Script" path="res://modemachine/game_modes/combat_mode.gd" id="3_smw54"]
+[ext_resource type="PackedScene" uid="uid://bxcxx1ioxwp48" path="res://combat/combat.tscn" id="4_53b64"]
+[ext_resource type="Script" path="res://modemachine/game_modes/dungeon_mode.gd" id="5_6xvtt"]
+[ext_resource type="PackedScene" uid="uid://dpwu21k1ya0ad" path="res://dungeon/dungeon.tscn" id="6_glx83"]
+[ext_resource type="Script" path="res://modemachine/mode.gd" id="7_422r3"]
+[ext_resource type="PackedScene" uid="uid://cujtfjsy5gju1" path="res://ui/inventory/inventory_ui.tscn" id="8_61aph"]
+[ext_resource type="Script" path="res://ui/actions/actions_ui.gd" id="9_d0nn4"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_mhmjv")
+
+[node name="GameModes" type="Node" parent="." node_paths=PackedStringArray("initial_mode")]
+script = ExtResource("2_x38xm")
+initial_mode = NodePath("DungeonMode")
+
+[node name="CombatMode" type="Node" parent="GameModes"]
+script = ExtResource("3_smw54")
+attached_scene = ExtResource("4_53b64")
+
+[node name="DungeonMode" type="Node" parent="GameModes" node_paths=PackedStringArray("attached_node")]
+script = ExtResource("5_6xvtt")
+attached_scene = ExtResource("6_glx83")
+attached_node = NodePath("../../Dungeon")
+
+[node name="UiModes" type="Node" parent="." node_paths=PackedStringArray("initial_mode")]
+script = ExtResource("2_x38xm")
+initial_mode = NodePath("ActionsMode")
+
+[node name="InventoryMode" type="Node" parent="UiModes" node_paths=PackedStringArray("attached_node")]
+script = ExtResource("7_422r3")
+attached_node = NodePath("../../Ui/InventoryUi")
+
+[node name="ActionsMode" type="Node" parent="UiModes" node_paths=PackedStringArray("attached_node")]
+script = ExtResource("7_422r3")
+attached_node = NodePath("../../Ui/ActionsUi")
+
+[node name="Ui" type="CanvasLayer" parent="."]
+
+[node name="InventoryUi" parent="Ui" instance=ExtResource("8_61aph")]
+
+[node name="ActionsUi" type="Control" parent="Ui"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_d0nn4")
+
+[node name="Buttons" type="VBoxContainer" parent="Ui/ActionsUi"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Dungeon" parent="." instance=ExtResource("6_glx83")]
