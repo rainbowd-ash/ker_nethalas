@@ -68,7 +68,7 @@ func scavenge():
 				print("\ttable roll + 5: %d" % scavenge_roll)
 		if scavenge_roll == 1:
 			# You uncover some grisly remains. Make a successful Resolve check or lose 1 Sanity
-			Dice.check(CheckValue.new(Character.get_value("resolve")))
+			Dice.check(CheckValue.new(Character.skills.get_value("resolve")))
 		elif scavenge_roll == 2:
 			# you find nothing of interest
 			pass
