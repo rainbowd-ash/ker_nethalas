@@ -72,8 +72,9 @@ func combat_rounds():
 
 
 func add_monster(monster : Monster):
-	for i in range(0, monster.number):
-		monsters.push_back(monster)
+	add_child(monster)
+	for i in range(1, monster.number):
+		add_child(monster.duplicate())
 
 func attempt_stealth():
 	var highest_awareness = 0
@@ -111,12 +112,9 @@ func roll_initiative():
 		print("monster gets initiative")
 		player_initiative = false
 
-func attack_roll(attacker : Node, defender : Node):
-	pass
-
 func monster_action():
 	print("monster swings!")
-	for monster in monsters:
+	for monster in get_children():
 		var monster_attack_value = monster.get_attack_value()
 		if not player_initiative:
 			monster_attack_value += 10
@@ -126,8 +124,9 @@ func monster_action():
 		)
 		if roll_outcome.winner == Dice.opposed_winner.attacker:
 			print("monster hits!")
+			monster.do_action()
 		else:
-			# defender gets roll on defensive move table
+			# TODO defender gets roll on defensive move table
 			print("player defends!")
 
 func player_action():
