@@ -52,4 +52,4 @@ func get_initiative_value() -> int:
 func _on_monster_attack(values):
 	if values.has("attack"):
 		attributes.modify_health( -1 * values.attack.damage)
-		print("you take %d %s damage" % [values.attack.damage, Attack.damage_types.keys()[values.attack.damage_type]])
+		SignalBus.chat_log.emit("you take %d %s damage" % [values.attack.damage, Attack.damage_types.keys()[values.attack.damage_type]])

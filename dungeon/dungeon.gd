@@ -12,13 +12,6 @@ func list_actions():
 	var actions = current_room().get_actions()
 	Router.actions_ui.list_actions(actions)
 
-func pick_up_item(item : Item):
-	var room = current_room()
-	if room.get_items().has(item):
-		SignalBus.item_picked_up.emit(item)
-		room.remove_item(item)
-		print("Picked up " + item.title)
-
 func current_room() -> Room:
 	return pawn.get_parent()
 
