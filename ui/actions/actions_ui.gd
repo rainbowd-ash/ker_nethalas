@@ -9,8 +9,8 @@ func list_actions(actions : Array):
 		else:
 			var button = ActionButton.new(action)
 			button.text = action.title
-			$Buttons.add_child(button)
+			add_child(button)
 
 func clear_action_buttons():
-	for child in $Buttons.get_children():
+	for child in get_children():
 		child.queue_free()
