@@ -11,6 +11,7 @@ var player_standard_actions : int = 1
 var player_free_actions : int = 1
 var initiative_mod = 0
 var stealth_check_result : OpposedCheckResult = null
+var round_counter : int = 0
 
 func _ready() -> void:
 	Character.performed_standard_action.connect(_on_character_performed_standard_action)
@@ -29,6 +30,7 @@ func do_action(action_key : String):
 	elif action_key == "standard action":
 		list_standard_actions()
 	elif action_key == "pass":
+		print("player passes turn")
 		player_round_finished.emit()
 	elif action_key == "actions_back":
 		list_combat_actions()
@@ -43,13 +45,19 @@ func initialize(values : CombatSetupValues):
 		list_stealth_actions()
 		await stealth_attempt_finished
 	roll_initiative()
+	print("-regular combat starting-")
 	combat_rounds()
 
 func combat_rounds():
+	# give monster first attack to make the loop simpler
 	if not player_initiative and in_combat:
 		monster_action()
 		player_initiative = true
+	
+	# combat loop
 	while in_combat:
+		round_counter += 1
+		print("-combat round %d-" % round_counter)
 		if in_combat:
 			player_action()
 			await player_round_finished
@@ -58,8 +66,10 @@ func combat_rounds():
 		# refresh actions
 		player_standard_actions = 1
 		player_free_actions = 1
+	# exit combat loop condition
 	if not in_combat:
 		end_combat()
+
 
 func add_monster(monster : Monster):
 	for i in range(0, monster.number):
@@ -85,13 +95,13 @@ func roll_initiative():
 			print("player gets initiative from stealth success")
 			player_initiative = true
 			return
-	var character_perception : int = Character.skills.get_value("perception")
+	var character_initiative : int = Character.get_initiative_value()
 	var highest_awareness = 0
 	for monster in monsters:
 		if monster.awareness > highest_awareness:
 			highest_awareness = monster.awareness
 	var roll_result : OpposedCheckResult = Dice.opposed_check(
-		CheckValue.new(character_perception + initiative_mod),
+		CheckValue.new(character_initiative),
 		CheckValue.new(highest_awareness),
 	)
 	if roll_result.winner == Dice.opposed_winner.attacker:
@@ -101,9 +111,24 @@ func roll_initiative():
 		print("monster gets initiative")
 		player_initiative = false
 
+func attack_roll(attacker : Node, defender : Node):
+	pass
+
 func monster_action():
+	print("monster swings!")
 	for monster in monsters:
-		print("monster action!")
+		var monster_attack_value = monster.get_attack_value()
+		if not player_initiative:
+			monster_attack_value += 10
+		var roll_outcome = Dice.opposed_check(
+			CheckValue.new(monster_attack_value),
+			CheckValue.new(Character.skills.get_value("dodge"))
+		)
+		if roll_outcome.winner == Dice.opposed_winner.attacker:
+			print("monster hits!")
+		else:
+			# defender gets roll on defensive move table
+			print("player defends!")
 
 func player_action():
 	list_combat_actions()
@@ -146,5 +171,4 @@ func _on_character_performed_free_action():
 
 func end_combat():
 	print("-end combat-")
-	initiative_mod = {}
 	get_node("/root/Game/GameModes").mode_swap("DungeonMode")

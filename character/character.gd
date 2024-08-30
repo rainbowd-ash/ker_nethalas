@@ -39,3 +39,9 @@ func get_standard_actions() -> Array:
 
 func get_free_actions() -> Array:
 	return []
+
+func get_defence_roll_value() -> int:
+	return skills.get_value("dodge")
+
+func get_initiative_value() -> int:
+	return skills.get_value("perception")

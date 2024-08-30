@@ -18,3 +18,6 @@ var level_adaption
 
 func actions():
 	return null
+
+func get_attack_value():
+	return combat_skill
