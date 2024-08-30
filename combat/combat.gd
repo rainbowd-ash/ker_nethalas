@@ -19,18 +19,18 @@ func _ready() -> void:
 
 func do_action(action_key : String):
 	if action_key == "attempt stealth":
-		print("-sneak attack attempt-")
+		SignalBus.chat_log.emit("-sneak attack attempt-")
 		attempt_stealth()
 		stealth_attempt_finished.emit()
 	elif action_key == "no stealth":
-		print("\tpassed on sneak attack")
+		SignalBus.chat_log.emit("passed on sneak attack")
 		stealth_attempt_finished.emit()
 	elif action_key == "free action":
 		list_free_actions()
 	elif action_key == "standard action":
 		list_standard_actions()
 	elif action_key == "pass":
-		print("player passes turn")
+		SignalBus.chat_log.emit("player passes turn")
 		player_round_finished.emit()
 	elif action_key == "actions_back":
 		list_combat_actions()
@@ -39,13 +39,13 @@ func do_action(action_key : String):
 		player_round_finished.emit()
 
 func initialize(values : CombatSetupValues):
-	print("-combat starting-\n")
+	SignalBus.chat_log.emit("-combat starting-\n")
 	add_monster(values.monster)
 	if not values.player_surprised:
 		list_stealth_actions()
 		await stealth_attempt_finished
 	roll_initiative()
-	print("-regular combat starting-")
+	SignalBus.chat_log.emit("-regular combat starting-")
 	combat_rounds()
 
 func combat_rounds():
@@ -57,7 +57,7 @@ func combat_rounds():
 	# combat loop
 	while in_combat:
 		round_counter += 1
-		print("-combat round %d-" % round_counter)
+		SignalBus.chat_log.emit("-combat round %d-" % round_counter)
 		if in_combat:
 			player_action()
 			await player_round_finished
@@ -93,7 +93,7 @@ func roll_initiative():
 	print("-initiative roll-")
 	if stealth_check_result:
 		if stealth_check_result.winner == Dice.opposed_winner.attacker:
-			print("player gets initiative from stealth success")
+			SignalBus.chat_log.emit("player gets initiative from stealth success")
 			player_initiative = true
 			return
 	var character_initiative : int = Character.get_initiative_value()
@@ -106,10 +106,10 @@ func roll_initiative():
 		CheckValue.new(highest_awareness),
 	)
 	if roll_result.winner == Dice.opposed_winner.attacker:
-		print("player gets initiative")
+		SignalBus.chat_log.emit("player gets initiative")
 		player_initiative = true
 	else: 
-		print("monster gets initiative")
+		SignalBus.chat_log.emit("monster gets initiative")
 		player_initiative = false
 
 func monster_action():

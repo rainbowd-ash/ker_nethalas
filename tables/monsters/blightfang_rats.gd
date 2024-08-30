@@ -23,7 +23,7 @@ func do_action():
 		rally()
 
 func bite():
-	print("%s bites" % title)
+	SignalBus.chat_log.emit("%s bites" % title)
 	var attack = Attack.new()
 	attack.damage_type = Attack.damage_types.piercing
 	attack.damage = Dice.roll(1, "d6")
@@ -33,7 +33,7 @@ func bite():
 	})
 
 func scratch():
-	print("%s scratches" % title)
+	SignalBus.chat_log.emit("%s scratches" % title)
 	var attack = Attack.new()
 	attack.damage_type = Attack.damage_types.slashing
 	attack.damage = Dice.roll(1, "d4", 1)
@@ -43,7 +43,7 @@ func scratch():
 	})
 
 func rally():
-	print("%s rallies" % title)
+	SignalBus.chat_log.emit("%s rallies" % title)
 	for child in get_parent().get_children():
 		if child is BlightfangRats:
 			child.rally_counter += 1

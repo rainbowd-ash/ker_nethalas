@@ -10,13 +10,11 @@ var accused = ""
 @onready var attributes = $Attributes
 @onready var inventory = $Inventory
 
-var current_health = 0
-
 func _ready():
 	SignalBus.monster_attack.connect(_on_monster_attack)
 	
-	attributes.health = Dice.roll(1, "d6", 8)
-	current_health = attributes.health
+	attributes.max_health = Dice.roll(1, "d6", 8)
+	attributes.health = attributes.max_health
 	attributes.toughness = Dice.roll(2, "d6", 10)
 	attributes.max_aether = Dice.roll(1, "d6", 10)
 	attributes.aether = attributes.max_aether
@@ -53,6 +51,5 @@ func get_initiative_value() -> int:
 
 func _on_monster_attack(values):
 	if values.has("attack"):
-		current_health -= values.attack.damage
-		print("you take %d %s damage" % [values.attack.damage, Attack.damage_types.keys()[values.attack.damage_type]])
-		print("you have %d health remaining" % [current_health])
+		attributes.modify_health( -1 * values.attack.damage)
+		SignalBus.chat_log.emit("you take %d %s damage" % [values.attack.damage, Attack.damage_types.keys()[values.attack.damage_type]])

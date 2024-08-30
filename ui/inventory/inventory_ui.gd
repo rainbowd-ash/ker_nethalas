@@ -23,7 +23,8 @@ func refresh_items():
 		line_item.text = item.title
 		line_item.focus_entered.connect(refresh_details)
 		%ItemList.add_child(line_item)
-	%ItemList.get_children()[0].grab_focus()
+	if get_child_count():
+		%ItemList.get_children()[0].grab_focus()
 
 func refresh_details():
 	for child in %ItemDetails.get_children():
@@ -41,5 +42,6 @@ func refresh_details():
 func _on_item_picked_up(_item_name):
 	refresh_items()
 
-func _on_mode_transition(_new_mode_name):
-	refresh_items()
+func _on_mode_transition(new_mode_name):
+	if new_mode_name == "InventoryMode":
+		refresh_items()

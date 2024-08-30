@@ -63,7 +63,7 @@ func do_action(action_key : String):
 	# on crit success, add 5 to d20 roll and go through scavenge table below
 	# on fail, roll combat encounter
 func scavenge():
-	print("-scavenge check-")
+	SignalBus.chat_log.emit("you rifle through bones and spiderwebs to find anything useful.")
 	scavenged = true
 	var scavenge_check = Dice.check(CheckValue.new(Character.skills.get_value("scavenge")))
 	if scavenge_check.success:
@@ -102,5 +102,5 @@ func scavenge():
 	find_parent("Dungeon").list_actions()
 	if not scavenge_check.success:
 		# roll a combat encounter
-		pass
+		SignalBus.chat_log.emit("your loud, pathetic attempts to scavenge have attracted a monster!")
 

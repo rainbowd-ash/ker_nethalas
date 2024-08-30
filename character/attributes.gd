@@ -1,11 +1,19 @@
 extends Node
 class_name Attributes
 
-var health : int = 0 :
-	get: 
+signal attributes_changed
+
+var health : int = 0 : 
+	get:
 		return health
 	set(value):
 		health = value
+
+var max_health : int = 0 :
+	get: 
+		return max_health
+	set(value):
+		max_health = value
 		
 var toughness : int = 0 :
 	get: 
@@ -59,3 +67,10 @@ func print_all():
 	print("\texhaustion: " + str(exhaustion))
 	print("\texhaustion_resistance: " + str(exhaustion_resistance))
 	print("\tmagic_resistance: " + str(magic_resistance))
+
+func modify_health(mod_value : int) -> int:
+	var prev_health = health
+	health += mod_value
+	attributes_changed.emit()
+	print("you have %d health remaining" % [health])
+	return health
