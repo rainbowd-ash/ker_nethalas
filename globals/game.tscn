@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cld1c4x65h2t7"]
+[gd_scene load_steps=13 format=3 uid="uid://cld1c4x65h2t7"]
 
 [ext_resource type="Script" path="res://globals/game.gd" id="1_mhmjv"]
 [ext_resource type="Script" path="res://modemachine/mode_machine.gd" id="2_x38xm"]
@@ -6,8 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://bxcxx1ioxwp48" path="res://combat/combat.tscn" id="4_53b64"]
 [ext_resource type="Script" path="res://modemachine/game_modes/dungeon_mode.gd" id="5_6xvtt"]
 [ext_resource type="PackedScene" uid="uid://dpwu21k1ya0ad" path="res://dungeon/dungeon.tscn" id="6_glx83"]
-[ext_resource type="Script" path="res://modemachine/mode.gd" id="7_422r3"]
+[ext_resource type="Script" path="res://modemachine/inventory_mode.gd" id="7_7xeuo"]
 [ext_resource type="Script" path="res://ui/inventory/inventory_ui.gd" id="8_i80o1"]
+[ext_resource type="Script" path="res://modemachine/dungeon_mode.gd" id="8_k3n8u"]
 [ext_resource type="Script" path="res://ui/stats.gd" id="9_5s05s"]
 [ext_resource type="Script" path="res://ui/actions/actions_ui.gd" id="9_d0nn4"]
 [ext_resource type="Script" path="res://ui/chat_log.gd" id="9_oe6tg"]
@@ -30,14 +31,14 @@ attached_node = NodePath("../../Ui/Dungeon_Chat/DungeonWindow/SubViewport/Dungeo
 
 [node name="UiModes" type="Node" parent="." node_paths=PackedStringArray("initial_mode")]
 script = ExtResource("2_x38xm")
-initial_mode = NodePath("ActionsMode")
+initial_mode = NodePath("ExploreMode")
 
 [node name="InventoryMode" type="Node" parent="UiModes" node_paths=PackedStringArray("attached_node")]
-script = ExtResource("7_422r3")
+script = ExtResource("7_7xeuo")
 attached_node = NodePath("../../Ui/InventoryUi")
 
-[node name="ActionsMode" type="Node" parent="UiModes" node_paths=PackedStringArray("attached_node")]
-script = ExtResource("7_422r3")
+[node name="ExploreMode" type="Node" parent="UiModes" node_paths=PackedStringArray("attached_node")]
+script = ExtResource("8_k3n8u")
 attached_node = NodePath("../../Ui/Dungeon_Chat")
 
 [node name="Ui" type="HBoxContainer" parent="."]

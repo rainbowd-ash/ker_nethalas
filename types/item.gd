@@ -16,10 +16,6 @@ var description : String = "default_description"
 var quantity : int = 0
 var stack_size : int = 10
 
-var item_actions = [
-	"drop"
-]
-
 func consume_item():
 	queue_free()
 
@@ -30,10 +26,3 @@ func get_item_details():
 		"cost": cost,
 		"description": description,
 	}
-
-func get_actions():
-	return item_actions
-
-func do_action(action : String):
-	if action == "drop":
-		$Character/Inventory.remove_item(self)

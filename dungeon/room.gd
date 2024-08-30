@@ -53,6 +53,7 @@ func do_action(action_key : String):
 	if action_key == "pick up":
 		if items:
 			Character.inventory.add_item(items[0])
+			SignalBus.chat_log.emit("picked up %s" % items[0].title)
 			remove_item(items[0])
 		else:
 			print("picked up nothing (>_<)")

@@ -169,5 +169,5 @@ func _on_character_performed_free_action():
 	list_combat_actions()
 
 func end_combat():
-	print("-end combat-")
-	get_node("/root/Game/GameModes").mode_swap("DungeonMode")
+	SignalBus.chat_log.emit("-end combat-")
+	Router.game_modes.mode_swap("DungeonMode")

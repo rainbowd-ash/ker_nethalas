@@ -6,7 +6,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if $UiModes.get_current_mode() != "InventoryMode":
 			$UiModes.mode_swap("InventoryMode")
 		else:
-			$UiModes.mode_swap("ActionsMode")
+			$UiModes.mode_swap("ExploreMode")
 
 func _ready():
 	call_deferred("setup") # called on the first frame of the game running (after all _ready()s)

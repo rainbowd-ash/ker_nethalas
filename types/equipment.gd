@@ -36,13 +36,6 @@ enum equipment_types {
 }
 var equipment_type : int = -1
 var equipped : bool = false
-var equipment_actions = [
-	"equip",
-	"unequip"
-]
-
-func get_actions():
-	return item_actions + equipment_actions
 
 func get_item_details():
 	var item_details = super.get_item_details()
