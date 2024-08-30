@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cld1c4x65h2t7"]
+[gd_scene load_steps=11 format=3 uid="uid://cld1c4x65h2t7"]
 
 [ext_resource type="Script" path="res://globals/game.gd" id="1_mhmjv"]
 [ext_resource type="Script" path="res://modemachine/mode_machine.gd" id="2_x38xm"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dpwu21k1ya0ad" path="res://dungeon/dungeon.tscn" id="6_glx83"]
 [ext_resource type="Script" path="res://modemachine/mode.gd" id="7_422r3"]
 [ext_resource type="Script" path="res://ui/inventory/inventory_ui.gd" id="8_i80o1"]
+[ext_resource type="Script" path="res://ui/stats.gd" id="9_5s05s"]
 [ext_resource type="Script" path="res://ui/actions/actions_ui.gd" id="9_d0nn4"]
 
 [node name="Game" type="Node"]
@@ -96,6 +97,7 @@ size_flags_stretch_ratio = 0.25
 theme_override_constants/h_separation = 70
 theme_override_constants/v_separation = 10
 columns = 2
+script = ExtResource("9_5s05s")
 
 [node name="Health" type="Label" parent="Ui/Stats_Actions/Stats"]
 layout_mode = 2
