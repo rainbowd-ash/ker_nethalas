@@ -1,7 +1,6 @@
 extends Node
 class_name Monster
 
-
 var title = ""
 var athletics = 0
 var awareness = 0
@@ -21,3 +20,6 @@ func actions():
 
 func get_attack_value():
 	return combat_skill
+
+func do_action():
+	return

@@ -10,4 +10,3 @@ func _init(a_monster : Monster,
 	monster = a_monster
 	player_surprised = a_player_surprised
 	monster_surprised = a_monster_surprised
-	

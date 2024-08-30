@@ -120,7 +120,7 @@ func monster_action():
 			monster_attack_value += 10
 		var roll_outcome = Dice.opposed_check(
 			CheckValue.new(monster_attack_value),
-			CheckValue.new(Character.skills.get_value("dodge"))
+			CheckValue.new(Character.get_defence_roll_value())
 		)
 		if roll_outcome.winner == Dice.opposed_winner.attacker:
 			print("monster hits!")

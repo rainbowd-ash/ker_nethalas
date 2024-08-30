@@ -10,13 +10,18 @@ var accused = ""
 @onready var attributes = $Attributes
 @onready var inventory = $Inventory
 
+var current_health = 0
+
 func _ready():
-	skills.set_value("acrobatics",10)
+	SignalBus.monster_attack.connect(_on_monster_attack)
+	
 	attributes.health = Dice.roll(1, "d6", 8)
+	current_health = attributes.health
 	attributes.toughness = Dice.roll(2, "d6", 10)
 	attributes.max_aether = Dice.roll(1, "d6", 10)
 	attributes.aether = attributes.max_aether
 	attributes.magic_resistance = 20
+	skills.set_value("acrobatics",10)
 	skills.set_value("athletics",10)
 	skills.set_value("dodge",10)
 	skills.set_value("perception",20)
@@ -45,3 +50,8 @@ func get_defence_roll_value() -> int:
 
 func get_initiative_value() -> int:
 	return skills.get_value("perception")
+
+func _on_monster_attack(values):
+	if values.has("attack"):
+		current_health -= values.attack.damage
+		print("you take %d %s damage" % [values.attack.damage, Attack.damage_types.keys()[values.attack.damage_type]])
