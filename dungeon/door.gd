@@ -11,4 +11,4 @@ func set_label(text : String):
 
 func do_action(action_key : String):
 	if action_key == "move":
-		get_node("/root/Game/Dungeon").move_through_door(self)
+		Router.dungeon.move_through_door(self)
