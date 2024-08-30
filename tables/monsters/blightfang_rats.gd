@@ -46,4 +46,4 @@ func rally():
 	print("%s rallies" % title)
 	for child in get_parent().get_children():
 		if child is BlightfangRats:
-			rally_counter += 1
+			child.rally_counter += 1

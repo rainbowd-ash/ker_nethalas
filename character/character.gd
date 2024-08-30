@@ -55,3 +55,4 @@ func _on_monster_attack(values):
 	if values.has("attack"):
 		current_health -= values.attack.damage
 		print("you take %d %s damage" % [values.attack.damage, Attack.damage_types.keys()[values.attack.damage_type]])
+		print("you have %d health remaining" % [current_health])
