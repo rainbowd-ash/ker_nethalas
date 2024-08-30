@@ -30,7 +30,7 @@ func move_through_door(door : Door):
 	SignalBus.moved_through_door.emit()
 	list_actions()
 	door_labels()
-	#roll_combat_encounter()
+	roll_combat_encounter()
 
 func door_labels(clear : bool = false):
 	var doors = current_room().get_doors()

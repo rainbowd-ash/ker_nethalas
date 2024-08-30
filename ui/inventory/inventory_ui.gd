@@ -38,8 +38,8 @@ func refresh_details():
 		label.set_text("%s: %s" % [property, properties[property]])
 		%ItemDetails.add_child(label)
 
-func _on_item_picked_up(item_name):
+func _on_item_picked_up(_item_name):
 	refresh_items()
 
-func _on_mode_transition(new_mode_name):
+func _on_mode_transition(_new_mode_name):
 	refresh_items()
