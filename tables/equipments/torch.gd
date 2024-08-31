@@ -1,4 +1,4 @@
-extends Item
+extends Equipment
 class_name Torch
 
 var turns_remaining : int = 20
