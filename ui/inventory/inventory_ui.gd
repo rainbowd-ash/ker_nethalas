@@ -12,10 +12,10 @@ func _ready():
 
 func setup():
 	refresh_items()
-	list_item_actions()
 
-func list_item_actions():
+func list_item_actions(item : Item):
 	Router.actions_ui.list_actions([
+		Action.new(self, "equip","equip",(true if item is Equipment else false)),
 		Action.new(self, "drop"),
 		Action.new(self, "back"),
 		])
@@ -39,19 +39,20 @@ func refresh_items():
 		child.free()
 	for item in inventory.get_items():
 		var line_item = ItemButton.new(item)
-		line_item.item_button_pressed.connect(set_details)
+		line_item.item_button_pressed.connect(set_details_and_buttons)
 		line_item.set_button_group(inventory_item_button_group)
 		%ItemList.add_child(line_item)
 	if %ItemList.get_child_count():
 		%ItemList.get_children()[0].grab_focus()
-		set_details(%ItemList.get_children()[0].item)
+		set_details_and_buttons(%ItemList.get_children()[0].item)
 	if not %ItemList.get_child_count():
 		var nothing_label = Label.new()
 		nothing_label.set_text("inventory empty")
 		%ItemList.add_child(nothing_label)
 
-func set_details(item : Item):
+func set_details_and_buttons(item : Item):
 	%ItemDetails.update_details(item)
+	list_item_actions(item)
 
 func _on_item_picked_up(_item_name):
 	refresh_items()
