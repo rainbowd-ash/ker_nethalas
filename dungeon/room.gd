@@ -1,7 +1,7 @@
 extends Sprite2D
 class_name Room
 
-var items = [Torch.new(), Backpack.new()]
+var items = [Torch.new(), Backpack.new(), CookingSupplies.new()]
 var scavenged = false
 var visited = false
 
