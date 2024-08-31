@@ -38,29 +38,20 @@ func refresh_items():
 	for child in %ItemList.get_children():
 		child.free()
 	for item in inventory.get_items():
-		var line_item = Button.new()
-		line_item.text = item.title
-		line_item.focus_entered.connect(refresh_details)
-		line_item.toggle_mode = true
+		var line_item = ItemButton.new(item)
+		line_item.item_button_pressed.connect(set_details)
 		line_item.set_button_group(inventory_item_button_group)
 		%ItemList.add_child(line_item)
 	if %ItemList.get_child_count():
 		%ItemList.get_children()[0].grab_focus()
-		refresh_details()
+		set_details(%ItemList.get_children()[0].item)
 	if not %ItemList.get_child_count():
 		var nothing_label = Label.new()
 		nothing_label.set_text("inventory empty")
 		%ItemList.add_child(nothing_label)
 
-func refresh_details():
-	for child in %ItemDetails.get_children():
-		child.free()
-	var focus_index = get_selected_item_index()
-	var properties = inventory.get_items()[focus_index].get_item_details()
-	for property in properties:
-		var label = Label.new()
-		label.set_text("%s: %s" % [property, properties[property]])
-		%ItemDetails.add_child(label)
+func set_details(item : Item):
+	%ItemDetails.update_details(item)
 
 func _on_item_picked_up(_item_name):
 	refresh_items()
