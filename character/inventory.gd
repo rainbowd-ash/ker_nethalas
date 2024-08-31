@@ -1,7 +1,6 @@
 extends Node
 class_name Inventory
 
-
 # list of item objects
 var items = []
 var base_capacity = 10
@@ -17,6 +16,8 @@ func add_item(item : Item): # TODO attempt to stack light items first
 	items.push_back(item)
 
 func drop_item_at(index : int):
+	var dropped = items[index]
+	SignalBus.item_dropped.emit(dropped)
 	items.remove_at(index)
 
 func adjust_currency(amount : int):

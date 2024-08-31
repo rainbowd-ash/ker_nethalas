@@ -5,6 +5,12 @@ var items = [Torch.new(), Backpack.new()]
 var scavenged = false
 var visited = false
 
+func _ready() -> void:
+	SignalBus.item_dropped.connect(add_item_to_room)
+
+func add_item_to_room(item : Item) -> void:
+	items.push_back(item)
+
 func get_doors() -> Array:
 	var return_array = []
 	for child in get_children():

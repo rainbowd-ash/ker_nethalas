@@ -69,7 +69,6 @@ func print_all():
 	print("\tmagic_resistance: " + str(magic_resistance))
 
 func modify_health(mod_value : int) -> int:
-	var prev_health = health
 	health += mod_value
 	attributes_changed.emit()
 	print("you have %d health remaining" % [health])
