@@ -35,7 +35,7 @@ func do_action(action_key : String):
 		gear.unequip_slot(get_selected_button().slot)
 		refresh_inventory()
 	elif action_key == "drop":
-		inventory.drop_item_at(get_selected_item_index())
+		inventory.drop_item(get_selected_button().item)
 		refresh_inventory()
 	elif action_key == "back":
 		Router.ui_modes.mode_swap("ExploreMode")

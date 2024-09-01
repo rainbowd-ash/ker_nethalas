@@ -1,15 +1,15 @@
 extends Sprite2D
 class_name Room
 
-var items = [Torch.new(), Backpack.new(), CookingSupplies.new()]
 var scavenged = false
 var visited = false
 
 func _ready() -> void:
 	SignalBus.item_dropped.connect(add_item_to_room)
+	add_child(Backpack.new())
 
 func add_item_to_room(item : Item) -> void:
-	items.push_back(item)
+	add_child(item)
 
 func get_doors() -> Array:
 	var return_array = []
@@ -27,28 +27,34 @@ func get_attached_doors() -> Array:
 			return_array.push_back(child.get_paired_door())
 	return return_array # array of Door nodes
 
-func get_items():
+func get_items() -> Array:
+	var items = []
+	for child in get_children():
+		if child is Item:
+			items.push_back(child)
 	return items
 
-func remove_item(item : Item):
-	if items.has(item):
-		items.erase(item)
+func remove_item(item : Item) -> Item:
+	var removed = null
+	for child in get_children():
+		if child == item:
+			removed = item
+			remove_child(item)
+	return removed
 
 func get_actions() -> Array:
-	var actions = []
-	if not scavenged:
-		actions.push_back(Action.new(self, "scavenge"))
-	if items:
-		actions.push_back(Action.new(self, "pick up"))
-	if not get_attached_doors().is_empty():
-		actions.push_back(Action.new(self, "doors"))
-	return actions
+	return [
+		Action.new(self, "scavenge","scavenge",(true if not scavenged else false)),
+		Action.new(self, "pick up","pick up",(true if get_items() else false)),
+		Action.new(self, "doors"),
+	]
 
 func do_action(action_key : String):
 	if action_key == "scavenge":
 		scavenge()
+		get_parent().list_actions()
 		return
-	if action_key == "doors":
+	elif action_key == "doors":
 		var door_actions = []
 		var counter : int = 1
 		for door in get_attached_doors():
@@ -56,13 +62,16 @@ func do_action(action_key : String):
 			counter += 1
 		Router.actions_ui.list_actions(door_actions)
 		return
-	if action_key == "pick up":
+	elif action_key == "pick up":
+		var items = get_items()
 		if items:
+			remove_child(items[0])
 			Character.inventory.add_item(items[0])
 			SignalBus.chat_log.emit("picked up %s" % items[0].title)
 			remove_item(items[0])
 		else:
 			print("picked up nothing (>_<)")
+		get_parent().list_actions()
 
 # can scavenge once per room
 # make a scavenge check

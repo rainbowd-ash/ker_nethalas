@@ -2,7 +2,6 @@ extends Node
 class_name Inventory
 
 # list of item objects
-var items = []
 var base_capacity = 10
 var currency = 0 # TODO coins and gems take up 1 slot per 100
 
@@ -10,19 +9,19 @@ func _ready():
 	SignalBus.item_picked_up.connect(_on_item_picked_up)
 
 func get_items():
-	return items
+	return get_children()
 
 func add_item(item : Item): # TODO attempt to stack light items first
-	items.push_back(item)
+	add_child(item)
 
-func equip_item_at(index : int):
-	if Character.gear.equip(items[index]):
-		items.remove_at(index)
+func equip_item(equipment : Equipment):
+	if Character.gear.can_equip(equipment):
+		remove_child(equipment)
+		Character.gear.equip(equipment)
 
-func drop_item_at(index : int):
-	var dropped = items[index]
-	SignalBus.item_dropped.emit(dropped)
-	items.remove_at(index)
+func drop_item(item : Item):
+	remove_child(item)
+	Router.dungeon.current_room().add_child(item)
 
 func adjust_currency(amount : int):
 	currency += amount
