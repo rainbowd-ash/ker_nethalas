@@ -1,9 +1,6 @@
 extends Node
 #class_name Character
 
-signal performed_standard_action(details : Dictionary)
-signal performed_free_action(details : Dictionary)
-
 var char_name = "default name"
 var accused = ""
 @onready var skills = $Skills
@@ -30,16 +27,6 @@ func _ready():
 	skills.set_value("scavenge",50)
 	skills.set_value("perception",70)
 	skills.set_value("stealth", 80)
-
-func do_action(action_title : String):
-	if action_title == "attack":
-		print("player attacks")
-		performed_standard_action.emit()
-
-func get_standard_actions() -> Array:
-	return [
-		Action.new(self,"attack"),
-	]
 
 func get_free_actions() -> Array:
 	return []

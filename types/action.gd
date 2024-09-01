@@ -13,3 +13,8 @@ func _init(a_source_node : Node, a_key : String, a_title : String = "", a_active
 	else:
 		title = a_title
 	active = a_active
+
+# source node needs:
+# func do_action(action_key : String):
+# 	if action_key == "pick nose":
+#		pick_nose()
