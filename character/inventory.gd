@@ -15,6 +15,10 @@ func get_items():
 func add_item(item : Item): # TODO attempt to stack light items first
 	items.push_back(item)
 
+func equip_item_at(index : int):
+	if Character.gear.equip(items[index]):
+		items.remove_at(index)
+
 func drop_item_at(index : int):
 	var dropped = items[index]
 	SignalBus.item_dropped.emit(dropped)

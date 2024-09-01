@@ -55,7 +55,27 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.66
 script = ExtResource("8_i80o1")
 
-[node name="ItemList" type="VBoxContainer" parent="Ui/InventoryUi"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Ui/InventoryUi"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.33
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Ui/InventoryUi/ScrollContainer"]
+layout_mode = 2
+
+[node name="GearLabel" type="Label" parent="Ui/InventoryUi/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Equipment"
+
+[node name="GearList" type="VBoxContainer" parent="Ui/InventoryUi/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="InventoryLabel" type="Label" parent="Ui/InventoryUi/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inventory"
+
+[node name="ItemList" type="VBoxContainer" parent="Ui/InventoryUi/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -65,6 +85,7 @@ unique_name_in_owner = true
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.33
 script = ExtResource("10_8syus")
 
 [node name="Title" type="Label" parent="Ui/InventoryUi/ItemDetails"]
@@ -78,6 +99,10 @@ text = "Weight: normal"
 [node name="Cost" type="Label" parent="Ui/InventoryUi/ItemDetails"]
 layout_mode = 2
 text = "Cost: 10c"
+
+[node name="GearSlot" type="Label" parent="Ui/InventoryUi/ItemDetails"]
+layout_mode = 2
+text = "Backpack"
 
 [node name="Description" type="Label" parent="Ui/InventoryUi/ItemDetails"]
 layout_mode = 2

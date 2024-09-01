@@ -9,6 +9,7 @@ var accused = ""
 @onready var skills = $Skills
 @onready var attributes = $Attributes
 @onready var inventory = $Inventory
+@onready var gear = $Gear
 
 func _ready():
 	SignalBus.monster_attack.connect(_on_monster_attack)
