@@ -22,7 +22,7 @@ func unequip(equipment : Equipment) -> Equipment:
 # ===================================================================
 func modify_max_carry_capacity() -> int:
 	var cap_mod : int = 0
-	for armor in get_children():
+	for armor in get_equipped():
 		if armor.has_method("modify_max_carry_capacity"):
 			cap_mod += armor.modify_max_inventory_size()
 	return cap_mod + %Inventory.base_capacity

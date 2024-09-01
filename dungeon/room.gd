@@ -46,7 +46,6 @@ func remove_item(item : Item) -> Item:
 func get_actions() -> Array:
 	return [
 		Action.new(self, "scavenge","scavenge",(true if not scavenged else false)),
-		Action.new(self, "pick up","pick up",(true if get_items() else false)),
 		Action.new(self, "doors"),
 	]
 

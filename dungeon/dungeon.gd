@@ -15,6 +15,12 @@ func list_actions():
 func current_room() -> Room:
 	return pawn.get_parent()
 
+func get_room_items() -> Array:
+	return current_room().get_items()
+
+func pick_up_item(item : Item):
+	return current_room().remove_item(item)
+
 func move_through_door(door : Door):
 	door_labels(true)
 	pawn.reparent(door.get_parent(), false)
