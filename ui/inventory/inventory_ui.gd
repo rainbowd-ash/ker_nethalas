@@ -21,7 +21,7 @@ func list_item_actions(item : Item):
 		Action.new(self, "back"),
 		])
 
-func list_gear_actions(equipment : Equipment):
+func list_gear_actions(_equipment : Equipment):
 	Router.actions_ui.list_actions([
 		Action.new(self, "unequip"),
 		Action.new(self, "back"),
@@ -29,31 +29,25 @@ func list_gear_actions(equipment : Equipment):
 
 func do_action(action_key : String):
 	if action_key == "equip":
-		inventory.equip_item_at(get_selected_item_index())
+		inventory.equip(get_item_from_selected_button())
 		refresh_inventory()
 	elif action_key == "unequip":
-		gear.unequip_slot(get_selected_button().slot)
+		inventory.add_item(gear.unequip(get_item_from_selected_button()))
 		refresh_inventory()
 	elif action_key == "drop":
-		inventory.drop_item(get_selected_button().item)
+		inventory.drop_item(get_item_from_selected_button())
 		refresh_inventory()
 	elif action_key == "back":
 		Router.ui_modes.mode_swap("ExploreMode")
 
-func get_selected_button():
+func get_item_from_selected_button() -> Item:
 	for button in %GearList.get_children():
 		if button.button_pressed == true:
-			return button
+			return button.item
 	for button in %ItemList.get_children():
 		if button.button_pressed == true:
-			return button
-
-func get_selected_item_index():
-	var selected_item = inventory_item_button_group.get_pressed_button()
-	for i in range(0, %ItemList.get_children().size()):
-		if %ItemList.get_children()[i] == selected_item:
-			return i
-	return -1
+			return button.item
+	return null
 
 func create_line_item(item : Item) -> ItemButton:
 	var line_item = ItemButton.new(item)
@@ -78,11 +72,9 @@ func refresh_inventory():
 		%ItemList.add_child(nothing_label)
 
 func refresh_gear():
-	for equipment in Character.gear.equipped:
-		if Character.gear.equipped[equipment]:
-			var line_item = create_line_item(Character.gear.equipped[equipment])
-			line_item.slot = equipment
-			%GearList.add_child(line_item)
+	for equipment in gear.get_equipped():
+		var line_item = create_line_item(equipment)
+		%GearList.add_child(line_item)
 
 func refresh_items():
 	for item in inventory.get_items():

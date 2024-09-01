@@ -6,7 +6,8 @@ var visited = false
 
 func _ready() -> void:
 	SignalBus.item_dropped.connect(add_item_to_room)
-	add_child(Backpack.new())
+	add_item_to_room(Backpack.new())
+	add_item_to_room(LightHelmet.new())
 
 func add_item_to_room(item : Item) -> void:
 	add_child(item)

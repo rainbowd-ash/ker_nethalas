@@ -14,7 +14,6 @@ func _ready():
 func setup() -> void:
 	$UiModes.initialize()
 	$GameModes.initialize()
-	
 
 func start_combat(values : CombatSetupValues):
 	$GameModes.mode_swap("CombatMode")

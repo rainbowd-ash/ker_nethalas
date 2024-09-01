@@ -14,7 +14,7 @@ func get_items():
 func add_item(item : Item): # TODO attempt to stack light items first
 	add_child(item)
 
-func equip_item(equipment : Equipment):
+func equip(equipment : Equipment):
 	if Character.gear.can_equip(equipment):
 		remove_child(equipment)
 		Character.gear.equip(equipment)
