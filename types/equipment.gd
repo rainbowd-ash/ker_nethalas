@@ -7,15 +7,9 @@ enum equipment_types {
 	belt,
 	head,
 	armor,
-	cuirass,
-	vambraces,
-	grieves,
 	gloves,
 	boots,
 	amulet,
 	ring,
-	backpack,
-	pouch,
 }
-var equipment_type : int = -1
-var equipped : bool = false
+var type : equipment_types

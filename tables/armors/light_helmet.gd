@@ -8,7 +8,7 @@ func _init():
 	cost = 20
 	integrity = Dice.sizes.d6
 	protection = 1
-	equipment_type = equipment_types.head
+	type = equipment_types.head
 
 func modify_perception_skill():
 	return perception_modifier

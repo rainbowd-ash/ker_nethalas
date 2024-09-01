@@ -7,7 +7,7 @@ func update_details(item : Item) -> void:
 	$Cost.text = "cost: %dc" % [item.cost]
 	$Description.text = "%s" % [item.description]
 	if item is Equipment:
-		$GearSlot.text = "%s" % [Equipment.equipment_types.keys()[item.equipment_type]]
+		$GearSlot.text = "%s" % [Equipment.equipment_types.keys()[item.type]]
 
 func _ready() -> void:
 	clear()
