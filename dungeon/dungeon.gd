@@ -3,10 +3,13 @@ class_name Dungeon
 
 @export var pawn : Node
 
+var tension_die : UsageDie
+
 func _ready() -> void:
 	current_room().visited = true
 	update_map()
 	door_labels()
+	tension_die = UsageDie.new(2)
 
 func list_actions():
 	var actions = current_room().get_actions()
@@ -24,12 +27,15 @@ func pick_up_item(item : Item):
 func move_through_door(door : Door):
 	door_labels(true)
 	pawn.reparent(door.get_parent(), false)
+	var new_room = not current_room().visited
 	current_room().visited = true
 	update_map()
 	SignalBus.moved_through_door.emit()
-	list_actions()
+	if new_room:
+		roll_room_checks()
 	door_labels()
-	roll_combat_encounter()
+	if Router.game_modes.get_current_mode() == "DungeonMode":
+		list_actions()
 
 func door_labels(clear : bool = false):
 	var doors = current_room().get_doors()
@@ -49,6 +55,18 @@ func update_map() -> void:
 				child.show()
 			else:
 				child.hide()
+
+# roll tension,
+# roll combat, 
+	# if no combat, roll events
+func roll_room_checks():
+	if tension_die.roll():
+		print("growing darkness table roll")
+	var combat_roll = Dice.roll(1, "d20")
+	if combat_roll > 10:
+		roll_combat_encounter()
+	else:
+		print("events table roll")
 
 func roll_combat_encounter():
 	# roll to see if combat happens
