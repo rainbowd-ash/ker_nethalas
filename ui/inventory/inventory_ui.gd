@@ -28,20 +28,21 @@ func list_actions():
 func list_floor_item_actions(item : Item):
 	Router.actions_ui.list_actions([
 		Action.new(self, "pick up"),
-		Action.new(self, "back"),
 	])
 
 func list_item_actions(item : Item):
-	Router.actions_ui.list_actions([
-		Action.new(self, "equip","equip",(true if item is Equipment else false)),
+	var actions_list = []
+	if item is Equipment:
+		actions_list.push_back(Action.new(self, "equip", "equip",gear.can_equip(item) ))
+	actions_list += [
 		Action.new(self, "drop"),
-		Action.new(self, "back"),
-		])
+	]
+	Router.actions_ui.list_actions(actions_list)
 
 func list_gear_actions(_equipment : Equipment):
 	Router.actions_ui.list_actions([
 		Action.new(self, "unequip"),
-		Action.new(self, "back"),
+		Action.new(self, "equip_drop","drop"),
 		])
 
 func do_action(action_key : String):
@@ -50,6 +51,9 @@ func do_action(action_key : String):
 		refresh_inventory()
 	elif action_key == "unequip":
 		inventory.add_item(gear.unequip(get_item_from_selected_button()))
+		refresh_inventory()
+	elif action_key == "equip_drop":
+		gear.drop(get_item_from_selected_button())
 		refresh_inventory()
 	elif action_key == "drop":
 		inventory.drop_item(get_item_from_selected_button())

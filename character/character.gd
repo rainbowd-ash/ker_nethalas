@@ -26,4 +26,6 @@ func _ready():
 	skills.set_value("perception",70)
 	skills.set_value("stealth", 80)
 	skills.set_value("fist_weapons", 80)
-	
+	skills.set_value("bladed_weapons", 10)
+	skills.set_value("shafted_weapons", 20)
+	skills.set_value("bludgeoning_weapons", 30)

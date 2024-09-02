@@ -7,6 +7,9 @@ var currency = 0 # TODO coins and gems take up 1 slot per 100
 
 func _ready():
 	SignalBus.item_picked_up.connect(_on_item_picked_up)
+	add_item(Dagger.new())
+	add_item(Spear.new())
+	add_item(Club.new())
 
 func get_items():
 	return get_children()
