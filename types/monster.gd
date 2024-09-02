@@ -15,11 +15,25 @@ var creature_trait
 var type
 var level_adaption
 
+func _ready() -> void:
+	SignalBus.combat_attack.connect(_on_combat_attack)
+
 func actions():
 	return null
 
-func get_attack_value():
+func get_attack_roll_value():
+	return combat_skill
+
+func get_defence_roll_value():
 	return combat_skill
 
 func do_action():
 	return
+
+func _on_combat_attack(attack):
+	if attack.target == self:
+		health -= attack.damage.amount
+		SignalBus.chat_log.emit("%s takes %d %s damage" % [title, attack.damage.amount, Damage.damage_types.keys()[attack.damage.damage_type]])
+		if health <= 0:
+			SignalBus.chat_log.emit("%s dies!" % title)
+			queue_free()

@@ -11,3 +11,5 @@ var game = "/root/Game/"
 @onready var chatlog = get_node(game + "Ui/Dungeon_Chat/ChatLog")
 @onready var actions_ui = get_node(game + "Ui/Stats_Actions/Actions")
 @onready var inventory_ui = get_node(game + "Ui/InventoryUi")
+
+var combat : Node

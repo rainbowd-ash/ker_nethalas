@@ -138,6 +138,7 @@ render_target_update_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
+scroll_following = true
 script = ExtResource("9_oe6tg")
 
 [node name="Stats_Actions" type="VBoxContainer" parent="Ui"]

@@ -39,7 +39,7 @@ enum damage_types {
 	water,
 }
 
-func setup(type : damage_types, a_roll : int) -> void:
+func _init(type : damage_types, a_roll : int) -> void:
 	damage_type = type
 	roll = a_roll
 	amount = convert_roll_to_damage(roll)

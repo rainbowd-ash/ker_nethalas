@@ -9,6 +9,7 @@ var in_combat : bool = true
 var initiative_mod = 0
 var stealth_check_result : OpposedCheckResult = null
 var round_counter : int = 0
+var finished_stealth = false
 
 func do_action(action_key : String):
 	if action_key == "attempt stealth":
@@ -30,11 +31,16 @@ func initialize(values : CombatSetupValues):
 	print("-combat starting")
 	$CharacterDummy.surprised = values.player_surprised
 	add_monster(values.monster)
-	stealth_check()
-	await stealth_finished
+	await stealth_check()
 	initiative_check()
 	SignalBus.chat_log.emit("-regular combat starting-")
 	combat_rounds()
+
+func list_actions():
+	if not finished_stealth:
+		list_stealth_actions()
+	else:
+		$CharacterDummy.list_player_actions()
 
 func add_monster(monster : Monster):
 	add_child(monster)
@@ -51,9 +57,10 @@ func get_monsters() -> Array:
 func stealth_check():
 	if $CharacterDummy.surprised:
 		print("character surprised, skipping stealth check")
-		stealth_finished.emit()
+		return
 	list_stealth_actions()
 	await stealth_action_choice
+	finished_stealth = true
 	if $CharacterDummy.attempting_stealth:
 		var highest_awareness = 0
 		for monster in get_monsters():
@@ -65,7 +72,7 @@ func stealth_check():
 		)
 		if stealth_check_result.winner == Dice.opposed_winner.defender:
 			$CharacterDummy.initiative_mod -= 10
-	stealth_finished.emit()
+	return
 
 func list_stealth_actions():
 	Router.actions_ui.list_actions([
@@ -81,13 +88,12 @@ func initiative_check():
 			SignalBus.chat_log.emit("player gets initiative from stealth success")
 			$CharacterDummy.initiative = true
 			return
-	var character_initiative : int = Character.get_initiative_value() + $CharacterDummy.initiative_mod
 	var highest_awareness = 0
 	for monster in get_monsters():
 		if monster.awareness > highest_awareness:
 			highest_awareness = monster.awareness
 	var roll_result : OpposedCheckResult = Dice.opposed_check(
-		CheckValue.new(character_initiative),
+		CheckValue.new($CharacterDummy.get_initiative_value()),
 		CheckValue.new(highest_awareness),
 	)
 	if roll_result.winner == Dice.opposed_winner.attacker:
@@ -105,7 +111,7 @@ func combat_rounds():
 	# combat loop
 	while in_combat:
 		round_counter += 1
-		SignalBus.chat_log.emit("-combat round %d-" % round_counter)
+		SignalBus.chat_log.emit("\n-combat round %d-" % round_counter)
 		if in_combat:
 			$CharacterDummy.list_player_actions()
 			await player_round_finished
@@ -117,20 +123,24 @@ func combat_rounds():
 		end_combat()
 
 func monster_action():
-	print("monster swings!")
 	for monster in get_monsters():
-		var monster_attack_value = monster.get_attack_value()
-		var roll_outcome = Dice.opposed_check(
-			CheckValue.new(monster_attack_value),
-			CheckValue.new(Character.get_defence_roll_value())
-		)
+		SignalBus.chat_log.emit("%s attacks!" % monster.title)
+		var roll_outcome = attack_check(monster, $CharacterDummy)
 		if roll_outcome.winner == Dice.opposed_winner.attacker:
-			print("monster hits!")
 			monster.do_action()
 		else:
 			# TODO defender gets roll on defensive move table
-			print("player defends!")
+			SignalBus.chat_log.emit("you dodge the attack!")
 
 func end_combat():
 	SignalBus.chat_log.emit("-end combat-")
 	Router.game_modes.mode_swap("DungeonMode")
+
+func attack_check(attacker : Node, defender : Node) -> OpposedCheckResult:
+	return Dice.opposed_check(
+		CheckValue.new(attacker.get_attack_roll_value()),
+		CheckValue.new(defender.get_defence_roll_value())
+	)
+
+func get_character_dummy() -> CharacterDummy:
+	return $CharacterDummy

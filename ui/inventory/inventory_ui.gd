@@ -34,7 +34,7 @@ func list_floor_item_actions(item : Item):
 func list_item_actions(item : Item):
 	Router.actions_ui.list_actions([
 		Action.new(self, "equip","equip",(true if item is Equipment else false)),
-		Action.new(self, "drop","drop",(true if %ItemList.get_children() else false)),
+		Action.new(self, "drop"),
 		Action.new(self, "back"),
 		])
 

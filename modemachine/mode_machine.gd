@@ -24,4 +24,6 @@ func mode_swap(new_mode_name : String):
 	SignalBus.mode_transition.emit(current_mode.name)
 
 func get_current_mode() -> String:
-	return current_mode.name
+	if current_mode:
+		return current_mode.name
+	return ""

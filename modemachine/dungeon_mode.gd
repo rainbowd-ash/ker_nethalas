@@ -3,4 +3,7 @@ class_name ExploreMode
 
 func enter() -> void:
 	super.enter()
-	Router.dungeon.list_actions()
+	if Router.game_modes.get_current_mode() == "CombatMode":
+		Router.combat.list_actions()
+	elif Router.game_modes.get_current_mode() == "DungeonMode":
+		Router.dungeon.list_actions()
