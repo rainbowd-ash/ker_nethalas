@@ -14,3 +14,4 @@ signal moved_through_door()
 signal mode_transition(new_mode_name : String)
 
 signal combat_attack(values : CombatAttack)
+signal monster_picked(monster : Monster)

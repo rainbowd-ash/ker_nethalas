@@ -17,7 +17,7 @@ func do_action(action_key : String):
 		$CharacterDummy.attempting_stealth = true
 		stealth_action_choice.emit()
 	elif action_key == "no stealth":
-		SignalBus.chat_log.emit("you attack!")
+		SignalBus.chat_log.emit("you do not sneak up on the monster")
 		stealth_action_choice.emit()
 	elif action_key == "pass":
 		SignalBus.chat_log.emit("player passes turn")
@@ -25,6 +25,8 @@ func do_action(action_key : String):
 	elif action_key == "flee":
 		in_combat = false
 		player_round_finished.emit()
+	elif action_key == "back":
+		list_actions()
 
 func initialize(values : CombatSetupValues):
 	SignalBus.chat_log.emit("-combat starting-\n")
@@ -53,6 +55,15 @@ func get_monsters() -> Array:
 		if child is Monster:
 			return_array.push_back(child)
 	return return_array
+
+func monster_picker():
+	var action_list = []
+	var index = 0
+	for monster in get_monsters():
+		action_list.push_back(Action.new(monster, "monster_pick", "%s" % monster.title))
+		index += 1
+	action_list.push_back(Action.new(self, "back"))
+	Router.actions_ui.list_actions(action_list)
 
 func stealth_check():
 	if $CharacterDummy.surprised:
@@ -127,7 +138,7 @@ func monster_action():
 		SignalBus.chat_log.emit("%s attacks!" % monster.title)
 		var roll_outcome = attack_check(monster, $CharacterDummy)
 		if roll_outcome.winner == Dice.opposed_winner.attacker:
-			monster.do_action()
+			monster.roll_attack()
 		else:
 			# TODO defender gets roll on defensive move table
 			SignalBus.chat_log.emit("you dodge the attack!")

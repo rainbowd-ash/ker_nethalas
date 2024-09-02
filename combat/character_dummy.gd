@@ -23,7 +23,12 @@ func reset_action_counts():
 
 func do_action(action_key : String):
 	if action_key == "standard attack":
-		standard_attack()
+		if get_parent().get_monsters().size() > 1:
+			get_parent().monster_picker()
+			var target = await SignalBus.monster_picked
+			standard_attack(target)
+		else:
+			standard_attack(get_parent().get_monsters()[0])
 	elif action_key == "flee":
 		flee()
 
@@ -33,14 +38,14 @@ func list_player_actions():
 		Action.new(self,"flee")
 	])
 
-func standard_attack():
+func standard_attack(target : Monster):
 	print("standard attack")
 	if get_parent().get_monsters().size() > 1:
 		pass # MONSTER SELECTOR
-	var roll = get_parent().attack_check(self, get_parent().get_monsters()[0])
+	var roll = get_parent().attack_check(self, target)
 	if roll.winner == Dice.opposed_winner.attacker:
 		print("successful attack")
-		var attack = CombatAttack.new(self,get_parent().get_monsters()[0])
+		var attack = CombatAttack.new(self,target)
 		attack.damage = get_standard_attack()
 		SignalBus.chat_log.emit("Attack hits!")
 		SignalBus.combat_attack.emit(attack)

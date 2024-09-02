@@ -25,3 +25,5 @@ func _ready():
 	skills.set_value("scavenge",50)
 	skills.set_value("perception",70)
 	skills.set_value("stealth", 80)
+	skills.set_value("fist_weapons", 80)
+	

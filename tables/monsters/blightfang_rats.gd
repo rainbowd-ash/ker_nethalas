@@ -13,7 +13,7 @@ func _init():
 	combat_skill = 30
 	magic_resistance = 20
 
-func do_action():
+func roll_attack():
 	var action_roll = Dice.roll(1,"d6")
 	if action_roll == 1 or action_roll == 2:
 		bite()

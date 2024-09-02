@@ -1,6 +1,8 @@
 extends Node
 class_name Monster
 
+signal monster_picked(monster : Monster)
+
 var title = ""
 var athletics = 0
 var awareness = 0
@@ -18,6 +20,10 @@ var level_adaption
 func _ready() -> void:
 	SignalBus.combat_attack.connect(_on_combat_attack)
 
+func do_action(action_key : String):
+	if action_key == "monster_pick":
+		SignalBus.monster_picked.emit(self)
+
 func actions():
 	return null
 
@@ -26,9 +32,6 @@ func get_attack_roll_value():
 
 func get_defence_roll_value():
 	return combat_skill
-
-func do_action():
-	return
 
 func _on_combat_attack(attack):
 	if attack.target == self:
