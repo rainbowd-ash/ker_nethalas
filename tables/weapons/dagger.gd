@@ -8,3 +8,4 @@ func _init():
 	skill = Skills.all_skills.bladed_weapons
 	speed = 10
 	qualities = [Weapon.all_qualities.quick]
+	description = ""
