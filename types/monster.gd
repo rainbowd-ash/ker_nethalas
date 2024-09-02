@@ -17,6 +17,8 @@ var creature_trait
 var type
 var level_adaption
 
+var active : bool = true
+
 func _ready() -> void:
 	SignalBus.combat_attack.connect(_on_combat_attack)
 
@@ -39,4 +41,5 @@ func _on_combat_attack(attack):
 		SignalBus.chat_log.emit("%s takes %d %s damage" % [title, attack.damage.amount, Damage.damage_types.keys()[attack.damage.damage_type]])
 		if health <= 0:
 			SignalBus.chat_log.emit("%s dies!" % title)
+			active = false
 			queue_free()

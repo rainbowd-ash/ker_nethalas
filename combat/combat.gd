@@ -53,7 +53,8 @@ func get_monsters() -> Array:
 	var return_array = []
 	for child in get_children():
 		if child is Monster:
-			return_array.push_back(child)
+			if child.active:
+				return_array.push_back(child)
 	return return_array
 
 func monster_picker():
@@ -121,6 +122,8 @@ func combat_rounds():
 		$CharacterDummy.initiative = true
 	# combat loop
 	while in_combat:
+		if get_monsters().size() == 0:
+			in_combat = false
 		round_counter += 1
 		SignalBus.chat_log.emit("\n-combat round %d-" % round_counter)
 		if in_combat:
