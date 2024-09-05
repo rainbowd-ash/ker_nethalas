@@ -24,6 +24,9 @@ func get_room_items() -> Array:
 func pick_up_item(item : Item):
 	return current_room().remove_item(item)
 
+func drop_item(item : Item):
+	current_room().add_item(item)
+
 func move_through_door(door : Door):
 	door_labels(true)
 	pawn.reparent(door.get_parent(), false)
