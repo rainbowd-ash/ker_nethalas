@@ -118,43 +118,45 @@ func initiative_check():
 func combat_rounds():
 	# give monster first attack to make the loop simpler
 	if not $CharacterDummy.initiative and in_combat:
-		monster_action()
+		for monster in get_monsters():
+			print("%s round 0 action" % monster.title)
+			monster_action(monster)
 		$CharacterDummy.initiative = true
 	# combat loop
 	while in_combat:
 		if get_monsters().size() == 0:
 			in_combat = false
 		round_counter += 1
+		print("combat round %d" % round_counter)
 		SignalBus.chat_log.emit("\n-combat round %d-" % round_counter)
 		if in_combat:
+			print("player action")
 			$CharacterDummy.list_player_actions()
 			await player_round_finished
 		if in_combat:
-			monster_action()
+			for monster in get_monsters():
+				print("%s action" % monster.title)
+				monster_action(monster)
 		$CharacterDummy.reset_action_counts()
 	# exit combat loop condition
 	if not in_combat:
 		end_combat()
 
-func monster_action():
-	for monster in get_monsters():
-		SignalBus.chat_log.emit("%s attacks!" % monster.title)
-		var roll_outcome = attack_check(monster, $CharacterDummy)
-		if roll_outcome.winner == Dice.opposed_winner.attacker:
-			monster.roll_attack()
-		else:
-			# TODO defender gets roll on defensive move table
-			SignalBus.chat_log.emit("you dodge the attack!")
+func monster_action(monster : Monster):
+	var roll = Dice.opposed_check(
+		CheckValue.new(monster.get_combat_skill()),
+		CheckValue.new($CharacterDummy.get_defence_skill())
+	)
+	if roll.winner == Dice.opposed_winner.attacker:
+		monster.roll_attack()
+	else:
+		# TODO defender gets roll on defensive move table
+		SignalBus.chat_log.emit("%s attacks! you dodge the attack!" % monster.title)
 
 func end_combat():
 	SignalBus.chat_log.emit("-end combat-")
 	Router.game_modes.mode_swap("DungeonMode")
 
-func attack_check(attacker : Node, defender : Node) -> OpposedCheckResult:
-	return Dice.opposed_check(
-		CheckValue.new(attacker.get_attack_roll_value()),
-		CheckValue.new(defender.get_defence_roll_value())
-	)
-
+# used by Monster
 func get_character_dummy() -> CharacterDummy:
 	return $CharacterDummy

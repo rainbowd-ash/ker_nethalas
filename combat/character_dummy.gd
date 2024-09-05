@@ -39,40 +39,58 @@ func list_player_actions():
 	])
 
 func standard_attack(target : Monster):
-	print("standard attack")
-	if get_parent().get_monsters().size() > 1:
-		pass # MONSTER SELECTOR
-	var roll = get_parent().attack_check(self, target)
-	if roll.winner == Dice.opposed_winner.attacker:
-		print("successful attack")
-		var attack = CombatAttack.new(self,target)
-		attack.damage = get_standard_attack()
-		SignalBus.chat_log.emit("Attack hits!")
-		SignalBus.combat_attack.emit(attack)
-	# do monster roll on defensive move table if needed
-	else:
-		SignalBus.chat_log.emit("Attack misses!")
+	var weapons : Array = Character.gear.get_weapons()
+	if weapons == []:
+		weapons.push_back(Character.get_unarmed_weapon())
+	for weapon in weapons:
+		var attack_skill = Character.skills.get_value(
+			Character.skills.all_skills.keys()[weapon.skill]
+		) + Character.gear.modify_attack_skill()
+		var roll = Dice.opposed_check(
+			CheckValue.new(attack_skill),
+			CheckValue.new(target.get_combat_skill())
+		)
+		if roll.winner == Dice.opposed_winner.attacker:
+			var attack = CombatAttack.new(self,target)
+			attack.damage = Damage.new(
+				Dice.to_damage(
+					weapon.die_quantity, 
+					weapon.die_size), 
+				weapon.damage_type
+			)
+			SignalBus.chat_log.emit("%s attack hits!" % weapon.title)
+			SignalBus.combat_attack.emit(attack)
+		# do monster roll on defensive move table if needed
+		else:
+			SignalBus.chat_log.emit("%s attack misses!" % weapon.title)
 	get_parent().player_round_finished.emit()
 
 func flee():
-	print("flee")
+	# TODO: actually do the flee check
+	# TODO: give player choice of door to run through
+	# TODO: keep track of monster in room (room monster_defeated bool)
+	SignalBus.chat_log.emit("You get away safely")
 	get_parent().in_combat = false
 	get_parent().player_round_finished.emit()
 
-func get_attack_roll_value() -> int:
-	return Character.skills.get_value("fist_weapons")
-
-func get_defence_roll_value() -> int:
-	return Character.skills.get_value("dodge")
+func get_defence_skill() -> int:
+	var value = Character.skills.get_value("dodge")
+	value += Character.gear.modify_defence_skill()
+	return value
 
 func get_initiative_value() -> int:
-	return Character.skills.get_value("perception") + initiative_mod
+	var value = Character.skills.get_value("perception")
+	value += initiative_mod
+	value += Character.gear.modify_initiative_skill()
+	return value
 
-func get_standard_attack() -> Damage:
-	return Damage.new(Damage.damage_types.bludgeoning,Dice.roll(1,"d6"))
+# checks weapons for attack rolls and modifiers (speed etc)
+# returns Damage (after table conversion)
+func get_standard_attack_damage(weapon : Weapon) -> Damage:
+	return 
 
 func _on_combat_attack(attack):
 	if attack.target == self:
 		Character.attributes.health -= attack.damage.amount
-		SignalBus.chat_log.emit("you take %d %s damage" % [attack.damage.amount, Damage.damage_types.keys()[attack.damage.damage_type]])
+		
 		Character.attributes.attributes_changed.emit()

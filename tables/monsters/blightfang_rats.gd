@@ -24,18 +24,17 @@ func roll_attack():
 
 func bite():
 	SignalBus.chat_log.emit("%s bites" % title)
-	var attack = Damage.new(Damage.damage_types.piercing, Dice.roll(1, "d6"))
+	var attack = Damage.new(Dice.to_damage(1, "d6", rally_counter), Damage.damage_types.piercing)
 	attack.amount += rally_counter
 	SignalBus.combat_attack.emit(CombatAttack.new(
-		self,get_parent().get_character_dummy(),attack)
+		self,Character,attack)
 	)
 
 func scratch():
 	SignalBus.chat_log.emit("%s scratches" % title)
-	var attack = Damage.new(Damage.damage_types.slashing, Dice.roll(1, "d4", 1))
-	attack.amount += rally_counter
+	var attack = Damage.new(Dice.to_damage(1, "d4", 1 + rally_counter), Damage.damage_types.slashing)
 	SignalBus.combat_attack.emit(CombatAttack.new(
-		self,get_parent().get_character_dummy(),attack)
+		self,Character,attack)
 	)
 
 func rally():
