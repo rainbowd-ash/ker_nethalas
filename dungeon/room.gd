@@ -5,11 +5,12 @@ var scavenged = false
 var visited = false
 
 func _ready() -> void:
-	SignalBus.item_dropped.connect(add_item_to_room)
-	add_item_to_room(Backpack.new())
-	add_item_to_room(LightHelmet.new())
+	SignalBus.item_dropped.connect(add_item)
+	add_item(Backpack.new())
+	add_item(LightHelmet.new())
+	add_item(GreatAxe.new())
 
-func add_item_to_room(item : Item) -> void:
+func add_item(item : Item) -> void:
 	add_child(item)
 
 func get_doors() -> Array:

@@ -24,12 +24,44 @@ const sizes = {
 	"d20": 20,
 }
 
+const roll_to_damage_table = [
+	[1, 0],
+	[4, 1],
+	[7, 2],
+	[9, 3],
+	[100, 4],
+]
+
 # (1, "d6", 4) = 1d6+4
-func roll(quantity : int, type : String, modifier : int = 0):
+# TODO: convert this to a regex (submit "1d4+4" string instead of 3 args)
+func roll(quantity : int, type : String, modifier : int = 0) -> int:
 	var total : int = modifier
 	for i in quantity:
 		total += randi_range(1, sizes[type])
 	return total
+
+func roll_seperately(quantity : int, type : String) -> Array:
+	var result : Array = []
+	for i in quantity:
+		result.push_back(roll(1, type))
+	return result
+
+func to_damage(quantity : int, type : String, modifier : int = 0) -> int:
+	var result : int = 0
+	var rolls = roll_seperately(quantity, type)
+	rolls.sort()
+	for roll in rolls:
+		if roll == rolls[0]:
+			roll += modifier
+		result += damage_table_conversion(roll)
+	return result
+
+func damage_table_conversion(roll : int) -> int:
+	for entry in roll_to_damage_table:
+		if roll <= entry[0]:
+			return entry[1]
+	push_error("Damage table conversion fall-through")
+	return 0
 
 # advantage -- 0 for none, 1 for advantage, -1 for disadvantage
 func roll_100(advantage : int):

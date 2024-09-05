@@ -29,10 +29,7 @@ func do_action(action_key : String):
 func actions():
 	return null
 
-func get_attack_roll_value():
-	return combat_skill
-
-func get_defence_roll_value():
+func get_combat_skill():
 	return combat_skill
 
 func _on_combat_attack(attack):
