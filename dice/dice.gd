@@ -50,6 +50,8 @@ func to_damage(dice : String) -> int:
 	rolls[0] += mod
 	for roll in rolls:
 		result += damage_table_conversion(roll)
+	print("damage conversion: ")
+	print("\trolls: ", rolls, " mod: %d result: %d\n" % [mod, result])
 	return result
 
 # \d+d\d+(\+\d+)?

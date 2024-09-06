@@ -44,6 +44,7 @@ func get_weapons() -> Array:
 func unarmed_weapon() -> Weapon:
 	var fists = Weapon.new(Damage.damage_types.bludgeoning, "fist_weapons")
 	fists.title = "unarmed strike"
+	fists.die = "1d4"
 	return fists
 
 # skill modification methods

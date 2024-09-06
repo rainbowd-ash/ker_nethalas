@@ -6,10 +6,10 @@ signal stealth_action_choice
 signal stealth_finished
 
 var in_combat : bool = true
-var initiative_mod = 0
-var stealth_check_result : OpposedCheckResult = null
 var round_counter : int = 0
-var finished_stealth = false
+
+var finished_stealth : bool = false
+var stealth_check_result : OpposedCheckResult = null
 
 func do_action(action_key : String):
 	if action_key == "attempt stealth":
@@ -30,12 +30,12 @@ func do_action(action_key : String):
 
 func initialize(values : CombatSetupValues):
 	SignalBus.chat_log.emit("-combat starting-\n")
-	print("-combat starting")
+	print("-combat starting-")
 	$CharacterDummy.surprised = values.player_surprised
 	add_monster(values.monster)
 	await stealth_check()
 	initiative_check()
-	SignalBus.chat_log.emit("-regular combat starting-")
+	print("-regular combat starting-")
 	combat_rounds()
 
 func list_actions():
@@ -52,9 +52,8 @@ func add_monster(monster : Monster):
 func get_monsters() -> Array:
 	var return_array = []
 	for child in get_children():
-		if child is Monster:
-			if child.active:
-				return_array.push_back(child)
+		if child is Monster and child.active:
+			return_array.push_back(child)
 	return return_array
 
 func monster_picker():
@@ -77,8 +76,8 @@ func stealth_check():
 		var highest_awareness = 0
 		for monster in get_monsters():
 			if monster.awareness > highest_awareness:
-				highest_awareness = monster.awareness
-		stealth_check_result = Dice.opposed_check(
+				highest_awareness = monster.get_skill("awareness")
+		var stealth_check_result = Dice.opposed_check(
 			CheckValue.new(Character.skills.get_skill("stealth")),
 			CheckValue.new(highest_awareness)
 		)
@@ -116,12 +115,10 @@ func initiative_check():
 		$CharacterDummy.initiative = false
 
 func combat_rounds():
-	# give monster first attack to make the loop simpler
-	if not $CharacterDummy.initiative and in_combat:
+	if not $CharacterDummy.initiative and in_combat and round_counter == 0:
 		for monster in get_monsters():
 			print("%s round 0 action" % monster.title)
 			monster_action(monster)
-		$CharacterDummy.initiative = true
 	# combat loop
 	while in_combat:
 		if get_monsters().size() == 0:
@@ -137,7 +134,6 @@ func combat_rounds():
 			for monster in get_monsters():
 				print("%s action" % monster.title)
 				monster_action(monster)
-		$CharacterDummy.reset_action_counts()
 	# exit combat loop condition
 	if not in_combat:
 		end_combat()

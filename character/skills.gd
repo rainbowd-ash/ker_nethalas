@@ -57,6 +57,7 @@ func get_skill(skill : String, include_modifiers : bool = true) -> int:
 		else:
 			modify_amount += _modify_skill_amount(weapon_skill.title)
 	if not include_modifiers:
+	# this does a lot of extra math to just return base value, but I like having it at the bottom
 		return base_value
 	return base_value + modify_amount
 

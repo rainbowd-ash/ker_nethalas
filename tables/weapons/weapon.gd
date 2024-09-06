@@ -18,6 +18,7 @@ var skill : String
 var speed = 0
 
 func _init(a_damage_type : Damage.damage_types, a_skill : String) -> void:
+	Character.skills._valid_skill_title(a_skill)
 	damage_type = a_damage_type
 	skill = a_skill
 
@@ -26,14 +27,15 @@ func get_speed():
 
 # stat modification methods
 # ===================================================================
-func modify_skill(skill : String):
+func modify_skill(skill : String) -> int:
 	match skill:
 		"attack":
 			return modify_attack_skill()
 		"defence":
 			return modify_defence_skill()
-		"initative":
+		"initiative":
 			return modify_initiative_skill()
+	return 0
 
 func modify_defence_skill() -> int:
 	var mod = 0
