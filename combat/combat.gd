@@ -79,7 +79,7 @@ func stealth_check():
 			if monster.awareness > highest_awareness:
 				highest_awareness = monster.awareness
 		stealth_check_result = Dice.opposed_check(
-			CheckValue.new(Character.skills.get_value("stealth")),
+			CheckValue.new(Character.skills.get_skill("stealth")),
 			CheckValue.new(highest_awareness)
 		)
 		if stealth_check_result.winner == Dice.opposed_winner.defender:
@@ -105,7 +105,7 @@ func initiative_check():
 		if monster.awareness > highest_awareness:
 			highest_awareness = monster.awareness
 	var roll_result : OpposedCheckResult = Dice.opposed_check(
-		CheckValue.new($CharacterDummy.get_initiative_value()),
+		CheckValue.new(Character.skills.get_skill("initiative")),
 		CheckValue.new(highest_awareness),
 	)
 	if roll_result.winner == Dice.opposed_winner.attacker:
@@ -143,9 +143,12 @@ func combat_rounds():
 		end_combat()
 
 func monster_action(monster : Monster):
+	# TODO: this is wrong-- 
+	# the monster picks a move from their movelist first, 
+	# then if they picked an attack the opposed check is rolled.
 	var roll = Dice.opposed_check(
-		CheckValue.new(monster.get_combat_skill()),
-		CheckValue.new($CharacterDummy.get_defence_skill())
+		CheckValue.new(monster.get_skill("combat")),
+		CheckValue.new(Character.skills.get_skill("defence"))
 	)
 	if roll.winner == Dice.opposed_winner.attacker:
 		monster.roll_attack()

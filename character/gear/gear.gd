@@ -35,13 +35,18 @@ func can_equip(equipment : Equipment) -> GearSlot:
 
 func get_weapons() -> Array:
 	var weapons : Array = []
-	for slot in get_slots():
-		for equipment in get_equipped():
-			if equipment is Weapon:
-				weapons.push_back(equipment)
+	for weapon in $WeaponSlot.get_equipped():
+		weapons.push_back(weapon)
+	if not weapons:
+		weapons.push_back(unarmed_weapon())
 	return weapons
 
-# stat modification methods
+func unarmed_weapon() -> Weapon:
+	var fists = Weapon.new(Damage.damage_types.bludgeoning, "fist_weapons")
+	fists.title = "unarmed strike"
+	return fists
+
+# skill modification methods
 # ===================================================================
 func modify_max_carry_capacity() -> int:
 	var cap_mod : int = 0

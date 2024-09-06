@@ -9,7 +9,7 @@ var accused = ""
 @onready var gear = $Gear
 
 func _ready():
-	SignalBus.combat_attack.connect(_on_combat_attack)
+	SignalBus.attack.connect(_on_attack)
 	
 	attributes.max_health = Dice.roll("1d6+8")
 	attributes.health = attributes.max_health
@@ -18,22 +18,22 @@ func _ready():
 	attributes.max_aether = Dice.roll("1d6+8")
 	attributes.aether = attributes.max_aether
 	attributes.magic_resistance = 20
-	skills.set_value("acrobatics",10)
-	skills.set_value("athletics",10)
-	skills.set_value("dodge",10)
-	skills.set_value("perception",20)
-	skills.set_value("resolve",10)
-	skills.set_value("fist_weapons",10)
+	skills.set_skill("acrobatics",10)
+	skills.set_skill("athletics",10)
+	skills.set_skill("dodge",10)
+	skills.set_skill("perception",20)
+	skills.set_skill("resolve",10)
+	skills.set_skill("fist_weapons",10)
 	# debug test values
-	skills.set_value("scavenge",50)
-	skills.set_value("perception",70)
-	skills.set_value("stealth", 80)
-	skills.set_value("fist_weapons", 80)
-	skills.set_value("bladed_weapons", 10)
-	skills.set_value("shafted_weapons", 20)
-	skills.set_value("bludgeoning_weapons", 30)
+	skills.set_skill("scavenge",50)
+	skills.set_skill("perception",70)
+	skills.set_skill("stealth", 80)
+	skills.set_skill("fist_weapons", 40)
+	skills.set_skill("bladed_weapons", 10)
+	skills.set_skill("shafted_weapons", 20)
+	skills.set_skill("bludgeoning_weapons", 30)
 
-func _on_combat_attack(attack : CombatAttack):
+func _on_attack(attack : Attack):
 	if attack.target == self:
 		var remaining_damage : int = attack.damage.amount
 		SignalBus.chat_log.emit("you take %d %s damage" % [attack.damage.amount, Damage.damage_types.keys()[attack.damage.damage_type]])
@@ -57,7 +57,7 @@ func death_check():
 func get_unarmed_weapon() -> Weapon:
 	var fists : Weapon = Weapon.new(
 		Damage.damage_types.bludgeoning, 
-		Skills.all_skills.fist_weapons
+		"fist_weapons"
 		)
 	fists.title = "fists"
 	return fists

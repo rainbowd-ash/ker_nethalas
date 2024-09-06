@@ -10,28 +10,13 @@ func can_equip(armor : Equipment) -> GearSlot:
 		return null
 	if armor.type == Equipment.equipment_types.full_suit:
 		if torso != null or vambraces != null or greaves != null:
-			return null
-		full_suit = armor
+			return null # piecemeal equipped
 		return self
-	elif [Equipment.equipment_types.torso,
-			Equipment.equipment_types.vambraces,
-			Equipment.equipment_types.greaves]\
-			.has(armor.type):
-		if full_suit != null:
-			return self
-		match armor.type:
-			Equipment.equipment_types.torso:
-				if torso != null:
-					return self
-				torso = armor
-			Equipment.equipment_types.vambraces:
-				if vambraces != null:
-					return self
-				vambraces = armor
-			Equipment.equipment_types.greaves:
-				if greaves != null:
-					return self
-				greaves = armor
+	elif armor.type == Equipment.equipment_types.torso and not torso:
+		return self
+	elif armor.type == Equipment.equipment_types.vambraces and not vambraces:
+		return self
+	elif armor.type == Equipment.equipment_types.greaves and not greaves:
 		return self
 	return null
 

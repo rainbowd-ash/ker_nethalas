@@ -82,7 +82,7 @@ func do_action(action_key : String):
 func scavenge():
 	SignalBus.chat_log.emit("you rifle through bones and spiderwebs to find anything useful.")
 	scavenged = true
-	var scavenge_check = Dice.check(CheckValue.new(Character.skills.get_value("scavenge")))
+	var scavenge_check = Dice.check(CheckValue.new(Character.skills.get_skill("scavenge")))
 	if scavenge_check.success:
 		var scavenge_roll = Dice.roll("1d20")
 		print("\tscavenge table roll: %d" % scavenge_roll)
@@ -93,7 +93,7 @@ func scavenge():
 				print("\ttable roll + 5: %d" % scavenge_roll)
 		if scavenge_roll == 1:
 			# You uncover some grisly remains. Make a successful Resolve check or lose 1 Sanity
-			Dice.check(CheckValue.new(Character.skills.get_value("resolve")))
+			Dice.check(CheckValue.new(Character.skills.get_skill("resolve")))
 		elif scavenge_roll == 2:
 			# you find nothing of interest
 			pass

@@ -9,7 +9,7 @@ func _init():
 	awareness = 60
 	endurance = 30
 	athletics = 5
-	health = 3
+	max_health = 3
 	combat_skill = 30
 	magic_resistance = 20
 
@@ -26,16 +26,12 @@ func bite():
 	SignalBus.chat_log.emit("%s bites" % title)
 	var attack = Damage.new(Dice.to_damage("1d6+%d" % rally_counter), Damage.damage_types.piercing)
 	attack.amount += rally_counter
-	SignalBus.combat_attack.emit(CombatAttack.new(
-		self,Character,attack)
-	)
+	SignalBus.attack.emit(Attack.new(self, default_target, attack))
 
 func scratch():
 	SignalBus.chat_log.emit("%s scratches" % title)
 	var attack = Damage.new(Dice.to_damage("1d4+%d" % (1 + rally_counter)), Damage.damage_types.slashing)
-	SignalBus.combat_attack.emit(CombatAttack.new(
-		self,Character,attack)
-	)
+	SignalBus.attack.emit(Attack.new(self, default_target, attack))
 
 func rally():
 	SignalBus.chat_log.emit("%s rallies" % title)

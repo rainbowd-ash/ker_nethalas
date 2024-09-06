@@ -15,7 +15,7 @@ var surprised : bool = false
 var attempting_stealth : bool = false
 
 func _ready() -> void:
-	SignalBus.combat_attack.connect(_on_combat_attack)
+	SignalBus.attack.connect(_on_attack)
 
 func reset_action_counts():
 	standard_action_count = base_standard_action_count
@@ -43,21 +43,18 @@ func standard_attack(target : Monster):
 	if weapons == []:
 		weapons.push_back(Character.get_unarmed_weapon())
 	for weapon in weapons:
-		var attack_skill = Character.skills.get_value(
-			Character.skills.all_skills.keys()[weapon.skill]
-		) + Character.gear.modify_skill("attack")
 		var roll = Dice.opposed_check(
-			CheckValue.new(attack_skill),
-			CheckValue.new(target.get_combat_skill())
+			CheckValue.new(Character.skills.get_skill("attack")),
+			CheckValue.new(target.get_skill("combat"))
 		)
 		if roll.winner == Dice.opposed_winner.attacker:
-			var attack = CombatAttack.new(self,target)
+			var attack = Attack.new(self,target)
 			attack.damage = Damage.new(
 				Dice.to_damage(weapon.die),
 				weapon.damage_type
 			)
 			SignalBus.chat_log.emit("%s attack hits!" % weapon.title)
-			SignalBus.combat_attack.emit(attack)
+			SignalBus.attack.emit(attack)
 		# do monster roll on defensive move table if needed
 		else:
 			SignalBus.chat_log.emit("%s attack misses!" % weapon.title)
@@ -71,25 +68,14 @@ func flee():
 	get_parent().in_combat = false
 	get_parent().player_round_finished.emit()
 
-func get_defence_skill() -> int:
-	# TODO fix these so they make more sense (ask character.skills for modified skill value and that checks everywhere)
-	var value = Character.skills.get_value("dodge")
-	value += Character.gear.modify_skill("defence")
-	return value
-
-func get_initiative_value() -> int:
-	var value = Character.skills.get_value("perception")
-	value += initiative_mod
-	value += Character.gear.modify_skill("initiative")
-	return value
-
-# checks weapons for attack rolls and modifiers (speed etc)
-# returns Damage (after table conversion)
-func get_standard_attack_damage(weapon : Weapon) -> Damage:
-	return 
-
-func _on_combat_attack(attack):
+# this should call Character._on_attack() after performing whatever combat modifiers 
+# monsters should call this version when attacking
+func _on_attack(attack):
 	if attack.target == self:
-		Character.attributes.health -= attack.damage.amount
-		
-		Character.attributes.attributes_changed.emit()
+		attack.target = Character
+		Character._on_attack(attack)
+
+# skill modification methods
+# ===================================================================
+func modify_skill(skill : String) -> int:
+	return 0

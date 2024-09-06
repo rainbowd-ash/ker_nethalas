@@ -7,6 +7,7 @@ var max_equipped : int = 1
 func get_equipped():
 	return get_children()
 
+# TODO: a well-adjusted person would make this return a bool
 func can_equip(equipment : Equipment) -> GearSlot:
 	if get_children().size() >= max_equipped:
 		return null
@@ -16,8 +17,7 @@ func can_equip(equipment : Equipment) -> GearSlot:
 	return null
 
 func equip(equipment : Equipment) -> bool:
-	var slot = can_equip(equipment)
-	if slot:
+	if can_equip(equipment):
 		add_child(equipment)
 		return true
 	return false

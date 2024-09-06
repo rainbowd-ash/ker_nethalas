@@ -14,10 +14,10 @@ enum all_qualities {
 var qualities = []
 var die : String = "1d6"
 var damage_type : Damage.damage_types
-var skill : Skills.all_skills
+var skill : String
 var speed = 0
 
-func _init(a_damage_type : Damage.damage_types, a_skill : Skills.all_skills) -> void:
+func _init(a_damage_type : Damage.damage_types, a_skill : String) -> void:
 	damage_type = a_damage_type
 	skill = a_skill
 
@@ -58,7 +58,7 @@ func modify_initiative_skill() -> int:
 func modify_damage_roll() -> int:
 	var mod = 0
 	if qualities.has(all_qualities.versatile):
-		if get_parent().is_single_wielding():
+		if get_parent().wield_state() == "single wield":
 			mod += 1
 	if qualities.has(all_qualities.twohanded):
 		mod += 1

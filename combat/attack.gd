@@ -1,4 +1,4 @@
-class_name CombatAttack
+class_name Attack
 
 var source : Node
 var target : Node

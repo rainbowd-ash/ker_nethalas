@@ -7,71 +7,71 @@ var health : int = 0 :
 	get:
 		return health
 	set(value):
-		attributes_changed.emit()
 		health = value
+		attributes_changed.emit()
 
 var max_health : int = 0 :
 	get: 
 		return max_health
 	set(value):
-		attributes_changed.emit()
 		max_health = value
+		attributes_changed.emit()
 		
 var toughness : int = 0 :
 	get: 
 		return toughness
 	set(value):
-		attributes_changed.emit()
 		toughness = value
+		attributes_changed.emit()
 
 var max_toughness : int = 0 :
 	get: 
 		return max_toughness
 	set(value):
-		attributes_changed.emit()
 		max_toughness = value
+		attributes_changed.emit()
 
 var aether : int = 0 :
 	get: 
 		return aether
 	set(value):
-		attributes_changed.emit()
 		aether = value
+		attributes_changed.emit()
 		
 var max_aether : int = 0 :
 	get: 
 		return max_aether
 	set(value):
-		attributes_changed.emit()
 		max_aether = value
+		attributes_changed.emit()
 		
 var sanity : int = 0 :
 	get: 
 		return sanity
 	set(value):
-		attributes_changed.emit()
 		sanity = value
+		attributes_changed.emit()
 		
 var exhaustion : int = 0 :
 	get: 
 		return exhaustion
 	set(value):
-		attributes_changed.emit()
 		exhaustion = value
+		attributes_changed.emit()
 		
 var exhaustion_resistance : int = 0 :
 	get: 
 		return exhaustion_resistance
 	set(value):
-		attributes_changed.emit()
 		exhaustion_resistance = value
+		attributes_changed.emit()
 
 var magic_resistance : int = 0 :
 	get: 
 		return magic_resistance
 	set(value):
-		attributes_changed.emit()
 		magic_resistance = value
+		attributes_changed.emit()
 
 func print_all():
 	print("All attributes:")

@@ -1,12 +1,19 @@
 extends GearSlot
 
-var left_hand: Weapon = null
+var left_hand: Weapon = null # character is left-handed by default
 var right_hand: Weapon = null
 
-func is_single_wielding() -> bool:
+func wield_state() -> String:
 	if (left_hand and not right_hand) or (right_hand and not left_hand):
-		return true
-	return false
+		return "single wield"
+	elif left_hand and right_hand:
+		return "dual wield"
+	elif left_hand == right_hand:
+		return "twohanded"
+	elif not left_hand and not right_hand:
+		return "unarmed"
+	push_error("wield_state() error")
+	return ""
 
 func can_equip(weapon : Equipment) -> GearSlot:
 	if weapon is not Weapon:
