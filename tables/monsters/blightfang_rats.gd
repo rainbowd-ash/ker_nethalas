@@ -14,7 +14,7 @@ func _init():
 	magic_resistance = 20
 
 func roll_attack():
-	var action_roll = Dice.roll(1,"d6")
+	var action_roll = Dice.roll("1d6")
 	if action_roll == 1 or action_roll == 2:
 		bite()
 	elif action_roll >= 3 and action_roll <= 5:
@@ -24,7 +24,7 @@ func roll_attack():
 
 func bite():
 	SignalBus.chat_log.emit("%s bites" % title)
-	var attack = Damage.new(Dice.to_damage(1, "d6", rally_counter), Damage.damage_types.piercing)
+	var attack = Damage.new(Dice.to_damage("1d6+%d" % rally_counter), Damage.damage_types.piercing)
 	attack.amount += rally_counter
 	SignalBus.combat_attack.emit(CombatAttack.new(
 		self,Character,attack)
@@ -32,7 +32,7 @@ func bite():
 
 func scratch():
 	SignalBus.chat_log.emit("%s scratches" % title)
-	var attack = Damage.new(Dice.to_damage(1, "d4", 1 + rally_counter), Damage.damage_types.slashing)
+	var attack = Damage.new(Dice.to_damage("1d4+%d" % (1 + rally_counter)), Damage.damage_types.slashing)
 	SignalBus.combat_attack.emit(CombatAttack.new(
 		self,Character,attack)
 	)

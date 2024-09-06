@@ -3,13 +3,12 @@ class_name Dungeon
 
 @export var pawn : Node
 
-var tension_die : UsageDie
+var tension_die : UsageDie = UsageDie.new("d8")
 
 func _ready() -> void:
 	current_room().visited = true
 	update_map()
 	door_labels()
-	tension_die = UsageDie.new(2)
 
 func list_actions():
 	var actions = current_room().get_actions()
@@ -65,7 +64,7 @@ func update_map() -> void:
 func roll_room_checks():
 	if tension_die.roll():
 		print("growing darkness table roll")
-	var combat_roll = Dice.roll(1, "d20")
+	var combat_roll = Dice.roll("1d20")
 	if combat_roll > 10:
 		roll_combat_encounter()
 	else:

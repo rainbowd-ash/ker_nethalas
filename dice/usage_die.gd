@@ -16,13 +16,15 @@ const size_chain = [
 var base_size : int # index on size chain of start position (3 = d10) -- die will reset to this size after triggering
 var current_size : int # index on size chain of current position
 
-func _init(a_base_size : int) -> void:
-	base_size = a_base_size
+func _init(die_size : String) -> void:
+	if not size_chain.has(die_size):
+		push_error("Invalid usage die size")
+	base_size = size_chain.find(die_size)
 	current_size = base_size
 
 # roll die. returns true if triggered and size reset otherwise false
 func roll() -> bool:
-	var roll_result = Dice.roll(1, size_chain[current_size])
+	var roll_result = Dice.roll("1%s" % size_chain[current_size])
 	if roll_result == 1 or roll_result == 2:
 		if current_size == 0:
 			current_size = base_size

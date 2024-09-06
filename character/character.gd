@@ -11,11 +11,11 @@ var accused = ""
 func _ready():
 	SignalBus.combat_attack.connect(_on_combat_attack)
 	
-	attributes.max_health = Dice.roll(1, "d6", 8)
+	attributes.max_health = Dice.roll("1d6+8")
 	attributes.health = attributes.max_health
-	attributes.max_toughness = Dice.roll(2, "d6", 10)
+	attributes.max_toughness = Dice.roll("1d6+10")
 	attributes.toughness = attributes.max_toughness
-	attributes.max_aether = Dice.roll(1, "d6", 10)
+	attributes.max_aether = Dice.roll("1d6+8")
 	attributes.aether = attributes.max_aether
 	attributes.magic_resistance = 20
 	skills.set_value("acrobatics",10)

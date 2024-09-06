@@ -15,53 +15,73 @@ enum opposed_winner {
 	defender,
 }
 
-const sizes = {
-	"d4": 4,
-	"d6": 6,
-	"d8": 8,
-	"d10": 10,
-	"d12": 12,
-	"d20": 20,
-}
-
-const roll_to_damage_table = [
-	[1, 0],
-	[4, 1],
-	[7, 2],
-	[9, 3],
-	[100, 4],
-]
-
-# (1, "d6", 4) = 1d6+4
-# TODO: convert this to a regex (submit "1d4+4" string instead of 3 args)
-func roll(quantity : int, type : String, modifier : int = 0) -> int:
-	var total : int = modifier
-	for i in quantity:
-		total += randi_range(1, sizes[type])
+func roll(dice : String) -> int:
+	var valid : bool = dice_string_validation(dice)
+	if not valid:
+		return 0
+	var amount : int = dice.get_slice('d',0).to_int()
+	var size : int = dice.get_slice('+',0).get_slice('d',1).to_int()
+	var mod : int = dice.get_slice('+',1).to_int() if dice.split('+').size() > 1 else 0
+	var total : int = mod
+	for i in amount:
+		var r = randi_range(1, size)
+		total += r
 	return total
 
-func roll_seperately(quantity : int, type : String) -> Array:
+func roll_seperately(dice : String) -> Array:
+	var valid : bool = dice_string_validation(dice)
+	if not valid:
+		return []
 	var result : Array = []
-	for i in quantity:
-		result.push_back(roll(1, type))
+	var amount : int = dice.get_slice('d',0).to_int()
+	var size : int = dice.get_slice('+',0).get_slice('d',1).to_int()
+	for i in amount:
+		result.push_back(roll("1d%d" % size)) # simply don't send the modifier to the roll
 	return result
 
-func to_damage(quantity : int, type : String, modifier : int = 0) -> int:
+func to_damage(dice : String) -> int:
+	var valid : bool = dice_string_validation(dice)
+	if not valid:
+		return 0
 	var result : int = 0
-	var rolls = roll_seperately(quantity, type)
+	var mod : int = dice.get_slice('+',1).to_int() if dice.split('+').size() > 1 else 0
+	var rolls = roll_seperately(dice)
 	rolls.sort()
+	rolls[0] += mod
 	for roll in rolls:
-		if roll == rolls[0]:
-			roll += modifier
 		result += damage_table_conversion(roll)
 	return result
 
+# \d+d\d+(\+\d+)?
+func dice_string_validation(dice : String) -> bool:
+	var validation : RegEx
+	validation = RegEx.create_from_string(r"\d+d\d+(\+\d+)?")
+	var substr : RegExMatch = validation.search(dice)
+	if substr == null:
+		push_error("Invalid die string")
+		return false
+	return true
+
+# die roll | damage dealt
+#      1   | 0
+#      2-4 | 1
+#      5-7 | 2
+#      8-9 | 3
+#      10+ | 4
 func damage_table_conversion(roll : int) -> int:
-	for entry in roll_to_damage_table:
-		if roll <= entry[0]:
-			return entry[1]
-	push_error("Damage table conversion fall-through")
-	return 0
+	if roll < 1:
+		return 0
+	match roll:
+		1:
+			return 0
+		2, 3, 4:
+			return 1
+		5, 6, 7:
+			return 2
+		8, 9:
+			return 3
+		_:
+			return 4
 
 # advantage -- 0 for none, 1 for advantage, -1 for disadvantage
 func roll_100(advantage : int):
@@ -162,5 +182,5 @@ func opposed_check(atk_values : CheckValue, def_values : CheckValue):
 		push_warning("ERROR: opposed check result not handled correctly")
 	print("\tattacker roll: %d stat: %d success: %s critical: %s" % [attacker_roll.roll, atk_values.attribute_value, str(result.attacker_success), str(result.attacker_critical)])
 	print("\tdefender roll: %d stat: %d success: %s critical: %s" % [defender_roll.roll, def_values.attribute_value, str(result.defender_success), str(result.defender_critical)])
-	print("\twinner: %s" % ("attacker" if  result.winner == 0 else "defender")) 
+	print("\twinner: %s\n" % ("attacker" if  result.winner == 0 else "defender")) 
 	return result

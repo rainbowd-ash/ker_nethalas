@@ -53,9 +53,7 @@ func standard_attack(target : Monster):
 		if roll.winner == Dice.opposed_winner.attacker:
 			var attack = CombatAttack.new(self,target)
 			attack.damage = Damage.new(
-				Dice.to_damage(
-					weapon.die_quantity, 
-					weapon.die_size), 
+				Dice.to_damage(weapon.die),
 				weapon.damage_type
 			)
 			SignalBus.chat_log.emit("%s attack hits!" % weapon.title)

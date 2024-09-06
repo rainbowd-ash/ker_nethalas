@@ -12,8 +12,7 @@ enum all_qualities {
 }
 
 var qualities = []
-var die_size : String = "d6"
-var die_quantity : int = 1
+var die : String = "1d6"
 var damage_type : Damage.damage_types
 var skill : Skills.all_skills
 var speed = 0
