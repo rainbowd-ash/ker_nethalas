@@ -15,10 +15,12 @@ func can_equip(equipment : Equipment) -> GearSlot:
 			return self
 	return null
 
-func equip(equipment : Equipment) -> void:
+func equip(equipment : Equipment) -> bool:
 	var slot = can_equip(equipment)
 	if slot:
 		add_child(equipment)
+		return true
+	return false
 
 func dequip(equipment : Equipment) -> Equipment:
 	remove_child(equipment)

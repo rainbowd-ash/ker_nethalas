@@ -11,7 +11,7 @@ func get_slots() -> Array:
 func equip(equipment : Equipment) -> void:
 	var slot = can_equip(equipment)
 	if slot:
-		slot.add_child(equipment)
+		slot.equip(equipment)
 
 func dequip(equipment : Equipment) -> Equipment:
 	return equipment.get_parent().dequip(equipment)
@@ -50,30 +50,12 @@ func modify_max_carry_capacity() -> int:
 			cap_mod += armor.modify_max_inventory_size()
 	return cap_mod + %Inventory.base_capacity
 
-func modify_attack_skill() -> int:
-	var atk_mod : int = 0
+func modify_skill(skill : String) -> int:
+	var skill_mod : int = 0
 	for equipment in get_equipped():
-		if equipment is Weapon:
-			atk_mod += equipment.get_speed()
-		if equipment.has_method("modify_attack_skill"):
-			atk_mod += equipment.modify_attack_skill()
-	return atk_mod
-
-func modify_defence_skill() -> int:
-	var def_mod : int = 0
-	for equipment in get_equipped():
-		if equipment is Weapon:
-			def_mod += equipment.get_speed()
-		if equipment.has_method("modify_defence_skill"):
-			def_mod += equipment.modify_defence_skill()
-	return def_mod
-
-func modify_initiative_skill() -> int:
-	var init_mod : int = 0
-	for equipment in get_equipped():
-		if equipment.has_method("modify_initiative_value"):
-			init_mod += equipment.modify_initiative_skill()
-	return init_mod
+		if equipment.has_method("modify_skill"):
+			skill_mod = equipment.modify_skill(skill)
+	return skill_mod
 
 func modify_damage_roll() -> int:
 	var dam_mod : int = 0

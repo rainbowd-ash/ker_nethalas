@@ -10,6 +10,10 @@ func _ready():
 	add_item(Dagger.new())
 	add_item(Spear.new())
 	add_item(Club.new())
+	add_item(FullSuitPlate.new())
+	add_item(TorsoMetalScale.new())
+	add_item(LightVambraces.new())
+	add_item(LightGreaves.new())
 
 func get_items():
 	return get_children()
@@ -18,9 +22,8 @@ func add_item(item : Item): # TODO attempt to stack light items first
 	add_child(item)
 
 func equip(equipment : Equipment):
-	if Character.gear.can_equip(equipment):
-		remove_child(equipment)
-		Character.gear.equip(equipment)
+	remove_child(equipment)
+	Character.gear.equip(equipment)
 
 func drop_item(item : Item):
 	remove_child(item)

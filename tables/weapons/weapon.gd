@@ -26,6 +26,15 @@ func get_speed():
 
 # stat modification methods
 # ===================================================================
+func modify_skill(skill : String):
+	match skill:
+		"attack":
+			return modify_attack_skill()
+		"defence":
+			return modify_defence_skill()
+		"initative":
+			return modify_initiative_skill()
+
 func modify_defence_skill() -> int:
 	var mod = 0
 	#if qualities.has(all_qualities.defensive) and Character.gear.has_shield():
@@ -48,8 +57,9 @@ func modify_initiative_skill() -> int:
 
 func modify_damage_roll() -> int:
 	var mod = 0
-	if qualities.has(all_qualities.versatile): # TODO fix this to check for offhand
-		mod += 1
+	if qualities.has(all_qualities.versatile):
+		if get_parent().is_single_wielding():
+			mod += 1
 	if qualities.has(all_qualities.twohanded):
 		mod += 1
 	if qualities.has(all_qualities.powerful):

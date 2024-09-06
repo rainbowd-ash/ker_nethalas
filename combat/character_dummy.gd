@@ -45,7 +45,7 @@ func standard_attack(target : Monster):
 	for weapon in weapons:
 		var attack_skill = Character.skills.get_value(
 			Character.skills.all_skills.keys()[weapon.skill]
-		) + Character.gear.modify_attack_skill()
+		) + Character.gear.modify_skill("attack")
 		var roll = Dice.opposed_check(
 			CheckValue.new(attack_skill),
 			CheckValue.new(target.get_combat_skill())
@@ -72,14 +72,15 @@ func flee():
 	get_parent().player_round_finished.emit()
 
 func get_defence_skill() -> int:
+	# TODO fix these so they make more sense (ask character.skills for modified skill value and that checks everywhere)
 	var value = Character.skills.get_value("dodge")
-	value += Character.gear.modify_defence_skill()
+	value += Character.gear.modify_skill("defence")
 	return value
 
 func get_initiative_value() -> int:
 	var value = Character.skills.get_value("perception")
 	value += initiative_mod
-	value += Character.gear.modify_initiative_skill()
+	value += Character.gear.modify_skill("initiative")
 	return value
 
 # checks weapons for attack rolls and modifiers (speed etc)

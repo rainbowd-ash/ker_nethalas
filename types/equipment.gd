@@ -6,7 +6,10 @@ enum equipment_types {
 	off_hand,
 	belt,
 	head,
-	armor,
+	full_suit,
+	torso, # body
+	vambraces, # arms
+	greaves, # legs
 	gloves,
 	boots,
 	amulet,
