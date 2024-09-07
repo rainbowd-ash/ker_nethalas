@@ -3,7 +3,7 @@ class_name BlightfangRats
 
 var rally_counter = 0
 
-func _init():
+func _init() -> void:
 	title = "blightfang rats"
 	number = 3
 	awareness = 60
@@ -12,6 +12,8 @@ func _init():
 	max_health = 3
 	combat_skill = 30
 	magic_resistance = 20
+	body_plan = BodyPlanQuadraped.new()
+	weak_spots = ["head"]
 
 func roll_attack():
 	var action_roll = Dice.roll("1d6")

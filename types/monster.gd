@@ -12,11 +12,14 @@ var health = 0
 var max_health = 0
 var magic_resistance = 0
 var number = 0
+
 var spoils
-var hit_location
 var creature_trait
 var type
 var level_adaption
+
+var weak_spots : Array[String] = []
+var body_plan : BodyPlan = null
 
 var active : bool = true
 var default_target : Node
@@ -25,6 +28,11 @@ func _ready() -> void:
 	SignalBus.attack.connect(_on_attack)
 	health = max_health
 	default_target = get_parent().get_character_dummy()
+	assign_weak_spots()
+
+func assign_weak_spots() -> void:
+	for location in weak_spots:
+		body_plan.body_parts[location].weak_spot = true
 
 func get_skill(skill : String):
 	match skill:
