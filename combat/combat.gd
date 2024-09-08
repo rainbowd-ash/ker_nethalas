@@ -58,10 +58,16 @@ func get_monsters() -> Array:
 
 func monster_picker():
 	var action_list = []
-	var index = 0
 	for monster in get_monsters():
 		action_list.push_back(Action.new(monster, "monster_pick", "%s" % monster.title))
-		index += 1
+	action_list.push_back(Action.new(self, "back"))
+	Router.actions_ui.list_actions(action_list)
+
+func monster_part_picker(monster : Monster):
+	var action_list = []
+	var parts : Dictionary = monster.body_plan.parts
+	for part in parts:
+		action_list.push_back(Action.new(monster, "part_pick-%s" % part , "%s" % parts[part].title))
 	action_list.push_back(Action.new(self, "back"))
 	Router.actions_ui.list_actions(action_list)
 
@@ -73,11 +79,11 @@ func stealth_check():
 	await stealth_action_choice
 	finished_stealth = true
 	if $CharacterDummy.attempting_stealth:
-		var highest_awareness = 0
+		var highest_awareness : int = 0
 		for monster in get_monsters():
 			if monster.awareness > highest_awareness:
 				highest_awareness = monster.get_skill("awareness")
-		var stealth_check_result = Dice.opposed_check(
+		stealth_check_result = Dice.opposed_check(
 			CheckValue.new(Character.skills.get_skill("stealth")),
 			CheckValue.new(highest_awareness)
 		)

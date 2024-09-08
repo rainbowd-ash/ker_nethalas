@@ -16,8 +16,7 @@ enum opposed_winner {
 }
 
 func roll(dice : String) -> int:
-	var valid : bool = dice_string_validation(dice)
-	if not valid:
+	if not dice_string_validation(dice):
 		return 0
 	var amount : int = dice.get_slice('d',0).to_int()
 	var size : int = dice.get_slice('+',0).get_slice('d',1).to_int()
@@ -29,8 +28,7 @@ func roll(dice : String) -> int:
 	return total
 
 func roll_seperately(dice : String) -> Array:
-	var valid : bool = dice_string_validation(dice)
-	if not valid:
+	if not dice_string_validation(dice):
 		return []
 	var result : Array = []
 	var amount : int = dice.get_slice('d',0).to_int()
@@ -39,19 +37,23 @@ func roll_seperately(dice : String) -> Array:
 		result.push_back(roll("1d%d" % size)) # simply don't send the modifier to the roll
 	return result
 
-func to_damage(dice : String) -> int:
-	var valid : bool = dice_string_validation(dice)
-	if not valid:
+func to_damage(dice : String, critical : bool = false) -> int:
+	if not dice_string_validation(dice):
 		return 0
 	var result : int = 0
+	var amount : int = dice.get_slice('d',0).to_int()
+	var size : int = dice.get_slice('+',0).get_slice('d',1).to_int()
 	var mod : int = dice.get_slice('+',1).to_int() if dice.split('+').size() > 1 else 0
-	var rolls = roll_seperately(dice)
+	if critical: # on crit, double amount of dice and double modifier
+		amount += amount
+		mod += mod
+	var rolls = roll_seperately("%dd%d" % [amount, size])
 	rolls.sort()
 	rolls[0] += mod
 	for roll in rolls:
 		result += damage_table_conversion(roll)
 	print("damage conversion: ")
-	print("\trolls: ", rolls, " mod: %d result: %d\n" % [mod, result])
+	print("\trolls: ", rolls, " mod: %d result: %d crit: %s\n" % [mod, result, str(critical)])
 	return result
 
 # \d+d\d+(\+\d+)?

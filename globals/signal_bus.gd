@@ -15,3 +15,4 @@ signal mode_transition(new_mode_name : String)
 
 signal attack(values : Attack)
 signal monster_picked(monster : Monster)
+signal part_picked(part : BodyPart)

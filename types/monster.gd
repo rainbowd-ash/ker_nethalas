@@ -1,8 +1,6 @@
 extends Node
 class_name Monster
 
-signal monster_picked(monster : Monster)
-
 var title = ""
 var athletics = 0
 var awareness = 0
@@ -32,7 +30,7 @@ func _ready() -> void:
 
 func assign_weak_spots() -> void:
 	for location in weak_spots:
-		body_plan.body_parts[location].weak_spot = true
+		body_plan.parts[location].weak_spot = true
 
 func get_skill(skill : String):
 	match skill:
@@ -40,6 +38,8 @@ func get_skill(skill : String):
 			return combat_skill
 		"athletics":
 			return athletics
+		"awareness":
+			return awareness
 		"endurance":
 			return endurance
 		"health":
@@ -52,6 +52,9 @@ func get_skill(skill : String):
 func do_action(action_key : String):
 	if action_key == "monster_pick":
 		SignalBus.monster_picked.emit(self)
+	elif action_key.contains("part_pick-"):
+		var substr = action_key.get_slice("-", 1)
+		SignalBus.part_picked.emit(body_plan.parts[substr])
 
 func actions():
 	return null
@@ -64,3 +67,11 @@ func _on_attack(attack):
 			SignalBus.chat_log.emit("%s dies!" % title)
 			active = false
 			queue_free()
+
+# makes a normal attack against the default target (player)
+# will double damage dice (1d4+2 > 2d4+4) on weak spot hit
+func build_default_attack(damage_dice : String, damage_type : Damage.damage_types, target : Node = default_target):
+	var attack = Attack.new(self,target)
+	attack.location = target.body_plan.roll_hit_location()
+	attack.damage = Damage.new(Dice.to_damage(damage_dice, attack.location.weak_spot), damage_type)
+	return attack

@@ -2,7 +2,7 @@ extends BodyPlan
 class_name BodyPlanQuadraped
 
 func _init() -> void:
-	body_parts = {
+	parts = {
 		right_hind_leg = BodyPart.new("right hind leg"),
 		left_hind_leg = BodyPart.new("left hind leg"),
 		hindquarters = BodyPart.new("hindquarters"),
@@ -16,18 +16,18 @@ func roll_hit_location() -> BodyPart:
 	var roll : int = Dice.roll("1d20")
 	match roll:
 		1, 2, 3:
-			return body_parts["right_hind_leg"]
+			return parts["right_hind_leg"]
 		4, 5, 6:
-			return body_parts["left_hind_leg"]
+			return parts["left_hind_leg"]
 		7, 8, 9:
-			return body_parts["hindquarters"]
+			return parts["hindquarters"]
 		10, 11, 12:
-			return body_parts["forequarters"]
+			return parts["forequarters"]
 		13, 14, 15:
-			return body_parts["right_front_leg"]
+			return parts["right_front_leg"]
 		16, 17, 18:
-			return body_parts["left_front_leg"]
+			return parts["left_front_leg"]
 		19, 20:
-			return body_parts["head"]
+			return parts["head"]
 	push_error("roll hit location returned null")
 	return null

@@ -1,6 +1,6 @@
 class_name BodyPlan
 
-var body_parts = {}
+var parts = {}
 
 func roll_hit_location() -> BodyPart:
 	return null
