@@ -67,7 +67,14 @@ func monster_part_picker(monster : Monster):
 	var action_list = []
 	var parts : Dictionary = monster.body_plan.parts
 	for part in parts:
-		action_list.push_back(Action.new(monster, "part_pick-%s" % part , "%s" % parts[part].title))
+		var button_title = "%s" % parts[part].title
+		if parts[part].weak_spot:
+			button_title = "♥ " + button_title
+		action_list.push_back(Action.new(
+			monster, 
+			"part_pick-%s" % part , 
+			button_title, 
+			not parts[part].disabled))
 	action_list.push_back(Action.new(self, "back"))
 	Router.actions_ui.list_actions(action_list)
 

@@ -68,7 +68,7 @@ func standard_attack(target : Monster) -> void:
 		)
 		SignalBus.chat_log.emit("%s attack hits %s's %s!" % [weapons[0].title, target.title, attack.location.title])
 		SignalBus.attack.emit(attack)
-	# do monster roll on defensive move table if needed
+	# TODO do monster roll on defensive move table if needed
 	else:
 		SignalBus.chat_log.emit("%s attack misses!" % weapons[0].title)
 	get_parent().player_round_finished.emit()
