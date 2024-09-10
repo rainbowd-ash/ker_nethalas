@@ -29,14 +29,17 @@ func _ready():
 	skills.set_skill("perception",70)
 	skills.set_skill("stealth", 80)
 	skills.set_skill("fist_weapons", 40)
-	skills.set_skill("bladed_weapons", 10)
+	skills.set_skill("bladed_weapons", 80)
 	skills.set_skill("shafted_weapons", 20)
 	skills.set_skill("bludgeoning_weapons", 30)
 
 func _on_attack(attack : Attack):
 	if attack.target == self:
+		var output_string = "you take %d %s damage" % [attack.damage.amount, Damage.damage_types.keys()[attack.damage.damage_type]]
+		if attack.location:
+			output_string += " to the %s" % [attack.location.title]
 		var remaining_damage : int = attack.damage.amount
-		SignalBus.chat_log.emit("you take %d %s damage" % [attack.damage.amount, Damage.damage_types.keys()[attack.damage.damage_type]])
+		SignalBus.chat_log.emit(output_string + "!")
 		if remaining_damage >= attributes.toughness:
 			remaining_damage -= attributes.toughness
 			attributes.toughness = 0

@@ -58,10 +58,23 @@ func get_monsters() -> Array:
 
 func monster_picker():
 	var action_list = []
-	var index = 0
 	for monster in get_monsters():
 		action_list.push_back(Action.new(monster, "monster_pick", "%s" % monster.title))
-		index += 1
+	action_list.push_back(Action.new(self, "back"))
+	Router.actions_ui.list_actions(action_list)
+
+func monster_part_picker(monster : Monster):
+	var action_list = []
+	var parts : Dictionary = monster.body_plan.parts
+	for part in parts:
+		var button_title = "%s" % parts[part].title
+		if parts[part].weak_spot:
+			button_title = "♥ " + button_title
+		action_list.push_back(Action.new(
+			monster, 
+			"part_pick-%s" % part , 
+			button_title, 
+			not parts[part].disabled))
 	action_list.push_back(Action.new(self, "back"))
 	Router.actions_ui.list_actions(action_list)
 
@@ -73,11 +86,11 @@ func stealth_check():
 	await stealth_action_choice
 	finished_stealth = true
 	if $CharacterDummy.attempting_stealth:
-		var highest_awareness = 0
+		var highest_awareness : int = 0
 		for monster in get_monsters():
 			if monster.awareness > highest_awareness:
 				highest_awareness = monster.get_skill("awareness")
-		var stealth_check_result = Dice.opposed_check(
+		stealth_check_result = Dice.opposed_check(
 			CheckValue.new(Character.skills.get_skill("stealth")),
 			CheckValue.new(highest_awareness)
 		)
@@ -143,7 +156,7 @@ func monster_action(monster : Monster):
 	# the monster picks a move from their movelist first, 
 	# then if they picked an attack the opposed check is rolled.
 	var roll = Dice.opposed_check(
-		CheckValue.new(monster.get_skill("combat")),
+		CheckValue.new(monster.get_skill("attack")),
 		CheckValue.new(Character.skills.get_skill("defence"))
 	)
 	if roll.winner == Dice.opposed_winner.attacker:

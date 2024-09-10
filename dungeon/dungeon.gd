@@ -73,4 +73,4 @@ func roll_room_checks():
 func roll_combat_encounter():
 	# roll to see if combat happens
 	# if so, roll a monster
-	get_node("/root/Game").start_combat(CombatSetupValues.new(BlightfangRats.new()))
+	get_node("/root/Game").start_combat()

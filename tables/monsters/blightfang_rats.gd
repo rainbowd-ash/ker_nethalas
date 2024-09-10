@@ -3,7 +3,7 @@ class_name BlightfangRats
 
 var rally_counter = 0
 
-func _init():
+func _init() -> void:
 	title = "blightfang rats"
 	number = 3
 	awareness = 60
@@ -12,6 +12,8 @@ func _init():
 	max_health = 3
 	combat_skill = 30
 	magic_resistance = 20
+	body_plan = BodyPlanQuadraped.new()
+	weak_spots = ["head"]
 
 func roll_attack():
 	var action_roll = Dice.roll("1d6")
@@ -24,14 +26,13 @@ func roll_attack():
 
 func bite():
 	SignalBus.chat_log.emit("%s bites" % title)
-	var attack = Damage.new(Dice.to_damage("1d6+%d" % rally_counter), Damage.damage_types.piercing)
-	attack.amount += rally_counter
-	SignalBus.attack.emit(Attack.new(self, default_target, attack))
+	var attack = build_default_attack("1d6+%d" % rally_counter, Damage.damage_types.piercing)
+	SignalBus.attack.emit(attack)
 
 func scratch():
 	SignalBus.chat_log.emit("%s scratches" % title)
-	var attack = Damage.new(Dice.to_damage("1d4+%d" % (1 + rally_counter)), Damage.damage_types.slashing)
-	SignalBus.attack.emit(Attack.new(self, default_target, attack))
+	var attack = build_default_attack("1d4+%d" % (1 + rally_counter), Damage.damage_types.slashing)
+	SignalBus.attack.emit(attack)
 
 func rally():
 	SignalBus.chat_log.emit("%s rallies" % title)
