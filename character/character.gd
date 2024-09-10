@@ -29,7 +29,7 @@ func _ready():
 	skills.set_skill("perception",70)
 	skills.set_skill("stealth", 80)
 	skills.set_skill("fist_weapons", 40)
-	skills.set_skill("bladed_weapons", 10)
+	skills.set_skill("bladed_weapons", 80)
 	skills.set_skill("shafted_weapons", 20)
 	skills.set_skill("bludgeoning_weapons", 30)
 

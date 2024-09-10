@@ -36,6 +36,8 @@ func get_skill(skill : String):
 	match skill:
 		"combat":
 			return combat_skill
+		"attack":
+			return (combat_skill - (10 * body_plan.get_disabled_count()))
 		"athletics":
 			return athletics
 		"awareness":

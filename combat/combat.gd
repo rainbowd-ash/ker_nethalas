@@ -149,7 +149,7 @@ func monster_action(monster : Monster):
 	# the monster picks a move from their movelist first, 
 	# then if they picked an attack the opposed check is rolled.
 	var roll = Dice.opposed_check(
-		CheckValue.new(monster.get_skill("combat")),
+		CheckValue.new(monster.get_skill("attack")),
 		CheckValue.new(Character.skills.get_skill("defence"))
 	)
 	if roll.winner == Dice.opposed_winner.attacker:

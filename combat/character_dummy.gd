@@ -53,16 +53,18 @@ func list_player_actions() -> void:
 func standard_attack(target : Monster) -> void:
 	var weapons : Array = Character.gear.get_weapons()
 	var roll = Dice.opposed_check(
-		CheckValue.new(Character.skills.get_skill("attack")),
+		CheckValue.new(Character.skills.get_skill("attack") - (10 * body_plan.get_disabled_count())),
 		CheckValue.new(target.get_skill("combat"))
 	)
 	if roll.winner == Dice.opposed_winner.attacker:
 		var attack = Attack.new(self,target)
 		attack.location = target.body_plan.roll_hit_location()
-		# check for critical hit here
 		attack.damage = Damage.new(
-			Dice.to_damage(weapons[0].die),
-			weapons[0].damage_type
+		Dice.to_damage(
+			weapons[0].die, 
+			true if attack.location.weak_spot else false
+			),
+		weapons[0].damage_type
 		)
 		SignalBus.chat_log.emit("%s attack hits %s's %s!" % [weapons[0].title, target.title, attack.location.title])
 		SignalBus.attack.emit(attack)
@@ -71,8 +73,33 @@ func standard_attack(target : Monster) -> void:
 		SignalBus.chat_log.emit("%s attack misses!" % weapons[0].title)
 	get_parent().player_round_finished.emit()
 
+# two functions:
+# if targeting a weak spot, do a critical hit
+# if targeting non-weak spot, go for disable (monster has -10 attack skill per disabled part until dead)
+	# disable does no damage
+# aimed attack has -30 on opposed check
 func aimed_attack(target : Monster, location : BodyPart):
-	print("aimed attack on %s's %s--" % [target.title, location.title])
+	var weapons : Array = Character.gear.get_weapons()
+	var roll = Dice.opposed_check(
+		CheckValue.new(Character.skills.get_skill("attack") - 30),
+		CheckValue.new(target.get_skill("combat"))
+	)
+	if roll.winner == Dice.opposed_winner.attacker:
+		var attack = Attack.new(self,target)
+		attack.location = location
+		if location.weak_spot:
+			attack.damage = Damage.new(
+			Dice.to_damage(weapons[0].die, true),
+			weapons[0].damage_type
+			)
+		else: # TODO hardcoded for now -- need to figure out if this is ok long-term
+			attack.damage = Damage.new(0, weapons[0].damage_type)
+			location.disabled = true
+		SignalBus.chat_log.emit("%s aimed attack hits %s's %s!" % [weapons[0].title, target.title, attack.location.title])
+		SignalBus.attack.emit(attack)
+	# do monster roll on defensive move table if needed
+	else:
+		SignalBus.chat_log.emit("%s aimed attack misses!" % weapons[0].title)
 	get_parent().player_round_finished.emit()
 
 func flee() -> void:
