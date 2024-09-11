@@ -1,6 +1,8 @@
 extends Node
 class_name Gear
 
+@onready var equipped_light = $TailSlot
+
 func get_slots() -> Array:
 	var result : Array = []
 	for child in get_children():
@@ -12,8 +14,10 @@ func equip(equipment : Equipment) -> void:
 	var slot = can_equip(equipment)
 	if slot:
 		slot.equip(equipment)
+		SignalBus.item_equipped.emit(equipment)
 
 func dequip(equipment : Equipment) -> Equipment:
+	SignalBus.item_dequipped.emit(equipment)
 	return equipment.get_parent().dequip(equipment)
 
 func drop(equipment : Equipment) -> Equipment:

@@ -7,7 +7,7 @@ var visited = false
 func _ready() -> void:
 	SignalBus.item_dropped.connect(add_item)
 	add_item(Backpack.new())
-	add_item(LightHelmet.new())
+	add_item(Torch.new())
 	add_item(GreatAxe.new())
 
 func add_item(item : Item) -> void:

@@ -167,6 +167,7 @@ func monster_action(monster : Monster):
 
 func end_combat():
 	SignalBus.chat_log.emit("-end combat-")
+	SignalBus.combat_finished.emit()
 	Router.game_modes.mode_swap("DungeonMode")
 
 # used by Monster

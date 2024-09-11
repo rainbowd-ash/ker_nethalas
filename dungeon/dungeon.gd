@@ -35,6 +35,9 @@ func move_through_door(door : Door):
 	SignalBus.moved_through_door.emit()
 	if new_room:
 		roll_room_checks()
+	else:
+		Character.light_check()
+		SignalBus.room_reentered.emit()
 	door_labels()
 	if Router.game_modes.get_current_mode() == "DungeonMode":
 		list_actions()
@@ -67,8 +70,12 @@ func roll_room_checks():
 	var combat_roll = Dice.roll("1d20")
 	if combat_roll > 10:
 		roll_combat_encounter()
+		if Router.game_modes.get_current_mode() == "CombatMode":
+			await SignalBus.combat_finished
 	else:
-		print("events table roll")
+		pass # TODO events table check
+	Character.light_check()
+	SignalBus.new_room_rolls_finished.emit()
 
 func roll_combat_encounter():
 	# roll to see if combat happens

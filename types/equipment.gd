@@ -14,5 +14,6 @@ enum equipment_types {
 	boots,
 	amulet,
 	ring,
+	lightsource,
 }
 var type : equipment_types

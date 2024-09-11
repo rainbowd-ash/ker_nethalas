@@ -1,7 +1,7 @@
 extends Node
 class_name GearSlot
 
-var valid_equip_types : Array
+@export var valid_equip_types : Array[Equipment.equipment_types]
 var max_equipped : int = 1
 
 func get_equipped():

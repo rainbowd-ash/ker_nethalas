@@ -86,3 +86,8 @@ func _valid_skill_title(skill : String) -> bool:
 		"attack", "defence", "initiative":
 			return true
 	return false
+
+func check(skill : String, advantage : int = 0) -> CheckResult:
+	var check = CheckValue.new(get_skill(skill), advantage)
+	print("%s check: " % skill)
+	return Dice.check(check)

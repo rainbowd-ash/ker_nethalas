@@ -1,18 +1,36 @@
 extends Equipment
 class_name Torch
 
-var turns_remaining : int = 20
+var turns_remaining : int = 2
+
+func _ready() -> void:
+	SignalBus.new_room_rolls_finished.connect(_on_room_rolls_finished)
+	SignalBus.room_reentered.connect(_on_room_rolls_finished)
 
 func _init():
 	title = "torch"
 	weight = Item.weights.light
 	cost = 10
+	type = equipment_types.lightsource
 	update_description()
 
+func _on_room_rolls_finished() -> void:
+	if equipped():
+		burn_torch()
+
+func equipped() -> bool:
+	if get_parent() is GearSlot:
+		return true
+	return false
+
+func light_remaining() -> int:
+	return turns_remaining
+
 # triggers every time player enters a room
-func burn_torch():
+func burn_torch() -> void:
 	turns_remaining -= 1
 	if turns_remaining == 0:
+		SignalBus.chat_log.emit("Your torch burns out...")
 		consume_item()
 	else:
 		update_description()

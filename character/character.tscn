@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://viqctjgf6pg2"]
+[gd_scene load_steps=9 format=3 uid="uid://viqctjgf6pg2"]
 
 [ext_resource type="Script" path="res://character/character.gd" id="1_i8eqm"]
 [ext_resource type="Script" path="res://character/attributes.gd" id="3_ug4ts"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://character/gear/gear.gd" id="5_jk57i"]
 [ext_resource type="Script" path="res://character/gear/weapon_slot.gd" id="6_u5ky3"]
 [ext_resource type="Script" path="res://character/gear/body_slot.gd" id="7_762uu"]
+[ext_resource type="Script" path="res://character/gear/tail_slot.gd" id="8_tq1h0"]
 
 [node name="Character" type="Node"]
 script = ExtResource("1_i8eqm")
@@ -29,6 +30,11 @@ script = ExtResource("5_jk57i")
 
 [node name="WeaponSlot" type="Node" parent="Gear"]
 script = ExtResource("6_u5ky3")
+valid_equip_types = Array[int]([12])
 
 [node name="ArmorSlot" type="Node" parent="Gear"]
 script = ExtResource("7_762uu")
+
+[node name="TailSlot" type="Node" parent="Gear"]
+script = ExtResource("8_tq1h0")
+valid_equip_types = Array[int]([12])

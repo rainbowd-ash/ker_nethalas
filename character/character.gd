@@ -56,6 +56,14 @@ func death_check():
 	if attributes.health == 0:
 		SignalBus.chat_log.emit("YOU DIED")
 
+func light_check() -> void:
+	if gear.equipped_light.light_remaining():
+		return
+	var check : CheckResult = skills.check("resolve")
+	if not check.success:
+		attributes.sanity -= 1
+		# TODO gain status effect blinded
+
 # might move this to gear.get_weapons()
 func get_unarmed_weapon() -> Weapon:
 	var fists : Weapon = Weapon.new(
