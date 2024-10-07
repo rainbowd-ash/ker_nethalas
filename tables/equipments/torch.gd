@@ -1,11 +1,12 @@
 extends Equipment
 class_name Torch
 
-var turns_remaining : int = 2
+var turns_remaining : int = 20
 
 func _ready() -> void:
 	SignalBus.new_room_rolls_finished.connect(_on_room_rolls_finished)
 	SignalBus.room_reentered.connect(_on_room_rolls_finished)
+	SignalBus.burn_light.connect(_on_force_burn)
 
 func _init():
 	title = "torch"
@@ -17,6 +18,11 @@ func _init():
 func _on_room_rolls_finished() -> void:
 	if equipped():
 		burn_torch()
+
+func _on_force_burn(amount : int):
+	if equipped():
+		for i in range(0, amount):
+			burn_torch()
 
 func equipped() -> bool:
 	if get_parent() is GearSlot:

@@ -38,23 +38,35 @@ func _on_attack(attack : Attack):
 		var output_string = "you take %d %s damage" % [attack.damage.amount, Damage.damage_types.keys()[attack.damage.damage_type]]
 		if attack.location:
 			output_string += " to the %s" % [attack.location.title]
-		var remaining_damage : int = attack.damage.amount
 		SignalBus.chat_log.emit(output_string + "!")
-		if remaining_damage >= attributes.toughness:
-			remaining_damage -= attributes.toughness
-			attributes.toughness = 0
-		else:
-			attributes.toughness -= remaining_damage
-			remaining_damage = 0
-		if remaining_damage:
-			attributes.health -= remaining_damage
-			remaining_damage = 0
-		death_check()
+		take_damage(attack)
 	return
 
-func death_check():
-	if attributes.health == 0:
-		SignalBus.chat_log.emit("YOU DIED")
+func take_damage(attack : Attack):
+	var damage : int = attack.damage.amount
+	if damage >= attributes.toughness:
+		damage -= attributes.toughness
+		attributes.toughness = 0
+	else:
+		attributes.toughness -= damage
+		damage = 0
+	if damage:
+		attributes.health -= damage
+		damage = 0
+	if attributes.health <= 0:
+		SignalBus.chat_log.emit("\n\n\n\nYOU DIED\n\n\n\n")
+
+func recover_health(amount : int):
+	attributes.health += amount
+	attributes.health = clamp(attributes.health, 0, attributes.max_health)
+
+func recover_toughness(amount : int):
+	attributes.toughness += amount
+	attributes.toughness = clamp(attributes.toughness, 0, attributes.max_toughness)
+
+func recover_exhaustion(amount : int):
+	attributes.exhaustion -= amount
+	attributes.exhaustion = clamp(attributes.exhaustion, 0, 99)
 
 func light_check() -> void:
 	if gear.equipped_light.light_remaining():

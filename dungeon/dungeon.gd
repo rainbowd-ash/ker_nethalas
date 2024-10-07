@@ -12,7 +12,13 @@ func _ready() -> void:
 
 func list_actions():
 	var actions = current_room().get_actions()
+	var take_break = Action.new(self, "take a break")
+	actions.append(take_break)
 	Router.actions_ui.list_actions(actions)
+
+func do_action(action_key : String):
+	if action_key == "take a break":
+		take_break()
 
 func current_room() -> Room:
 	return pawn.get_parent()
@@ -81,3 +87,11 @@ func roll_combat_encounter():
 	# roll to see if combat happens
 	# if so, roll a monster
 	get_node("/root/Game").start_combat()
+
+func take_break():
+	SignalBus.chat_log.emit("You take a break and recover health, toughness, and exhaustion.")
+	Character.recover_toughness(Dice.roll("1d10"))
+	Character.recover_health(1)
+	Character.recover_exhaustion(2)
+	SignalBus.burn_light.emit(5) # TODO: how to handle taking a break with <5 light remaining?
+	tension_die.shrink() # TODO: how to handle tension die shrinking when already at min size?

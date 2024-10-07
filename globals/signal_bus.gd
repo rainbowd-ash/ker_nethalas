@@ -24,3 +24,8 @@ signal combat_finished()
 signal attack(values : Attack)
 signal monster_picked(monster : Monster)
 signal part_picked(part : BodyPart)
+
+# emitted by something that wants to force the equipped lightsource to diminish
+	# take a break
+	# some growing darkness table events
+signal burn_light(amount : int)

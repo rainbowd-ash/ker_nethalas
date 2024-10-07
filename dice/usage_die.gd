@@ -34,3 +34,13 @@ func roll() -> bool:
 			return false
 	else:
 		return false
+
+func shrink():
+	if current_size == 0:
+		return
+	current_size -= 1
+
+func grow():
+	if current_size == base_size:
+		return
+	current_size += 1
