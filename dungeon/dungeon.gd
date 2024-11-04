@@ -13,7 +13,9 @@ func _ready() -> void:
 func list_actions():
 	var actions = current_room().get_actions()
 	var take_break = Action.new(self, "take a break")
+	var camp = Action.new(Router.game_modes, "mode_camping")
 	actions.append(take_break)
+	actions.append(camp)
 	Router.actions_ui.list_actions(actions)
 
 func do_action(action_key : String):

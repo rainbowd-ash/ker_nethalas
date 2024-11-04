@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cld1c4x65h2t7"]
+[gd_scene load_steps=16 format=3 uid="uid://cld1c4x65h2t7"]
 
 [ext_resource type="Script" path="res://globals/game.gd" id="1_mhmjv"]
 [ext_resource type="Script" path="res://modemachine/mode_machine.gd" id="2_x38xm"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://modemachine/game_modes/dungeon_mode.gd" id="5_6xvtt"]
 [ext_resource type="PackedScene" uid="uid://dpwu21k1ya0ad" path="res://dungeon/dungeon.tscn" id="6_glx83"]
 [ext_resource type="Script" path="res://modemachine/inventory_mode.gd" id="7_7xeuo"]
+[ext_resource type="Script" path="res://modemachine/mode.gd" id="7_v3vc1"]
 [ext_resource type="Script" path="res://ui/inventory/inventory_ui.gd" id="8_i80o1"]
 [ext_resource type="Script" path="res://modemachine/dungeon_mode.gd" id="8_k3n8u"]
 [ext_resource type="Script" path="res://ui/stats.gd" id="9_5s05s"]
@@ -30,6 +31,10 @@ attached_scene = ExtResource("4_53b64")
 script = ExtResource("5_6xvtt")
 attached_scene = ExtResource("6_glx83")
 attached_node = NodePath("../../Ui/Dungeon_Chat/DungeonWindow/SubViewport/Dungeon")
+
+[node name="CampMode" type="Node" parent="GameModes" node_paths=PackedStringArray("attached_node")]
+script = ExtResource("7_v3vc1")
+attached_node = NodePath("../../Camping")
 
 [node name="UiModes" type="Node" parent="." node_paths=PackedStringArray("initial_mode")]
 script = ExtResource("2_x38xm")
@@ -130,7 +135,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Ui/Dungeon_Chat/DungeonWindow"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(423, 720)
 render_target_update_mode = 4
 
 [node name="Dungeon" parent="Ui/Dungeon_Chat/DungeonWindow/SubViewport" instance=ExtResource("6_glx83")]
@@ -194,5 +199,11 @@ script = ExtResource("9_d0nn4")
 [node name="InventoryButton" type="Button" parent="Ui/Stats_Actions"]
 layout_mode = 2
 text = "Inventory"
+
+[node name="Camping" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+text = "You have entered the camp zone."
 
 [connection signal="pressed" from="Ui/Stats_Actions/InventoryButton" to="." method="_on_inventory_button_pressed"]
