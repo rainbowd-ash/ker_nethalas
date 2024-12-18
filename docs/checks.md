@@ -1,4 +1,4 @@
-# Dice Checks
+# Checks
 Performing actions and rolling dice to check success.
 
 ## How
@@ -16,4 +16,9 @@ Rolling doubles (the same number on both die), magnifies the outcome. A regular 
 Some abilities and events will confer Advantage or Disadvantage on the next check. After rolling with advantage, if swapping the 1s and 10s die would create a better outcome (lower number), then make that swap. Disadvantage works the same way but checks for a worse outcome.
 
 # Implementation
-Dice is a singleton that handles all rolling. It needs some work.
+Checks are currently handled by the Dice singleton. They are going to be moved into their own Checks singleton, to split them off from "rolling" which is simply rolling on tables.
+
+## Access
+* This is not how access is currently implemented *
+
+The rest of the game gets checks by calling Dice.check(int skill_level, bool advantage=false, bool disadvantage=false). This will return a dictionary with the roll value, the success boolean, and the critical boolean.
