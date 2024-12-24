@@ -10,20 +10,6 @@ var accused = ""
 
 func _ready():
 	SignalBus.attack.connect(_on_attack)
-	
-	attributes.max_health = Dice.roll("1d6+8")
-	attributes.health = attributes.max_health
-	attributes.max_toughness = Dice.roll("1d6+10")
-	attributes.toughness = attributes.max_toughness
-	attributes.max_aether = Dice.roll("1d6+8")
-	attributes.aether = attributes.max_aether
-	attributes.magic_resistance = 20
-	skills.set_skill("acrobatics",10)
-	skills.set_skill("athletics",10)
-	skills.set_skill("dodge",10)
-	skills.set_skill("perception",20)
-	skills.set_skill("resolve",10)
-	skills.set_skill("fist_weapons",10)
 	# debug test values
 	skills.set_skill("scavenge",50)
 	skills.set_skill("perception",70)
@@ -43,37 +29,24 @@ func _on_attack(attack : Attack):
 	return
 
 func take_damage(attack : Attack):
-	var damage : int = attack.damage.amount
-	if damage >= attributes.toughness:
-		damage -= attributes.toughness
-		attributes.toughness = 0
+	var unallocated_damage : int = attack.damage.amount
+	var toughness = attributes.toughness.details()
+	if unallocated_damage >= toughness.current_toughness:
+		unallocated_damage -= toughness.current_toughness
+		attributes.toughness.change(toughness.current_toughness * -1)
 	else:
-		attributes.toughness -= damage
-		damage = 0
-	if damage:
-		attributes.health -= damage
-		damage = 0
-	if attributes.health <= 0:
-		SignalBus.chat_log.emit("\n\n\n\nYOU DIED\n\n\n\n")
-
-func recover_health(amount : int):
-	attributes.health += amount
-	attributes.health = clamp(attributes.health, 0, attributes.max_health)
-
-func recover_toughness(amount : int):
-	attributes.toughness += amount
-	attributes.toughness = clamp(attributes.toughness, 0, attributes.max_toughness)
-
-func recover_exhaustion(amount : int):
-	attributes.exhaustion -= amount
-	attributes.exhaustion = clamp(attributes.exhaustion, 0, 99)
+		attributes.toughness.change(toughness.current_toughness * -1)
+		unallocated_damage = 0
+	if unallocated_damage:
+		attributes.health.change(-1 * unallocated_damage)
+		unallocated_damage = 0
 
 func light_check() -> void:
 	if gear.equipped_light.light_remaining():
 		return
 	var check : CheckResult = skills.check("resolve")
 	if not check.success:
-		attributes.sanity -= 1
+		attributes.sanity.change(-1)
 		# TODO gain status effect blinded
 
 # might move this to gear.get_weapons()

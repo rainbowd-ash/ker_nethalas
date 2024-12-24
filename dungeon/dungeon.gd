@@ -90,8 +90,8 @@ func roll_combat_encounter():
 
 func take_break():
 	SignalBus.chat_log.emit("You take a break and recover health, toughness, and exhaustion.")
-	Character.recover_toughness(Dice.roll("1d10"))
-	Character.recover_health(1)
-	Character.recover_exhaustion(2)
+	Character.attributes.toughness.change(Dice.roll("1d10"))
+	Character.attributes.health.change(1)
+	Character.attributes.exhaustion.change(2)
 	SignalBus.burn_light.emit(5) # TODO: how to handle taking a break with <5 light remaining?
 	tension_die.shrink() # TODO: how to handle tension die shrinking when already at min size?
