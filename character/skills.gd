@@ -1,22 +1,26 @@
 extends Node
 class_name Skills
 
+# TODO: implement Skill Improvement
+
 var skills = {
-			 acrobatics = Skill.new("acrobatics", "acrobatics", 0),
-			  athletics = Skill.new("athletics", "athletics", 0),
-		 bladed_weapons = Skill.new("bladed_weapons", "bladed weapons", 0, ["weapon"]),
-	bludgeoning_weapons = Skill.new("bludgeoning_weapons", "bludgeoning weapons", 0, ["weapon"]),
-				  dodge = Skill.new("dodge", "dodge", 0),
-			  endurance = Skill.new("endurance", "endurance", 0),
-			   medicine = Skill.new("medicine", "medicine", 0),
-			 perception = Skill.new("perception", "perception", 0),
-				resolve = Skill.new("resolve", "resolve", 0),
-				 reason = Skill.new("reason", "reason", 0),
-			   scavenge = Skill.new("scavenge", "scavenge", 0),
-		shafted_weapons = Skill.new("shafted_weapons", "shafted weapons", 0, ["weapon"]),
-				stealth = Skill.new("stealth", "stealth", 0),
-			   thievery = Skill.new("thievery", "thievery", 0),
-		   fist_weapons = Skill.new("fist_weapons", "fist weapons", 0, ["weapon"]),
+			  acrobatics = Skill.new("acrobatics", "acrobatics", 10),
+			   athletics = Skill.new("athletics", "athletics", 10),
+		  bladed_weapons = Skill.new("bladed_weapons", "bladed weapons", 0, ["weapon"]),
+	 bludgeoning_weapons = Skill.new("bludgeoning_weapons", "bludgeoning weapons", 0, ["weapon"]),
+				   dodge = Skill.new("dodge", "dodge", 10),
+			   endurance = Skill.new("endurance", "endurance", 0),
+				medicine = Skill.new("medicine", "medicine", 0),
+			  perception = Skill.new("perception", "perception", 20),
+				 resolve = Skill.new("resolve", "resolve", 10),
+				  reason = Skill.new("reason", "reason", 0),
+				scavenge = Skill.new("scavenge", "scavenge", 0),
+		 shafted_weapons = Skill.new("shafted_weapons", "shafted weapons", 0, ["weapon"]),
+				 stealth = Skill.new("stealth", "stealth", 0),
+				thievery = Skill.new("thievery", "thievery", 0),
+			fist_weapons = Skill.new("fist_weapons", "fist weapons", 20, ["weapon"]),
+		# TODO: implement no_skill_improvement and no_skill_allocation tags
+		magic_resistance = Skill.new("magic_resistance", "magic resistance", 0, ["no_skill_improvement", "no_skill_allocation"])
 }
 
 func set_skill(skill : String, new_value : int) -> void:

@@ -20,11 +20,13 @@ Exhaustion works differently than the other attributes, in that it starts at 0 a
 
 The character's current Exhaustion amount is the accrued Exhaustion - Exhaustion Resistance stat.
 
+## Magic Resistance
+Magic resistance is considered an attribute by the source book, but it functions as a skill with checks and such. Thusly it is implemented as a skill.
+
 # Implementation
-* This is not how attributes are currently implemented *
+The individual attributes are subnodes under $Character/%Attributes. %Attributes is an organizational to route calls to the attributes via the form Character.attributes.attribute_name
 
-The individual attributes are subnodes under $Character/%Attributes.
+Each attribute watches for signals relating to events or actions and updates itself, then sending a signal about the new status.
 
-The rest of the game accesses the attributes through the $Character node. The Character node takes damage and handles assigning it to toughness and health, handles receiving exhaustion or sanity damage, etc.
-
-$Character also watches for signals like "short_break" and makes the appropriate adjustments to the attributes.
+## Access
+Each attribute has details() that will return the details dictionary, and change(amount) that will modify the attribute.

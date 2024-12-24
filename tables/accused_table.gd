@@ -1,6 +1,8 @@
 extends Node
 #class_name AccusedTable
 
+# the list of all crimes
+
 func roll():
 	return accused_table[randi_range(1, accused_table.size())]
 

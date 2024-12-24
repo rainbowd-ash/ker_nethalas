@@ -3,7 +3,9 @@ Skills are the characters capabilities. A skill cannot go above level 80 natural
 
 The skill level is used when performing checks.
 
-Players improve skills permamently during character creation, during skill improvement checks, and during level-up.
+Players improve skills permanently during character creation, during skill improvement checks, and during level-up.
+
+Note: Magic resistance is considered an attribute by the source book, but it functions as a skill with checks and such. Thusly it is implemented as a skill, but omitted from Skill Improvement or starting skill point selection.
 
 ## List of skills (starting level)
 * Acrobatics (10)
@@ -20,9 +22,10 @@ Players improve skills permamently during character creation, during skill impro
 * Shafted Weapons (0)
 * Thievery (0)
 * Fist Weapons (20)
+* Magic Resistance (20)
 
 ## Skill Improvement
-When the player rolls doubles during a skill check, a skill is marked for "improvement". Then, when resting at camp, roll skill improvement checks. A success increases the skill by d4, and a failure increases the skill by 1, up to the maximum of 80.
+When the player rolls doubles during a skill check, a skill is marked for "improvement". Then, when resting at camp, roll skill improvement checks. A success increases the skill by d4, and a failure increases the skill by 1, up to the maximum of 80. Magic resistance is omitted from the list of skills that can be marked this way.
 
 # Implementation
 The Character has a subnode called %Skills. This node keeps all the individual skills as a dictionary.
